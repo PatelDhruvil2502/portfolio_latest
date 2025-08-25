@@ -144,7 +144,7 @@ const educationHistory = [
 const experienceHistory = [
   {
     company: "Fuzzy Cloud",
-    position: "React Intern",
+    position: "Software Developer Intern",
     date: "December 2023 - May 2024",
     responsibilities: [
       "Contributed to two real-world projects in React.",
