@@ -10,10 +10,15 @@ import {
   Github,
   Mail,
   FileText,
+  Briefcase,
   Code,
+  ArrowRight,
   ChevronRight,
   Building,
+  Sparkles,
+  Book,
   Monitor,
+  Dices,
   GitCommit,
   Coffee,
   Database,
@@ -72,7 +77,6 @@ const skills = [
   },
   { name: "Git", icon: <GitCommit size={32} className="text-purple-600" /> },
 ];
-
 
 
 import pihealth from "../src/assets/pihealth.png";
@@ -1039,16 +1043,18 @@ const App = () => {
             ))}
           </motion.div>
         </motion.section>
+      </main>
 
+      <div className="relative">
+        <ContactAnimation />
         <motion.section
           id="contact"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-          className="relative p-8 md:p-16 max-w-full mx-auto text-center overflow-hidden"
+          className="relative p-8 md:p-16 max-w-full mx-auto text-center"
         >
-          <ContactAnimation />
           <div className="relative z-10 max-w-3xl mx-auto">
             <SectionTitle>Get In Touch</SectionTitle>
             <motion.div
@@ -1118,50 +1124,37 @@ const App = () => {
                   {isSending ? "Sending..." : "Send Message"}
                 </motion.button>
               </form>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="mt-12 mb-8"
-            >
-              <p className="text-gray-800 text-lg md:text-xl leading-relaxed">
-                I'm currently seeking new opportunities and projects. Feel free
-                to reach out to me!
-              </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex flex-wrap justify-center gap-6"
-            >
-              {socialLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 p-4 rounded-full bg-gray-100 text-gray-600 hover:text-gray-800 hover:bg-gray-200 transition-all duration-300 transform hover:-translate-y-1 shadow-lg"
-                >
-                  {link.icon}
-                  <span className="text-lg font-semibold">{link.name}</span>
-                </a>
-              ))}
+              <div className="mt-12">
+                <p className="text-gray-800 text-lg md:text-xl leading-relaxed mb-6">
+                  I'm currently seeking new opportunities and projects. Feel
+                  free to reach out to me!
+                </p>
+                <div className="flex flex-wrap justify-center gap-6">
+                  {socialLinks.map((link) => (
+                    <a
+                      key={link.name}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 p-4 rounded-full bg-gray-100 text-gray-600 hover:text-gray-800 hover:bg-gray-200 transition-all duration-300 transform hover:-translate-y-1 shadow-lg"
+                    >
+                      {link.icon}
+                      <span className="text-lg font-semibold">{link.name}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
             </motion.div>
           </div>
         </motion.section>
-      </main>
-
-      <footer className="py-8 text-center text-gray-500">
-        <p className="text-sm">
-          Designed and Built by{" "}
-          <span className="text-purple-600">Dhruvil Patel</span>
-        </p>
-        <p className="text-sm">&copy; 2025. All Rights Reserved.</p>
-      </footer>
+        <footer className="relative z-10 py-8 text-center text-gray-800">
+          <p className="text-sm">
+            Designed and Built by{" "}
+            <span className="text-purple-600">Dhruvil Patel</span>
+          </p>
+          <p className="text-sm">&copy; 2025. All Rights Reserved.</p>
+        </footer>
+      </div>
     </div>
   );
 };
