@@ -78,7 +78,6 @@ const skills = [
   { name: "Git", icon: <GitCommit size={32} className="text-purple-600" /> },
 ];
 
-
 import pihealth from "../src/assets/pihealth.png";
 import me from "../src/assets/me.png";
 import chat from "../src/assets/chat.png";
@@ -1074,9 +1073,8 @@ const App = () => {
                 possible.
               </p>
               <form
-                action="https://formspree.io/f/xanqvwyd"
+                action="https://formspree.io/f/xanqvwyd" // <-- PASTE YOUR URL HERE
                 method="POST"
-                onSubmit={handleSubmit}
                 className="flex flex-col gap-6 w-full max-w-xl mx-auto"
               >
                 <input
@@ -1084,8 +1082,7 @@ const App = () => {
                   name="name"
                   placeholder="Your Name"
                   required
-                  value={formState.name}
-                  onChange={handleFormChange}
+                  // No need for value or onChange if you let the form handle state
                   className="w-full p-4 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 shadow-md"
                 />
                 <input
@@ -1093,8 +1090,6 @@ const App = () => {
                   name="email"
                   placeholder="Your Email"
                   required
-                  value={formState.email}
-                  onChange={handleFormChange}
                   className="w-full p-4 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 shadow-md"
                 />
                 <textarea
@@ -1102,8 +1097,6 @@ const App = () => {
                   placeholder="Your Message"
                   required
                   rows="6"
-                  value={formState.message}
-                  onChange={handleFormChange}
                   className="w-full p-4 rounded-xl border border-gray-300 bg-white text-gray-800 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 shadow-md"
                 ></textarea>
                 <motion.button
@@ -1112,16 +1105,9 @@ const App = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  className={`px-8 py-4 rounded-full font-semibold text-lg transition-all duration-500 shadow-lg ${
-                    isSending
-                      ? "bg-green-600 text-white cursor-not-allowed"
-                      : isFormValid
-                      ? "bg-purple-600 text-white hover:bg-purple-700 shadow-purple-500/30"
-                      : "bg-gray-400 text-gray-700 cursor-not-allowed"
-                  }`}
-                  disabled={isSending || !isFormValid}
+                  className="px-8 py-4 rounded-full font-semibold text-lg transition-all duration-500 shadow-lg bg-purple-600 text-white hover:bg-purple-700 shadow-purple-500/30"
                 >
-                  {isSending ? "Sending..." : "Send Message"}
+                  Send Message
                 </motion.button>
               </form>
               <div className="mt-12">
