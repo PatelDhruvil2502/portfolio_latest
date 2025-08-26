@@ -10,15 +10,10 @@ import {
   Github,
   Mail,
   FileText,
-  Briefcase,
   Code,
-  ArrowRight,
   ChevronRight,
   Building,
-  Sparkles,
-  Book,
   Monitor,
-  Dices,
   GitCommit,
   Coffee,
   Database,
@@ -27,6 +22,11 @@ import {
   Network,
   ChevronDown,
   Feather,
+  Braces,
+  Leaf,
+  Cloud,
+  DatabaseZap,
+  Camera,
 } from "lucide-react";
 
 // Define the navigation items
@@ -42,7 +42,10 @@ const navItems = [
 // Define skills data with relevant icons from lucide-react
 const skills = [
   { name: "React", icon: <Monitor size={32} className="text-purple-600" /> },
-  { name: "TypeScript", icon: <Code size={32} className="text-purple-600" /> },
+  {
+    name: "TypeScript",
+    icon: <Braces size={32} className="text-purple-600" />,
+  },
   { name: "JavaScript", icon: <Code size={32} className="text-purple-600" /> },
   { name: "Python", icon: <Terminal size={32} className="text-purple-600" /> },
   { name: "Java", icon: <Coffee size={32} className="text-purple-600" /> },
@@ -50,22 +53,27 @@ const skills = [
   { name: "Node.js", icon: <Server size={32} className="text-purple-600" /> },
   {
     name: "Spring Boot",
-    icon: <Server size={32} className="text-purple-600" />,
+    icon: <Leaf size={32} className="text-purple-600" />,
   },
   {
     name: "Firebase",
-    icon: <Database size={32} className="text-purple-600" />,
+    icon: <Cloud size={32} className="text-purple-600" />,
   },
-  { name: "MongoDB", icon: <Database size={32} className="text-purple-600" /> },
+  {
+    name: "MongoDB",
+    icon: <DatabaseZap size={32} className="text-purple-600" />,
+  },
   { name: "MySQL", icon: <Database size={32} className="text-purple-600" /> },
   { name: "Redux", icon: <Network size={32} className="text-purple-600" /> },
-  { name: "OpenCV", icon: <Sparkles size={32} className="text-purple-600" /> },
+  { name: "OpenCV", icon: <Camera size={32} className="text-purple-600" /> },
   {
     name: "Tesseract OCR",
     icon: <FileText size={32} className="text-purple-600" />,
   },
   { name: "Git", icon: <GitCommit size={32} className="text-purple-600" /> },
 ];
+
+
 
 import pihealth from "../src/assets/pihealth.png";
 import me from "../src/assets/me.png";
@@ -74,6 +82,7 @@ import ecommerce from "../src/assets/ecommerce.png";
 import pullventure from "../src/assets/pullventure.png";
 import societyzen from "../src/assets/societyzen.png";
 import textextract from "../src/assets/textextract.png";
+
 // Define projects data
 const projects = [
   {
@@ -214,7 +223,7 @@ const HeroAnimation = () => {
   }, []);
 
   useEffect(() => {
-    if (!threeLoaded) return;
+    if (!threeLoaded || !mountRef.current) return;
 
     const THREE = window.THREE;
     const currentMount = mountRef.current;
@@ -282,7 +291,125 @@ const HeroAnimation = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
-      currentMount.removeChild(renderer.domElement);
+      if (currentMount && renderer.domElement) {
+        currentMount.removeChild(renderer.domElement);
+      }
+    };
+  }, [threeLoaded]);
+
+  return (
+    <div ref={mountRef} className="absolute top-0 left-0 w-full h-full z-0" />
+  );
+};
+
+const ContactAnimation = () => {
+  const mountRef = useRef(null);
+  const [threeLoaded, setThreeLoaded] = useState(false);
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src =
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
+    script.async = true;
+    script.onload = () => setThreeLoaded(true);
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!threeLoaded || !mountRef.current) return;
+
+    const THREE = window.THREE;
+    const currentMount = mountRef.current;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      currentMount.clientWidth / currentMount.clientHeight,
+      0.1,
+      1000
+    );
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
+    currentMount.appendChild(renderer.domElement);
+
+    const particlesCount = 10000;
+    const positions = new Float32Array(particlesCount * 3);
+    const colors = new Float32Array(particlesCount * 3);
+
+    for (let i = 0; i < particlesCount * 3; i++) {
+      positions[i] = (Math.random() - 0.5) * 20;
+      colors[i] = Math.random();
+    }
+
+    const particlesGeometry = new THREE.BufferGeometry();
+    particlesGeometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(positions, 3)
+    );
+    particlesGeometry.setAttribute(
+      "color",
+      new THREE.BufferAttribute(colors, 3)
+    );
+
+    const particlesMaterial = new THREE.PointsMaterial({
+      size: 0.03,
+      vertexColors: true,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+    scene.add(particles);
+
+    camera.position.z = 5;
+
+    const mouse = new THREE.Vector2();
+    const handleMouseMove = (event) => {
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+
+    const clock = new THREE.Clock();
+    const animate = () => {
+      const elapsedTime = clock.getElapsedTime();
+      requestAnimationFrame(animate);
+      particles.rotation.y = elapsedTime * 0.1;
+      particles.rotation.x = elapsedTime * 0.1;
+
+      const positions = particles.geometry.attributes.position.array;
+      for (let i = 0; i < particlesCount; i++) {
+        const i3 = i * 3;
+        const x = particles.geometry.attributes.position.array[i3];
+        particles.geometry.attributes.position.array[i3 + 1] = Math.sin(
+          elapsedTime + x
+        );
+      }
+      particles.geometry.attributes.position.needsUpdate = true;
+
+      camera.position.x += (mouse.x * 2 - camera.position.x) * 0.02;
+      camera.position.y += (-mouse.y * 2 - camera.position.y) * 0.02;
+      camera.lookAt(scene.position);
+      renderer.render(scene, camera);
+    };
+    animate();
+
+    const handleResize = () => {
+      camera.aspect = currentMount.clientWidth / currentMount.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (currentMount && renderer.domElement) {
+        currentMount.removeChild(renderer.domElement);
+      }
     };
   }, [threeLoaded]);
 
@@ -412,7 +539,7 @@ const App = () => {
     if (isFormValid) {
       setIsSending(true);
       setTimeout(() => {
-        alert("Message sent successfully!");
+        console.log("Message sent successfully!");
         setIsSending(false);
         setFormState({ name: "", email: "", message: "" });
       }, 2000);
@@ -919,104 +1046,112 @@ const App = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-          className="p-8 md:p-16 max-w-3xl mx-auto text-center"
+          className="relative p-8 md:p-16 max-w-full mx-auto text-center overflow-hidden"
         >
-          <SectionTitle>Get In Touch</SectionTitle>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="bg-white/50 backdrop-blur-md p-8 rounded-3xl shadow-xl"
-          >
-            <p className="text-lg text-gray-700 mb-8">
-              Send me a message directly, and I'll get back to you as soon as
-              possible.
-            </p>
-            <form
-              action="https://formspree.io/f/xanqvwyd"
-              method="POST"
-              onSubmit={handleSubmit}
-              className="flex flex-col gap-6 w-full max-w-xl mx-auto"
+          <ContactAnimation />
+          <div className="relative z-10 max-w-3xl mx-auto">
+            <SectionTitle>Get In Touch</SectionTitle>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              whileHover={{
+                scale: 1.02,
+                y: -8,
+                boxShadow: "0 25px 50px -12px rgba(168, 85, 247, 0.25)",
+              }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, type: "spring" }}
+              className="bg-black/10 backdrop-blur-sm p-8 rounded-3xl shadow-2xl shadow-purple-500/20 border border-white/10"
             >
-              <input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                required
-                value={formState.name}
-                onChange={handleFormChange}
-                className="w-full p-4 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 shadow-md"
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                required
-                value={formState.email}
-                onChange={handleFormChange}
-                className="w-full p-4 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 shadow-md"
-              />
-              <textarea
-                name="message"
-                placeholder="Your Message"
-                required
-                rows="6"
-                value={formState.message}
-                onChange={handleFormChange}
-                className="w-full p-4 rounded-xl border border-gray-300 bg-white text-gray-800 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 shadow-md"
-              ></textarea>
-              <motion.button
-                type="submit"
-                initial={{ scale: 1 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                className={`px-8 py-4 rounded-full font-semibold text-lg transition-all duration-500 shadow-lg ${
-                  isSending
-                    ? "bg-green-600 text-white cursor-not-allowed"
-                    : isFormValid
-                    ? "bg-purple-600 text-white hover:bg-purple-700 shadow-purple-500/30"
-                    : "bg-gray-400 text-gray-700 cursor-not-allowed"
-                }`}
-                disabled={isSending || !isFormValid}
+              <p className="text-lg text-gray-800 mb-8">
+                Send me a message directly, and I'll get back to you as soon as
+                possible.
+              </p>
+              <form
+                action="https://formspree.io/f/xanqvwyd"
+                method="POST"
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-6 w-full max-w-xl mx-auto"
               >
-                {isSending ? "Sending..." : "Send Message"}
-              </motion.button>
-            </form>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-12 mb-8"
-          >
-            <p className="text-gray-600 text-lg md:text-xl leading-relaxed">
-              I'm currently seeking new opportunities and projects. Feel free to
-              reach out to me!
-            </p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="flex flex-wrap justify-center gap-6"
-          >
-            {socialLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 p-4 rounded-full bg-gray-100 text-gray-600 hover:text-gray-800 hover:bg-gray-200 transition-all duration-300 transform hover:-translate-y-1 shadow-lg"
-              >
-                {link.icon}
-                <span className="text-lg font-semibold">{link.name}</span>
-              </a>
-            ))}
-          </motion.div>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  required
+                  value={formState.name}
+                  onChange={handleFormChange}
+                  className="w-full p-4 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 shadow-md"
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  required
+                  value={formState.email}
+                  onChange={handleFormChange}
+                  className="w-full p-4 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 shadow-md"
+                />
+                <textarea
+                  name="message"
+                  placeholder="Your Message"
+                  required
+                  rows="6"
+                  value={formState.message}
+                  onChange={handleFormChange}
+                  className="w-full p-4 rounded-xl border border-gray-300 bg-white text-gray-800 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 shadow-md"
+                ></textarea>
+                <motion.button
+                  type="submit"
+                  initial={{ scale: 1 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  className={`px-8 py-4 rounded-full font-semibold text-lg transition-all duration-500 shadow-lg ${
+                    isSending
+                      ? "bg-green-600 text-white cursor-not-allowed"
+                      : isFormValid
+                      ? "bg-purple-600 text-white hover:bg-purple-700 shadow-purple-500/30"
+                      : "bg-gray-400 text-gray-700 cursor-not-allowed"
+                  }`}
+                  disabled={isSending || !isFormValid}
+                >
+                  {isSending ? "Sending..." : "Send Message"}
+                </motion.button>
+              </form>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="mt-12 mb-8"
+            >
+              <p className="text-gray-800 text-lg md:text-xl leading-relaxed">
+                I'm currently seeking new opportunities and projects. Feel free
+                to reach out to me!
+              </p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="flex flex-wrap justify-center gap-6"
+            >
+              {socialLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 p-4 rounded-full bg-gray-100 text-gray-600 hover:text-gray-800 hover:bg-gray-200 transition-all duration-300 transform hover:-translate-y-1 shadow-lg"
+                >
+                  {link.icon}
+                  <span className="text-lg font-semibold">{link.name}</span>
+                </a>
+              ))}
+            </motion.div>
+          </div>
         </motion.section>
       </main>
 
