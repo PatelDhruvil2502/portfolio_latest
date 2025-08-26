@@ -497,15 +497,9 @@ const App = () => {
   };
 
   const SectionTitle = ({ children }) => (
-    <motion.h2
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className="text-4xl md:text-5xl font-bold text-gray-800 mb-12 text-center"
-    >
+    <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-12 text-center">
       {children}
-    </motion.h2>
+    </h2>
   );
 
   const sectionVariants = {
