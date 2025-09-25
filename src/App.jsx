@@ -10,15 +10,10 @@ import {
   Github,
   Mail,
   FileText,
-  Briefcase,
   Code,
-  ArrowRight,
   ChevronRight,
   Building,
-  Sparkles,
-  Book,
   Monitor,
-  Dices,
   GitCommit,
   Coffee,
   Database,
@@ -33,7 +28,6 @@ import {
   DatabaseZap,
   Camera,
 } from "lucide-react";
-
 // Define the navigation items
 const navItems = [
   { name: "About Me", id: "about" },
@@ -43,7 +37,6 @@ const navItems = [
   { name: "Projects", id: "projects" },
   { name: "Contact Me", id: "contact" },
 ];
-
 // Define skills data with relevant icons from lucide-react
 const skills = [
   { name: "React", icon: <Monitor size={32} className="text-purple-600" /> },
@@ -77,6 +70,7 @@ const skills = [
   },
   { name: "Git", icon: <GitCommit size={32} className="text-purple-600" /> },
 ];
+
 
 import pihealth from "../src/assets/pihealth.png";
 import me from "../src/assets/me.png";
@@ -131,7 +125,6 @@ const projects = [
     tags: ["Flutter", "Firebase"],
   },
 ];
-
 // Define education history
 const educationHistory = [
   {
@@ -151,7 +144,6 @@ const educationHistory = [
     id: "bachelors",
   },
 ];
-
 // Define experience history
 const experienceHistory = [
   {
@@ -188,7 +180,6 @@ const experienceHistory = [
     skills: ["Flutter", "Java", "Hibernate", "MERN Stack"],
   },
 ];
-
 // Define social media links
 const socialLinks = [
   {
@@ -207,11 +198,9 @@ const socialLinks = [
     url: "mailto:pateldhruvil2502@gmail.com",
   },
 ];
-
 const HeroAnimation = () => {
   const mountRef = useRef(null);
   const [threeLoaded, setThreeLoaded] = useState(false);
-
   useEffect(() => {
     const script = document.createElement("script");
     script.src =
@@ -219,15 +208,12 @@ const HeroAnimation = () => {
     script.async = true;
     script.onload = () => setThreeLoaded(true);
     document.body.appendChild(script);
-
     return () => {
       document.body.removeChild(script);
     };
   }, []);
-
   useEffect(() => {
     if (!threeLoaded || !mountRef.current) return;
-
     const THREE = window.THREE;
     const currentMount = mountRef.current;
     const scene = new THREE.Scene();
@@ -240,19 +226,16 @@ const HeroAnimation = () => {
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
     currentMount.appendChild(renderer.domElement);
-
     const particlesCount = 7000;
     const positions = new Float32Array(particlesCount * 3);
     for (let i = 0; i < particlesCount * 3; i++) {
       positions[i] = (Math.random() - 0.5) * 15;
     }
-
     const particlesGeometry = new THREE.BufferGeometry();
     particlesGeometry.setAttribute(
       "position",
       new THREE.BufferAttribute(positions, 3)
     );
-
     const particlesMaterial = new THREE.PointsMaterial({
       size: 0.025,
       color: 0x9333ea, // Purple color
@@ -261,16 +244,13 @@ const HeroAnimation = () => {
     });
     const particles = new THREE.Points(particlesGeometry, particlesMaterial);
     scene.add(particles);
-
     camera.position.z = 5;
-
     const mouse = new THREE.Vector2();
     const handleMouseMove = (event) => {
       mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     };
     window.addEventListener("mousemove", handleMouseMove);
-
     const clock = new THREE.Clock();
     const animate = () => {
       const elapsedTime = clock.getElapsedTime();
@@ -283,14 +263,12 @@ const HeroAnimation = () => {
       renderer.render(scene, camera);
     };
     animate();
-
     const handleResize = () => {
       camera.aspect = currentMount.clientWidth / currentMount.clientHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
     };
     window.addEventListener("resize", handleResize);
-
     return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
@@ -299,16 +277,13 @@ const HeroAnimation = () => {
       }
     };
   }, [threeLoaded]);
-
   return (
     <div ref={mountRef} className="absolute top-0 left-0 w-full h-full z-0" />
   );
 };
-
 const ContactAnimation = () => {
   const mountRef = useRef(null);
   const [threeLoaded, setThreeLoaded] = useState(false);
-
   useEffect(() => {
     const script = document.createElement("script");
     script.src =
@@ -316,15 +291,12 @@ const ContactAnimation = () => {
     script.async = true;
     script.onload = () => setThreeLoaded(true);
     document.body.appendChild(script);
-
     return () => {
       document.body.removeChild(script);
     };
   }, []);
-
   useEffect(() => {
     if (!threeLoaded || !mountRef.current) return;
-
     const THREE = window.THREE;
     const currentMount = mountRef.current;
     const scene = new THREE.Scene();
@@ -337,16 +309,13 @@ const ContactAnimation = () => {
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
     currentMount.appendChild(renderer.domElement);
-
     const particlesCount = 10000;
     const positions = new Float32Array(particlesCount * 3);
     const colors = new Float32Array(particlesCount * 3);
-
     for (let i = 0; i < particlesCount * 3; i++) {
       positions[i] = (Math.random() - 0.5) * 20;
       colors[i] = Math.random();
     }
-
     const particlesGeometry = new THREE.BufferGeometry();
     particlesGeometry.setAttribute(
       "position",
@@ -356,7 +325,6 @@ const ContactAnimation = () => {
       "color",
       new THREE.BufferAttribute(colors, 3)
     );
-
     const particlesMaterial = new THREE.PointsMaterial({
       size: 0.03,
       vertexColors: true,
@@ -366,23 +334,19 @@ const ContactAnimation = () => {
     });
     const particles = new THREE.Points(particlesGeometry, particlesMaterial);
     scene.add(particles);
-
     camera.position.z = 5;
-
     const mouse = new THREE.Vector2();
     const handleMouseMove = (event) => {
       mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     };
     window.addEventListener("mousemove", handleMouseMove);
-
     const clock = new THREE.Clock();
     const animate = () => {
       const elapsedTime = clock.getElapsedTime();
       requestAnimationFrame(animate);
       particles.rotation.y = elapsedTime * 0.1;
       particles.rotation.x = elapsedTime * 0.1;
-
       const positions = particles.geometry.attributes.position.array;
       for (let i = 0; i < particlesCount; i++) {
         const i3 = i * 3;
@@ -392,21 +356,18 @@ const ContactAnimation = () => {
         );
       }
       particles.geometry.attributes.position.needsUpdate = true;
-
       camera.position.x += (mouse.x * 2 - camera.position.x) * 0.02;
       camera.position.y += (-mouse.y * 2 - camera.position.y) * 0.02;
       camera.lookAt(scene.position);
       renderer.render(scene, camera);
     };
     animate();
-
     const handleResize = () => {
       camera.aspect = currentMount.clientWidth / currentMount.clientHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
     };
     window.addEventListener("resize", handleResize);
-
     return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
@@ -415,12 +376,10 @@ const ContactAnimation = () => {
       }
     };
   }, [threeLoaded]);
-
   return (
     <div ref={mountRef} className="absolute top-0 left-0 w-full h-full z-0" />
   );
 };
-
 const ExperienceItem = ({ exp }) => {
   return (
     <motion.div
@@ -478,7 +437,6 @@ const ExperienceItem = ({ exp }) => {
     </motion.div>
   );
 };
-
 const App = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [isTyping, setIsTyping] = useState(true);
@@ -494,7 +452,6 @@ const App = () => {
   const [viewedOnMobile, setViewedOnMobile] = useState({});
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const headerRef = useRef(null);
-
   const { scrollYProgress } = useScroll();
   const headerWidth = useTransform(
     scrollYProgress,
@@ -506,7 +463,6 @@ const App = () => {
     [0.05, 0.15],
     ["rgba(229, 231, 235, 0.85)", "rgba(229, 231, 235, 0.5)"]
   );
-
   const buttonWidth = useTransform(
     scrollYProgress,
     [0, 0.15],
@@ -523,12 +479,10 @@ const App = () => {
     [0, 0.05],
     ["block", "none"]
   );
-
   const isFormValid =
     formState.name.trim() !== "" &&
     formState.email.trim() !== "" &&
     formState.message.trim() !== "";
-
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setFormState((prevState) => ({
@@ -536,7 +490,6 @@ const App = () => {
       [name]: value,
     }));
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isFormValid) {
@@ -548,31 +501,42 @@ const App = () => {
       }, 2000);
     }
   };
-
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = document.querySelectorAll("section");
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
-      sections.forEach((section) => {
-        if (
-          scrollPosition >= section.offsetTop &&
-          scrollPosition < section.offsetTop + section.offsetHeight
-        ) {
-          setActiveSection(section.id);
+    const sections = document.querySelectorAll("section[id]");
+
+    const observerOptions = {
+      root: null,
+      // This margin creates a horizontal "trigger line" at the 75% vertical mark.
+      // A section becomes active when it crosses this lower line, preventing premature activation.
+      rootMargin: "-75% 0px -25% 0px",
+      threshold: 0,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
         }
       });
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    }, observerOptions);
 
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+
+    // Cleanup
+    return () => {
+      sections.forEach((section) => {
+        observer.unobserve(section);
+      });
+    };
+  }, []);
   useEffect(() => {
     const typingTimeout = setTimeout(() => {
       setIsTyping(false);
     }, 2000);
     return () => clearTimeout(typingTimeout);
   }, []);
-
   useEffect(() => {
     const handleResize = () => {
       const isMobileDevice = window.innerWidth < 768;
@@ -584,7 +548,6 @@ const App = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (headerRef.current && !headerRef.current.contains(event.target)) {
@@ -598,13 +561,11 @@ const App = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isMenuOpen]);
-
   const HeroText = () => {
     const text =
       "A Full Stack Developer passionate about creating beautiful and functional web applications.";
     const [displayedText, setDisplayedText] = useState("");
     const [index, setIndex] = useState(0);
-
     useEffect(() => {
       if (!isTyping) {
         setDisplayedText(text);
@@ -618,20 +579,17 @@ const App = () => {
         return () => clearTimeout(typingTimeout);
       }
     }, [index, isTyping, text]);
-
     return (
       <p className="text-xl md:text-2xl text-gray-600 font-light max-w-2xl">
         {displayedText}
       </p>
     );
   };
-
   const SectionTitle = ({ children }) => (
     <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-12 text-center">
       {children}
     </h2>
   );
-
   const sectionVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: {
@@ -640,7 +598,6 @@ const App = () => {
       transition: { duration: 0.8, ease: "easeOut" },
     },
   };
-
   return (
     <div className="bg-white text-gray-800 font-sans antialiased relative">
       <motion.header
@@ -692,7 +649,7 @@ const App = () => {
                     }`}
                   >
                     {item.name}
-                    {activeSection === item.id && (
+                    {activeSection === item.id && activeSection !== "home" && (
                       <motion.span
                         layoutId="underline"
                         className="absolute left-0 -bottom-1 block h-0.5 w-full bg-purple-600"
@@ -740,7 +697,6 @@ const App = () => {
           )}
         </AnimatePresence>
       </motion.header>
-
       <main>
         <section
           id="home"
@@ -791,7 +747,6 @@ const App = () => {
             </motion.div>
           </motion.div>
         </section>
-
         <motion.section
           id="about"
           variants={sectionVariants}
@@ -850,7 +805,6 @@ const App = () => {
             </motion.div>
           </div>
         </motion.section>
-
         <motion.section
           id="education"
           variants={sectionVariants}
@@ -938,7 +892,6 @@ const App = () => {
             })}
           </div>
         </motion.section>
-
         <motion.section
           id="experience"
           variants={sectionVariants}
@@ -954,7 +907,6 @@ const App = () => {
             ))}
           </div>
         </motion.section>
-
         <motion.section
           id="skills"
           variants={sectionVariants}
@@ -992,7 +944,6 @@ const App = () => {
             ))}
           </motion.div>
         </motion.section>
-
         <motion.section
           id="projects"
           variants={sectionVariants}
@@ -1043,7 +994,6 @@ const App = () => {
           </motion.div>
         </motion.section>
       </main>
-
       <div className="relative">
         <ContactAnimation />
         <motion.section
@@ -1144,5 +1094,4 @@ const App = () => {
     </div>
   );
 };
-
 export default App;
