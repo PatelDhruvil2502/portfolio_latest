@@ -73,57 +73,47 @@ const skills = [
 ];
 
 // Define projects data
-
-import pihealth from "../src/assets/pihealth.png";
-import me from "../src/assets/me.png";
-import chat from "../src/assets/chat.png";
-import ecommerce from "../src/assets/ecommerce.png";
-import pullventure from "../src/assets/pullventure.png";
-import societyzen from "../src/assets/societyzen.png";
-import textextract from "../src/assets/textextract.png";
-
-// Define projects data
 const projects = [
   {
     title: "Pi-health",
     description:
       "A hospital management application built with React and TypeScript to enhance operational efficiency and patient care.",
-    image: pihealth,
+    image: "https://placehold.co/600x400/A855F7/FFFFFF?text=Pi-health",
     tags: ["React", "TypeScript", "Redux"],
   },
   {
     title: "Societyzen",
     description:
       "A society management application built with React and TypeScript to streamline operations for administrators and residents.",
-    image: societyzen,
+    image: "https://placehold.co/600x400/A855F7/FFFFFF?text=Societyzen",
     tags: ["React", "TypeScript", "Node.js"],
   },
   {
     title: "Ecommerce Website",
     description:
       "A seamless online retail experience built with Java, Servlets, JSP, and Hibernate, featuring a responsive UI and secure checkout.",
-    image: ecommerce,
+    image: "https://placehold.co/600x400/A855F7/FFFFFF?text=Ecommerce",
     tags: ["Java", "Spring Boot", "MySQL"],
   },
   {
     title: "Gujarati Text Extractor",
     description:
       "An application using Python and Tesseract OCR to efficiently extract Gujarati text from images with a user-friendly interface.",
-    image: textextract,
+    image: "https://placehold.co/600x400/A855F7/FFFFFF?text=Text+Extractor",
     tags: ["Python", "OpenCV", "Tesseract OCR"],
   },
   {
     title: "Chatapp",
     description:
       "A real-time chat application built with Flutter and Firebase, offering a seamless messaging experience similar to WhatsApp.",
-    image: chat,
+    image: "https://placehold.co/600x400/A855F7/FFFFFF?text=Chat+App",
     tags: ["Flutter", "Firebase"],
   },
   {
     title: "Pullventure",
     description:
       "A chat app developed with Flutter and Firebase, connecting startup founders with users for collaboration and networking.",
-    image: pullventure,
+    image: "https://placehold.co/600x400/A855F7/FFFFFF?text=Pullventure",
     tags: ["Flutter", "Firebase"],
   },
 ];
@@ -479,11 +469,22 @@ const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const headerRef = useRef(null);
   const { scrollYProgress } = useScroll();
-  const headerWidth = useTransform(
+  const defaultHeaderWidth = useTransform(
     scrollYProgress,
     [0.05, 0.15],
     ["100%", "90%"]
   );
+  const mobileHomeHeaderWidth = useTransform(
+    scrollYProgress,
+    [0, 0.15],
+    ["90%", "85%"]
+  );
+
+  const headerWidth =
+    isMobile && (activeSection === "home" || activeSection === "about")
+      ? mobileHomeHeaderWidth
+      : defaultHeaderWidth;
+
   const headerBackgroundColor = useTransform(
     scrollYProgress,
     [0.05, 0.15],
@@ -816,7 +817,7 @@ const App = () => {
               className="w-full md:w-1/3 flex-shrink-0"
             >
               <img
-                src={me}
+                src="https://placehold.co/256x256/A855F7/FFFFFF?text=DP"
                 alt="Dhruvil Patel"
                 className="w-64 h-64 mx-auto rounded-full object-cover shadow-[0_10px_40px_-10px_rgba(168,85,247,0.5)]"
               />
@@ -1079,26 +1080,22 @@ const App = () => {
       </main>
       <div className="relative">
         <ContactAnimation />
-        <motion.section
+        <section
           id="contact"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
           className="relative p-8 md:p-16 max-w-full mx-auto text-center"
         >
           <div className="relative z-10 max-w-3xl mx-auto">
             <SectionTitle>Get In Touch</SectionTitle>
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ y: 50, scale: 0.95 }}
+              whileInView={{ y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ type: "spring", stiffness: 150, damping: 20 }}
               whileHover={{
                 scale: 1.02,
                 y: -8,
                 boxShadow: "0 25px 50px -12px rgba(168, 85, 247, 0.25)",
               }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, type: "spring" }}
               className="bg-black/10 backdrop-blur-sm p-8 rounded-3xl shadow-2xl shadow-purple-500/20 border border-white/10"
             >
               <p className="text-lg text-gray-800 mb-8">
@@ -1165,7 +1162,7 @@ const App = () => {
               </div>
             </motion.div>
           </div>
-        </motion.section>
+        </section>
         <footer className="relative z-10 py-8 text-center text-gray-800">
           <p className="text-sm">
             Designed and Built by{" "}
