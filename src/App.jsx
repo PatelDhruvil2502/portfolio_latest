@@ -72,7 +72,6 @@ const skills = [
   { name: "Git", icon: <GitCommit size={32} className="text-purple-600" /> },
 ];
 
-// Define projects data
 
 import pihealth from "../src/assets/pihealth.png";
 import me from "../src/assets/me.png";
@@ -613,67 +612,93 @@ const App = () => {
           isMobile ? "rounded-2xl" : "rounded-full"
         }`}
       >
-        <div className="flex items-center justify-between p-4 md:px-8">
-          <div className="flex items-center gap-6">
-            <motion.div className="text-2xl font-extrabold text-gray-800">
-              DP
-            </motion.div>
-            {isMobile ? (
-              activeSection !== "home" && (
-                <button
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="flex items-center gap-1 text-lg font-bold text-gray-800"
-                >
-                  <motion.span
-                    key={activeSection}
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {navItems.find((item) => item.id === activeSection)?.name}
-                  </motion.span>
-                  <motion.div animate={{ rotate: isMenuOpen ? 180 : 0 }}>
-                    <ChevronDown size={20} />
-                  </motion.div>
-                </button>
-              )
-            ) : (
-              <div className="hidden md:flex space-x-6">
-                {navItems.map((item) => (
-                  <motion.a
-                    key={item.id}
-                    href={`#${item.id}`}
-                    className={`relative text-lg font-medium transition-all duration-300 ${
-                      activeSection === item.id
-                        ? "text-purple-600"
-                        : "text-gray-600 hover:text-gray-800"
-                    }`}
-                  >
-                    {item.name}
-                    {activeSection === item.id && activeSection !== "home" && (
-                      <motion.span
-                        layoutId="underline"
-                        className="absolute left-0 -bottom-1 block h-0.5 w-full bg-purple-600"
-                      />
-                    )}
-                  </motion.a>
-                ))}
-              </div>
-            )}
+        {isMobile && activeSection === "home" ? (
+          <div className="grid grid-cols-[1fr_auto] items-center p-4 gap-2">
+            <div className="text-center">
+              <motion.div className="text-xl font-extrabold text-gray-800 inline-block">
+                Dhruvil Patel
+              </motion.div>
+            </div>
+            <motion.a
+              style={{ width: buttonWidth, padding: buttonPadding }}
+              href="https://drive.google.com/file/d/1VfPTEp3cL0i6zNzR8dOj5tzcZ4j-R6A4/view?usp=sharing"
+              download
+              className="flex items-center justify-center gap-2 bg-purple-600 text-white font-semibold transition-all duration-300 shadow-lg rounded-full hover:bg-purple-700"
+            >
+              <FileText size={18} />
+              <motion.span
+                style={{ opacity: textOpacity, display: textDisplay }}
+              >
+                Resume
+              </motion.span>
+            </motion.a>
           </div>
-          <motion.a
-            style={{ width: buttonWidth, padding: buttonPadding }}
-            href="https://drive.google.com/file/d/1VfPTEp3cL0i6zNzR8dOj5tzcZ4j-R6A4/view?usp=sharing"
-            download
-            className="flex items-center justify-center gap-2 bg-purple-600 text-white font-semibold transition-all duration-300 shadow-lg rounded-full hover:bg-purple-700"
-          >
-            <FileText size={18} />
-            <motion.span style={{ opacity: textOpacity, display: textDisplay }}>
-              Resume
-            </motion.span>
-          </motion.a>
-        </div>
+        ) : (
+          <div className="flex items-center justify-between p-4 md:px-8">
+            <div className="flex items-center gap-6">
+              <motion.div className="text-2xl font-extrabold text-gray-800">
+                DP
+              </motion.div>
+              {isMobile ? (
+                activeSection !== "home" && (
+                  <button
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    className="flex items-center gap-1 text-lg font-bold text-gray-800"
+                  >
+                    <motion.span
+                      key={activeSection}
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {navItems.find((item) => item.id === activeSection)?.name}
+                    </motion.span>
+                    <motion.div animate={{ rotate: isMenuOpen ? 180 : 0 }}>
+                      <ChevronDown size={20} />
+                    </motion.div>
+                  </button>
+                )
+              ) : (
+                <div className="hidden md:flex space-x-6">
+                  {navItems.map((item) => (
+                    <motion.a
+                      key={item.id}
+                      href={`#${item.id}`}
+                      className={`relative text-lg font-medium transition-all duration-300 ${
+                        activeSection === item.id
+                          ? "text-purple-600"
+                          : "text-gray-600 hover:text-gray-800"
+                      }`}
+                    >
+                      {item.name}
+                      {activeSection === item.id &&
+                        activeSection !== "home" && (
+                          <motion.span
+                            layoutId="underline"
+                            className="absolute left-0 -bottom-1 block h-0.5 w-full bg-purple-600"
+                          />
+                        )}
+                    </motion.a>
+                  ))}
+                </div>
+              )}
+            </div>
+            <motion.a
+              style={{ width: buttonWidth, padding: buttonPadding }}
+              href="https://drive.google.com/file/d/1VfPTEp3cL0i6zNzR8dOj5tzcZ4j-R6A4/view?usp=sharing"
+              download
+              className="flex items-center justify-center gap-2 bg-purple-600 text-white font-semibold transition-all duration-300 shadow-lg rounded-full hover:bg-purple-700"
+            >
+              <FileText size={18} />
+              <motion.span
+                style={{ opacity: textOpacity, display: textDisplay }}
+              >
+                Resume
+              </motion.span>
+            </motion.a>
+          </div>
+        )}
         <AnimatePresence>
           {isMenuOpen && isMobile && (
             <motion.div
