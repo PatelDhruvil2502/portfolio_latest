@@ -440,7 +440,7 @@ const ExperienceItem = ({ exp }) => {
 };
 const App = () => {
   const [activeSection, setActiveSection] = useState("home");
-  const [isTyping, setIsTyping] = useState(true);
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
   const [hoveredEduId, setHoveredEduId] = useState(null);
   const [activeEduId, setActiveEduId] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -532,12 +532,7 @@ const App = () => {
       });
     };
   }, []);
-  useEffect(() => {
-    const typingTimeout = setTimeout(() => {
-      setIsTyping(false);
-    }, 2000);
-    return () => clearTimeout(typingTimeout);
-  }, []);
+
   useEffect(() => {
     const handleResize = () => {
       const isMobileDevice = window.innerWidth < 768;
@@ -568,18 +563,16 @@ const App = () => {
     const [displayedText, setDisplayedText] = useState("");
     const [index, setIndex] = useState(0);
     useEffect(() => {
-      if (!isTyping) {
-        setDisplayedText(text);
-        return;
-      }
       if (index < text.length) {
         const typingTimeout = setTimeout(() => {
           setDisplayedText((prev) => prev + text.charAt(index));
           setIndex((prev) => prev + 1);
         }, 50);
         return () => clearTimeout(typingTimeout);
+      } else {
+        setIsTypingComplete(true);
       }
-    }, [index, isTyping, text]);
+    }, [index, text]);
     return (
       <p className="text-xl md:text-2xl text-gray-600 font-light max-w-2xl">
         {displayedText}
@@ -597,6 +590,30 @@ const App = () => {
       opacity: 1,
       y: 0,
       transition: { duration: 0.8, ease: "easeOut" },
+    },
+  };
+  const bubbleContentVariants = {
+    hidden: { opacity: 0, transition: { when: "afterChildren" } },
+    visible: {
+      opacity: 1,
+      transition: {
+        delay: 0,
+        when: "beforeChildren",
+        staggerChildren: 0.03,
+      },
+    },
+  };
+
+  const textItemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 20,
+      },
     },
   };
   return (
@@ -749,29 +766,33 @@ const App = () => {
               </span>
             </motion.h1>
             <HeroText />
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 2.5 }}
-              className="mt-10 flex flex-wrap justify-center gap-4"
-            >
-              <motion.a
-                href="#projects"
-                className="group relative overflow-hidden px-6 py-3 rounded-full bg-purple-600 text-white font-semibold transition-all duration-300 hover:bg-purple-700 shadow-lg shadow-purple-500/30"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="relative z-10">View My Work</span>
-              </motion.a>
-              <motion.a
-                href="#contact"
-                className="group relative overflow-hidden px-6 py-3 rounded-full bg-gray-200 text-gray-700 font-semibold transition-all duration-300 hover:bg-gray-300"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="relative z-10">Get In Touch</span>
-              </motion.a>
-            </motion.div>
+            <AnimatePresence>
+              {isTypingComplete && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  className="mt-10 flex flex-wrap justify-center gap-4"
+                >
+                  <motion.a
+                    href="#projects"
+                    className="group relative overflow-hidden px-6 py-3 rounded-full bg-purple-600 text-white font-semibold transition-all duration-300 hover:bg-purple-700 shadow-lg shadow-purple-500/30"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <span className="relative z-10">View My Work</span>
+                  </motion.a>
+                  <motion.a
+                    href="#contact"
+                    className="group relative overflow-hidden px-6 py-3 rounded-full bg-gray-200 text-gray-700 font-semibold transition-all duration-300 hover:bg-gray-300"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <span className="relative z-10">Get In Touch</span>
+                  </motion.a>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         </section>
         <motion.section
@@ -914,9 +935,8 @@ const App = () => {
                 >
                   <motion.div
                     className="absolute inset-0 flex items-center justify-center p-4"
-                    initial={{ opacity: 1 }}
                     animate={{ opacity: isExpanded ? 0 : 1 }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.3 }}
                   >
                     <h3 className="text-xl md:text-2xl font-bold text-center">
                       {edu.degree.split(" of")[0]}
@@ -924,19 +944,28 @@ const App = () => {
                   </motion.div>
                   <motion.div
                     className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center overflow-hidden"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: isExpanded ? 1 : 0 }}
-                    transition={{
-                      opacity: { duration: 0.2, delay: isExpanded ? 0.2 : 0 },
-                    }}
+                    initial="hidden"
+                    animate={isExpanded ? "visible" : "hidden"}
+                    variants={bubbleContentVariants}
                   >
-                    <h3 className="text-xl md:text-2xl font-bold">
+                    <motion.h3
+                      variants={textItemVariants}
+                      className="text-xl md:text-2xl font-bold"
+                    >
                       {edu.school}
-                    </h3>
-                    <p className="text-sm font-semibold">{edu.date}</p>
-                    <p className="mt-2 text-sm text-center">
+                    </motion.h3>
+                    <motion.p
+                      variants={textItemVariants}
+                      className="text-sm font-semibold"
+                    >
+                      {edu.date}
+                    </motion.p>
+                    <motion.p
+                      variants={textItemVariants}
+                      className="mt-2 text-sm text-center"
+                    >
                       {edu.description}
-                    </p>
+                    </motion.p>
                   </motion.div>
                 </motion.div>
               );
