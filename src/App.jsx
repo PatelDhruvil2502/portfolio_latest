@@ -73,47 +73,57 @@ const skills = [
 ];
 
 // Define projects data
+
+import pihealth from "../src/assets/pihealth.png";
+import me from "../src/assets/me.png";
+import chat from "../src/assets/chat.png";
+import ecommerce from "../src/assets/ecommerce.png";
+import pullventure from "../src/assets/pullventure.png";
+import societyzen from "../src/assets/societyzen.png";
+import textextract from "../src/assets/textextract.png";
+
+// Define projects data
 const projects = [
   {
     title: "Pi-health",
     description:
       "A hospital management application built with React and TypeScript to enhance operational efficiency and patient care.",
-    image: "https://placehold.co/600x400/A855F7/FFFFFF?text=Pi-health",
+    image: pihealth,
     tags: ["React", "TypeScript", "Redux"],
   },
   {
     title: "Societyzen",
     description:
       "A society management application built with React and TypeScript to streamline operations for administrators and residents.",
-    image: "https://placehold.co/600x400/A855F7/FFFFFF?text=Societyzen",
+    image: societyzen,
     tags: ["React", "TypeScript", "Node.js"],
   },
   {
     title: "Ecommerce Website",
     description:
       "A seamless online retail experience built with Java, Servlets, JSP, and Hibernate, featuring a responsive UI and secure checkout.",
-    image: "https://placehold.co/600x400/A855F7/FFFFFF?text=Ecommerce",
+    image: ecommerce,
     tags: ["Java", "Spring Boot", "MySQL"],
   },
   {
     title: "Gujarati Text Extractor",
     description:
       "An application using Python and Tesseract OCR to efficiently extract Gujarati text from images with a user-friendly interface.",
-    image: "https://placehold.co/600x400/A855F7/FFFFFF?text=Text+Extractor",
+    image: textextract,
     tags: ["Python", "OpenCV", "Tesseract OCR"],
   },
   {
     title: "Chatapp",
     description:
       "A real-time chat application built with Flutter and Firebase, offering a seamless messaging experience similar to WhatsApp.",
-    image: "https://placehold.co/600x400/A855F7/FFFFFF?text=Chat+App",
+    image: chat,
     tags: ["Flutter", "Firebase"],
   },
   {
     title: "Pullventure",
     description:
       "A chat app developed with Flutter and Firebase, connecting startup founders with users for collaboration and networking.",
-    image: "https://placehold.co/600x400/A855F7/FFFFFF?text=Pullventure",
+    image: pullventure,
     tags: ["Flutter", "Firebase"],
   },
 ];
@@ -817,7 +827,7 @@ const App = () => {
               className="w-full md:w-1/3 flex-shrink-0"
             >
               <img
-                src="https://placehold.co/256x256/A855F7/FFFFFF?text=DP"
+                src={me}
                 alt="Dhruvil Patel"
                 className="w-64 h-64 mx-auto rounded-full object-cover shadow-[0_10px_40px_-10px_rgba(168,85,247,0.5)]"
               />
