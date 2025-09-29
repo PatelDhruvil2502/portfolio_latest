@@ -27,6 +27,7 @@ import {
   Cloud,
   DatabaseZap,
   Camera,
+  MousePointer2,
 } from "lucide-react";
 // Define the navigation items
 const navItems = [
@@ -71,6 +72,7 @@ const skills = [
   { name: "Git", icon: <GitCommit size={32} className="text-purple-600" /> },
 ];
 
+// Define projects data
 
 import pihealth from "../src/assets/pihealth.png";
 import me from "../src/assets/me.png";
@@ -814,6 +816,30 @@ const App = () => {
           className="p-8 md:p-16 max-w-6xl mx-auto"
         >
           <SectionTitle>Education</SectionTitle>
+          {!isMobile && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="flex items-center justify-center gap-3 text-gray-500 mb-8 -mt-4"
+            >
+              <motion.div
+                animate={{
+                  x: [0, 5, -5, 5, 0],
+                  y: [0, -5, 0, -5, 0],
+                }}
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  ease: "easeInOut",
+                }}
+              >
+                <MousePointer2 size={24} />
+              </motion.div>
+              <p className="text-lg">Hover over the bubbles for details</p>
+            </motion.div>
+          )}
           <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16">
             {educationHistory.map((edu) => {
               const isExpanded =
