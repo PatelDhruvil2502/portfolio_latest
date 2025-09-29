@@ -72,6 +72,7 @@ const skills = [
   { name: "Git", icon: <GitCommit size={32} className="text-purple-600" /> },
 ];
 
+// Define projects data
 
 import pihealth from "../src/assets/pihealth.png";
 import me from "../src/assets/me.png";
@@ -438,6 +439,30 @@ const ExperienceItem = ({ exp }) => {
     </motion.div>
   );
 };
+
+const HeroText = ({ setIsTypingComplete }) => {
+  const text =
+    "A Full Stack Developer passionate about creating beautiful and functional web applications.";
+  const [displayedText, setDisplayedText] = useState("");
+  const [index, setIndex] = useState(0);
+  useEffect(() => {
+    if (index < text.length) {
+      const typingTimeout = setTimeout(() => {
+        setDisplayedText((prev) => prev + text.charAt(index));
+        setIndex((prev) => prev + 1);
+      }, 50);
+      return () => clearTimeout(typingTimeout);
+    } else {
+      setIsTypingComplete(true);
+    }
+  }, [index, text, setIsTypingComplete]);
+  return (
+    <p className="text-xl md:text-2xl text-gray-600 font-light max-w-2xl">
+      {displayedText}
+    </p>
+  );
+};
+
 const App = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [isTypingComplete, setIsTypingComplete] = useState(false);
@@ -557,28 +582,6 @@ const App = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isMenuOpen]);
-  const HeroText = () => {
-    const text =
-      "A Full Stack Developer passionate about creating beautiful and functional web applications.";
-    const [displayedText, setDisplayedText] = useState("");
-    const [index, setIndex] = useState(0);
-    useEffect(() => {
-      if (index < text.length) {
-        const typingTimeout = setTimeout(() => {
-          setDisplayedText((prev) => prev + text.charAt(index));
-          setIndex((prev) => prev + 1);
-        }, 50);
-        return () => clearTimeout(typingTimeout);
-      } else {
-        setIsTypingComplete(true);
-      }
-    }, [index, text]);
-    return (
-      <p className="text-xl md:text-2xl text-gray-600 font-light max-w-2xl">
-        {displayedText}
-      </p>
-    );
-  };
   const SectionTitle = ({ children }) => (
     <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-12 text-center">
       {children}
@@ -765,7 +768,7 @@ const App = () => {
                 Dhruvil Patel
               </span>
             </motion.h1>
-            <HeroText />
+            <HeroText setIsTypingComplete={setIsTypingComplete} />
             <AnimatePresence>
               {isTypingComplete && (
                 <motion.div
