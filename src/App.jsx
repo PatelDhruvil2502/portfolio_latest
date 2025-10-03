@@ -1,16 +1,3 @@
-/*
-  IMPORTANT NOTE FOR DARK MODE:
-  This portfolio uses Tailwind's "class" strategy for dark mode.
-  For the theme toggle to work correctly, please ensure your `tailwind.config.js` file includes the `darkMode: 'class'` property.
-
-  Example tailwind.config.js:
-  module.exports = {
-    darkMode: 'class',
-    // ... other configurations
-  };
-
-  After adding this line, you may need to restart your development server.
-*/
 import { useState, useEffect, useRef } from "react";
 import {
   motion,
@@ -44,7 +31,6 @@ import {
   Sun,
   Moon,
 } from "lucide-react";
-
 
 
 // Define the navigation items
@@ -410,7 +396,7 @@ const ExperienceItem = ({ exp }) => {
       className={`relative flex flex-col md:grid md:grid-cols-2 md:gap-12 md:items-start mb-12 last:mb-0`}
     >
       <div className="w-full p-6 md:p-0">
-        <h4 className="text-xl font-bold text-gray-800 dark:text-slate-200 mb-4">
+        <h4 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">
           Skills Learned:
         </h4>
         <div className="flex flex-wrap gap-2">
@@ -422,7 +408,7 @@ const ExperienceItem = ({ exp }) => {
               whileHover={{ y: -5, boxShadow: "0 10px 15px rgba(0,0,0,0.1)" }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.3 }}
-              className="px-4 py-2 bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300 rounded-full text-sm font-medium cursor-pointer shadow-md transform"
+              className="px-4 py-2 bg-purple-100 text-purple-800 dark:bg-emerald-900/50 dark:text-emerald-300 rounded-full text-sm font-medium cursor-pointer shadow-md transform"
             >
               {skill}
             </motion.div>
@@ -434,24 +420,27 @@ const ExperienceItem = ({ exp }) => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.8 }}
-        className="bg-gray-100 dark:bg-slate-800 rounded-2xl p-6 shadow-xl w-full md:col-start-2 transform hover:scale-105 transition-transform duration-300"
+        className="bg-gray-100 dark:bg-gray-800/50 rounded-2xl p-6 shadow-xl w-full md:col-start-2 transform hover:scale-105 transition-transform duration-300"
       >
         <div className="flex items-center gap-3 mb-2">
-          <Building size={24} className="text-purple-600" />
-          <h3 className="text-2xl font-bold text-gray-800 dark:text-slate-200">
+          <Building
+            size={24}
+            className="text-purple-600 dark:text-emerald-400"
+          />
+          <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200">
             {exp.company}
           </h3>
         </div>
         <p className="text-lg text-purple-500 font-semibold">{exp.position}</p>
-        <p className="text-sm text-gray-500 dark:text-slate-400 mb-4">
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
           {exp.date}
         </p>
-        <ul className="list-none space-y-2 text-gray-600 dark:text-slate-400">
+        <ul className="list-none space-y-2 text-gray-600 dark:text-gray-400">
           {exp.responsibilities.map((resp, respIndex) => (
             <li key={respIndex} className="flex items-start gap-2">
               <ChevronRight
                 size={18}
-                className="text-purple-500 flex-shrink-0 mt-1"
+                className="text-purple-500 dark:text-emerald-400 flex-shrink-0 mt-1"
               />
               <span>{resp}</span>
             </li>
@@ -479,7 +468,7 @@ const HeroText = ({ setIsTypingComplete }) => {
     }
   }, [index, text, setIsTypingComplete]);
   return (
-    <p className="text-xl md:text-2xl text-gray-600 dark:text-slate-400 font-light max-w-2xl">
+    <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 font-light max-w-2xl">
       {displayedText}
     </p>
   );
@@ -514,7 +503,7 @@ const App = () => {
   const headerDarkBackgroundColor = useTransform(
     scrollYProgress,
     [0.05, 0.15],
-    ["rgba(30, 41, 59, 0.85)", "rgba(30, 41, 59, 0.5)"] // slate-800
+    ["rgba(24, 24, 27, 0.85)", "rgba(24, 24, 27, 0.5)"] // zinc-800
   );
 
   const defaultHeaderWidth = useTransform(
@@ -605,7 +594,7 @@ const App = () => {
   }, [isMenuOpen]);
 
   const SectionTitle = ({ children }) => (
-    <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-slate-100 mb-12 text-center">
+    <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-12 text-center">
       {children}
     </h2>
   );
@@ -642,7 +631,7 @@ const App = () => {
     },
   };
   return (
-    <div className="bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-200 font-sans antialiased relative">
+    <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans antialiased relative">
       <motion.header
         ref={headerRef}
         style={{
@@ -659,7 +648,7 @@ const App = () => {
         {isMobile && activeSection === "home" ? (
           <div className="grid grid-cols-[1fr_auto] items-center p-4 gap-2">
             <div className="text-center">
-              <motion.div className="text-xl font-extrabold text-gray-800 dark:text-slate-200 inline-block">
+              <motion.div className="text-xl font-extrabold text-gray-800 dark:text-gray-200 inline-block">
                 Dhruvil Patel
               </motion.div>
             </div>
@@ -680,14 +669,14 @@ const App = () => {
         ) : (
           <div className="flex items-center justify-between p-4 md:px-8">
             <div className="flex items-center gap-6">
-              <motion.div className="text-2xl font-extrabold text-gray-800 dark:text-slate-200">
+              <motion.div className="text-2xl font-extrabold text-gray-800 dark:text-gray-200">
                 DP
               </motion.div>
               {isMobile ? (
                 activeSection !== "home" && (
                   <button
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    className="flex items-center gap-1 text-lg font-bold text-gray-800 dark:text-slate-200"
+                    className="flex items-center gap-1 text-lg font-bold text-gray-800 dark:text-gray-200"
                   >
                     <motion.span
                       key={activeSection}
@@ -711,8 +700,8 @@ const App = () => {
                       href={`#${item.id}`}
                       className={`relative text-lg font-medium transition-all duration-300 ${
                         activeSection === item.id
-                          ? "text-purple-600"
-                          : "text-gray-600 hover:text-gray-800 dark:text-slate-400 dark:hover:text-white"
+                          ? "text-purple-600 dark:text-emerald-400"
+                          : "text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white"
                       }`}
                     >
                       {item.name}
@@ -720,7 +709,7 @@ const App = () => {
                         activeSection !== "home" && (
                           <motion.span
                             layoutId="underline"
-                            className="absolute left-0 -bottom-1 block h-0.5 w-full bg-purple-600"
+                            className="absolute left-0 -bottom-1 block h-0.5 w-full bg-purple-600 dark:bg-emerald-400"
                           />
                         )}
                     </motion.a>
@@ -758,7 +747,7 @@ const App = () => {
                     key={item.id}
                     href={`#${item.id}`}
                     onClick={() => setIsMenuOpen(false)}
-                    className="py-2 text-lg font-medium text-gray-700 dark:text-slate-300 hover:text-purple-600 transition-colors"
+                    className="py-2 text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-purple-600 transition-colors"
                   >
                     {item.name}
                   </a>
@@ -778,13 +767,13 @@ const App = () => {
             initial="hidden"
             animate="visible"
             variants={sectionVariants}
-            className="max-w-4xl z-10 bg-white/10 dark:bg-slate-900/20 backdrop-blur-sm p-8 rounded-2xl"
+            className="max-w-4xl z-10 bg-white/10 dark:bg-gray-900/20 backdrop-blur-sm p-8 rounded-2xl"
           >
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-5xl md:text-7xl font-extrabold mb-4 text-gray-800 dark:text-slate-100"
+              className="text-5xl md:text-7xl font-extrabold mb-4 text-gray-800 dark:text-gray-100"
               style={{ textShadow: "0 0 15px rgba(168, 85, 247, 0.2)" }}
             >
               Hi, I'm{" "}
@@ -811,7 +800,7 @@ const App = () => {
                   </motion.a>
                   <motion.a
                     href="#contact"
-                    className="group relative overflow-hidden px-6 py-3 rounded-full bg-gray-200 text-gray-700 dark:bg-slate-800 dark:text-slate-300 font-semibold transition-all duration-300 hover:bg-gray-300 dark:hover:bg-slate-700"
+                    className="group relative overflow-hidden px-6 py-3 rounded-full bg-gray-200 text-gray-700 dark:bg-gray-800 dark:text-gray-300 font-semibold transition-all duration-300 hover:bg-gray-300 dark:hover:bg-gray-700"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -852,27 +841,29 @@ const App = () => {
               transition={{ duration: 0.8 }}
               className="md:w-2/3"
             >
-              <p className="text-gray-600 dark:text-slate-400 text-lg md:text-xl leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-400 text-lg md:text-xl leading-relaxed">
                 As a passionate Full Stack Developer, I thrive on bringing ideas
                 to life through code. My expertise spans both{" "}
-                <span className="font-bold text-purple-500">
+                <span className="font-bold text-purple-500 dark:text-emerald-400">
                   web development
                 </span>{" "}
                 and{" "}
-                <span className="font-bold text-purple-500">
+                <span className="font-bold text-purple-500 dark:text-emerald-400">
                   machine learning
                 </span>
                 . While I enjoy crafting dynamic user interfaces and scalable
                 databases with the MERN stack, I'm equally enthusiastic about
                 applying my skills in{" "}
-                <span className="font-bold text-purple-500">data analysis</span>{" "}
+                <span className="font-bold text-purple-500 dark:text-emerald-400">
+                  data analysis
+                </span>{" "}
                 and{" "}
-                <span className="font-bold text-purple-500">
+                <span className="font-bold text-purple-500 dark:text-emerald-400">
                   model building
                 </span>
                 .
               </p>
-              <p className="mt-4 text-gray-600 dark:text-slate-400 text-lg md:text-xl leading-relaxed">
+              <p className="mt-4 text-gray-600 dark:text-gray-400 text-lg md:text-xl leading-relaxed">
                 I believe that technology should not only be functional but also
                 intelligent and visually appealing. My goal is to create
                 seamless digital experiences that make a real impact.
@@ -894,7 +885,7 @@ const App = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="flex items-center justify-center gap-3 text-gray-500 dark:text-slate-400 mb-8 -mt-4"
+              className="flex items-center justify-center gap-3 text-gray-500 dark:text-gray-400 mb-8 -mt-4"
             >
               <motion.div
                 animate={{
@@ -959,7 +950,7 @@ const App = () => {
                   }}
                 >
                   {/* Background Layers to prevent color transition artifacts */}
-                  <motion.div className="absolute inset-0 rounded-full bg-gray-100 dark:bg-slate-800" />
+                  <motion.div className="absolute inset-0 rounded-full bg-gray-100 dark:bg-gray-800" />
                   <motion.div
                     className="absolute inset-0 rounded-full bg-purple-600"
                     initial={{ opacity: 0 }}
@@ -970,7 +961,7 @@ const App = () => {
                   {/* Content Layer */}
                   <div className="relative z-10 h-full w-full">
                     <motion.div
-                      className="absolute inset-0 flex items-center justify-center p-4 text-gray-800 dark:text-slate-100"
+                      className="absolute inset-0 flex items-center justify-center p-4 text-gray-800 dark:text-gray-100"
                       animate={{ opacity: isExpanded ? 0 : 1 }}
                       transition={{ duration: 0.3 }}
                     >
@@ -1044,17 +1035,17 @@ const App = () => {
                   hidden: { opacity: 0, scale: 0.8 },
                   visible: { opacity: 1, scale: 1 },
                 }}
-                className="flex flex-col items-center p-6 bg-gray-100 dark:bg-slate-800 rounded-2xl shadow-lg transform hover:scale-105 transition-transform duration-300"
+                className="flex flex-col items-center p-6 bg-gray-100 dark:bg-gray-800/50 rounded-2xl shadow-lg transform hover:scale-105 transition-transform duration-300"
               >
                 <motion.div
                   initial={{ scale: 1 }}
                   whileHover={{ scale: 1.2, rotate: 5 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  className="w-16 h-16 rounded-full bg-white dark:bg-slate-700 flex items-center justify-center mb-4"
+                  className="w-16 h-16 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center mb-4"
                 >
                   {skill.icon}
                 </motion.div>
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-slate-200">
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
                   {skill.name}
                 </h3>
               </motion.div>
@@ -1081,7 +1072,7 @@ const App = () => {
                   hidden: { opacity: 0, y: 50 },
                   visible: { opacity: 1, y: 0 },
                 }}
-                className="bg-gray-100 dark:bg-slate-800 rounded-2xl overflow-hidden shadow-lg group transform hover:scale-105 transition-transform duration-300 hover:shadow-purple-500/20 flex flex-col"
+                className="bg-gray-100 dark:bg-gray-800/50 rounded-2xl overflow-hidden shadow-lg group transform hover:scale-105 transition-transform duration-300 hover:shadow-purple-500/20 flex flex-col"
               >
                 <div className="relative overflow-hidden">
                   <img
@@ -1091,17 +1082,17 @@ const App = () => {
                   />
                 </div>
                 <div className="p-6 flex flex-col flex-grow">
-                  <h3 className="text-2xl font-semibold mb-2 text-purple-600">
+                  <h3 className="text-2xl font-semibold mb-2 text-purple-600 dark:text-emerald-400">
                     {project.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-slate-400 mb-4 flex-grow">
+                  <p className="text-gray-600 dark:text-gray-400 mb-4 flex-grow">
                     {project.description}
                   </p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-3 py-1 bg-gray-200 text-purple-800 dark:bg-slate-700 dark:text-purple-300 text-sm rounded-full font-medium"
+                        className="px-3 py-1 bg-gray-200 text-purple-800 dark:bg-gray-800 dark:text-emerald-300 text-sm rounded-full font-medium"
                       >
                         {tag}
                       </span>
@@ -1133,7 +1124,7 @@ const App = () => {
               }}
               className="bg-black/10 dark:bg-white/5 backdrop-blur-sm p-8 rounded-3xl shadow-2xl shadow-purple-500/20 border border-white/10 dark:border-white/20"
             >
-              <p className="text-lg text-gray-800 dark:text-slate-200 mb-8">
+              <p className="text-lg text-gray-800 dark:text-gray-200 mb-8">
                 Send me a message directly, and I'll get back to you as soon as
                 possible.
               </p>
@@ -1147,21 +1138,21 @@ const App = () => {
                   name="name"
                   placeholder="Your Name"
                   required
-                  className="w-full p-4 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 shadow-md dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-500"
+                  className="w-full p-4 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:placeholder-gray-500"
                 />
                 <input
                   type="email"
                   name="email"
                   placeholder="Your Email"
                   required
-                  className="w-full p-4 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 shadow-md dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-500"
+                  className="w-full p-4 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:placeholder-gray-500"
                 />
                 <textarea
                   name="message"
                   placeholder="Your Message"
                   required
                   rows="6"
-                  className="w-full p-4 rounded-xl border border-gray-300 bg-white text-gray-800 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 shadow-md dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-500"
+                  className="w-full p-4 rounded-xl border border-gray-300 bg-white text-gray-800 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:placeholder-gray-500"
                 ></textarea>
                 <motion.button
                   type="submit"
@@ -1175,7 +1166,7 @@ const App = () => {
                 </motion.button>
               </form>
               <div className="mt-12">
-                <p className="text-gray-800 dark:text-slate-200 text-lg md:text-xl leading-relaxed mb-6">
+                <p className="text-gray-800 dark:text-gray-200 text-lg md:text-xl leading-relaxed mb-6">
                   I'm currently seeking new opportunities and projects. Feel
                   free to reach out to me!
                 </p>
@@ -1186,7 +1177,7 @@ const App = () => {
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 p-4 rounded-full bg-gray-100 text-gray-600 hover:text-gray-800 hover:bg-gray-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-700 transition-all duration-300 transform hover:-translate-y-1 shadow-lg"
+                      className="flex items-center gap-2 p-4 rounded-full bg-gray-100 text-gray-600 hover:text-gray-800 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-1 shadow-lg"
                     >
                       {link.icon}
                       <span className="text-lg font-semibold">{link.name}</span>
@@ -1197,10 +1188,12 @@ const App = () => {
             </motion.div>
           </div>
         </section>
-        <footer className="relative z-10 py-8 text-center text-gray-800 dark:text-slate-400">
+        <footer className="relative z-10 py-8 text-center text-gray-800 dark:text-gray-400">
           <p className="text-sm">
             Designed and Built by{" "}
-            <span className="text-purple-500">Dhruvil Patel</span>
+            <span className="text-purple-500 dark:text-emerald-400">
+              Dhruvil Patel
+            </span>
           </p>
           <p className="text-sm">&copy; 2025. All Rights Reserved.</p>
         </footer>
@@ -1208,7 +1201,7 @@ const App = () => {
 
       <motion.button
         onClick={() => setIsDarkMode(!isDarkMode)}
-        className="fixed bottom-8 right-8 bg-gray-200 dark:bg-slate-800 text-gray-800 dark:text-slate-200 w-16 h-16 rounded-full flex items-center justify-center shadow-lg z-50"
+        className="fixed bottom-8 right-8 bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 w-16 h-16 rounded-full flex items-center justify-center shadow-lg z-50"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         aria-label="Toggle dark mode"
