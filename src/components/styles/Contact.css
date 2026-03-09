@@ -69,6 +69,21 @@
   color: var(--backgroundColor);
 }
 
+.contact-error {
+  font-size: 13px;
+  color: #f97373;
+  margin: 0;
+}
+
+.contact-honeypot {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+  width: 0;
+}
+
 .contact-flex {
   flex: 0.8;
   display: flex;
