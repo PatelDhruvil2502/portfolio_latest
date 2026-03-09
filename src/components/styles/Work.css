@@ -332,4 +332,10 @@
   .carousel-slide {
     padding: 30px 0;
   }
+
+  /* Mobile-only: make project previews square */
+  .work-image-in {
+    max-width: 320px;
+    aspect-ratio: 1 / 1;
+  }
 }

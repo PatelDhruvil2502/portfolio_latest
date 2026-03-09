@@ -4,10 +4,10 @@
 .ts-mobile-section {
   width: 100vw;
   margin-left: calc(-50vw + 50%);
-  padding: 64px 16px 32px;
+  padding: 64px 16px 48px;
   background: radial-gradient(circle at top, #020617 0%, #020617 55%, #020617 100%);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .ts-mobile-section::before {
@@ -80,8 +80,8 @@
   display: flex;
   gap: 16px;
   overflow-x: auto;
-  padding: 4px 4px 8px;
-  margin: 0 -4px;
+  padding: 4px 16px 12px;
+  margin: 0;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
 }
@@ -101,7 +101,7 @@
 
 .tsm-slide {
   scroll-snap-align: start;
-  flex: 0 0 82%;
+  flex: 0 0 78%;
   max-width: 440px;
   border-radius: 20px;
   padding: 16px 16px 14px;
