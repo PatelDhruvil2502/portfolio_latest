@@ -1,0 +1,43 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgGrad" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"
+      gradientTransform="translate(40 24) rotate(45) scale(260)">
+      <stop offset="0" stop-color="#22D3EE" />
+      <stop offset="0.4" stop-color="#0F172A" />
+      <stop offset="1" stop-color="#020617" />
+    </radialGradient>
+    <linearGradient id="ringGrad" x1="32" y1="32" x2="224" y2="224" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5EEAD4" />
+      <stop offset="1" stop-color="#6366F1" />
+    </linearGradient>
+    <linearGradient id="textGrad" x1="72" y1="80" x2="184" y2="176" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#E0F2FE" />
+      <stop offset="1" stop-color="#A5B4FC" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="256" height="256" rx="72" fill="url(#bgGrad)" />
+
+  <!-- Outer ring -->
+  <circle cx="128" cy="128" r="84"
+    stroke="url(#ringGrad)"
+    stroke-width="8"
+    stroke-linecap="round"
+    stroke-dasharray="8 10"
+    opacity="0.9" />
+
+  <!-- Inner glow -->
+  <circle cx="128" cy="128" r="56" fill="rgba(15,23,42,0.9)" />
+
+  <!-- DP monogram -->
+  <path
+    d="M92 96H118C132 96 142 106 142 120C142 134 132 144 118 144H92V96ZM104 108V132H118C125 132 130 127 130 120C130 113 125 108 118 108H104Z"
+    fill="url(#textGrad)"/>
+  <path
+    d="M150 96H174C186 96 196 105 196 118C196 131 186 140 174 140H162V156H150V96ZM162 108V128H174C180 128 184 124 184 118C184 112 180 108 174 108H162Z"
+    fill="url(#textGrad)"/>
+
+  <!-- Accent dot -->
+  <circle cx="196" cy="72" r="8" fill="#5EEAD4" />
+</svg>
