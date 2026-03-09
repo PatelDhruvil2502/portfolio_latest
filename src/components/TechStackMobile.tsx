@@ -29,7 +29,7 @@ const TechStackMobile = () => {
       <div className="ts-mobile-header">
         <p className="ts-mobile-kicker">Skill Stories</p>
         <h2>
-          My <span>Techstack</span>
+          My <span>Tech Stack</span>
         </h2>
         <p className="ts-mobile-subtitle">
           Swipe through the stacks I lean on for research, product and shipping.

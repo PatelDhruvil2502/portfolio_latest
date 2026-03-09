@@ -93,7 +93,7 @@ const WhatIDo = () => {
                 Crafting performant, responsive interfaces with modern frameworks.
                 From SPAs to micro-frontends, I deliver pixel-perfect experiences.
               </p>
-              <h5>Skillset & tools</h5>
+              <h5>Skill set &amp; tools</h5>
               <div className="what-content-flex">
                 <div className="what-tags">React.js</div>
                 <div className="what-tags">Angular</div>
@@ -132,7 +132,7 @@ const WhatIDo = () => {
                 Designing robust APIs and microservices. From CMS platforms to
                 complex business logic, I build backends that scale.
               </p>
-              <h5>Skillset & tools</h5>
+              <h5>Skill set &amp; tools</h5>
               <div className="what-content-flex">
                 <div className="what-tags">Node.js</div>
                 <div className="what-tags">NestJS</div>

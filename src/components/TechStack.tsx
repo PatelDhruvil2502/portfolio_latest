@@ -224,7 +224,7 @@ const TechStack = () => {
 
   return (
     <div className="techstack">
-      <h2> My Techstack</h2>
+      <h2> My Tech Stack</h2>
 
       <div className="tech-background-skills">
         {skills.map((skill, index) => (
