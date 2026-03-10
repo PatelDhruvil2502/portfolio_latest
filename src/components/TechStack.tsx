@@ -227,11 +227,20 @@ const TechStack = () => {
       <h2> My Tech Stack</h2>
 
       <div className="tech-background-skills">
-        {skills.map((skill, index) => (
-          <span key={index} className="tech-bg-skill">
-            {skill}
-          </span>
-        ))}
+        <div className="tech-bg-col left">
+          {skills.slice(0, Math.ceil(skills.length / 2)).map((skill, index) => (
+            <span key={`left-${index}`} className="tech-bg-skill">
+              {skill}
+            </span>
+          ))}
+        </div>
+        <div className="tech-bg-col right">
+          {skills.slice(Math.ceil(skills.length / 2)).map((skill, index) => (
+            <span key={`right-${index}`} className="tech-bg-skill">
+              {skill}
+            </span>
+          ))}
+        </div>
       </div>
 
       <Canvas

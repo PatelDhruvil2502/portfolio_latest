@@ -126,19 +126,33 @@ body {
 
 .tech-background-skills {
   position: absolute;
-  top: 250px;
+  top: 120px;
   left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  height: calc(100% - 300px);
+  transform: translateX(-50%) translateZ(0);
+  width: 92%;
+  height: calc(100% - 150px);
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: center;
-  gap: 15px 30px;
+  justify-content: space-between;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.35;
+  opacity: 0.25;
+}
+
+.tech-bg-col {
+  width: 25vw;
+  min-width: 200px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 15px 25px;
+}
+
+.tech-bg-col.left {
+  justify-content: flex-start;
+}
+
+.tech-bg-col.right {
+  justify-content: flex-end;
 }
 
 .tech-bg-skill {
