@@ -28,10 +28,12 @@ const Navbar = () => {
       let element = elem as HTMLAnchorElement;
       element.addEventListener("click", (e) => {
         if (window.innerWidth > 1024) {
-          e.preventDefault();
-          let elem = e.currentTarget as HTMLAnchorElement;
-          let section = elem.getAttribute("data-href");
-          smoother.scrollTo(section, true, "top top");
+          const target = e.currentTarget as HTMLAnchorElement;
+          const section = target.getAttribute("data-href");
+          if (section) {
+            e.preventDefault();
+            smoother.scrollTo(section, true, "top top");
+          }
         }
       });
     });
@@ -66,6 +68,15 @@ const Navbar = () => {
           <li>
             <a data-href="#contact" href="#contact">
               <HoverLinks text="CONTACT" />
+            </a>
+          </li>
+          <li className="nav-resume">
+            <a
+              href="https://drive.google.com/drive/folders/1hcBAv1AOkNLXJ6dhAiyaMeSSI-mirWor?usp=drive_link"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <HoverLinks text="RESUME" />
             </a>
           </li>
         </ul>

@@ -149,14 +149,14 @@ export function setAllTimeline() {
     careerTimeline
       .fromTo(
         section.querySelectorAll(".career-timeline"),
-        { maxHeight: "10%" },
-        { maxHeight: "100%", duration: 0.5 },
+        { maxHeight: "0%" },
+        { maxHeight: "100%", duration: 1 },
         0
       )
       .fromTo(
         section.querySelectorAll(".career-timeline"),
         { opacity: 0 },
-        { opacity: 1, duration: 0.1 },
+        { opacity: 1, duration: 0.05 },
         0
       )
       .fromTo(

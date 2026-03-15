@@ -4,7 +4,7 @@ import {
 } from "react-icons/fa6";
 import "./styles/SocialIcons.css";
 import { TbNotes } from "react-icons/tb";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import HoverLinks from "./HoverLinks";
 
 const SocialIcons = () => {
@@ -54,6 +54,32 @@ const SocialIcons = () => {
     });
   }, []);
 
+  const [isScrolling, setIsScrolling] = useState(false);
+
+  useEffect(() => {
+    let timeoutId: number | undefined;
+
+    const handleScroll = () => {
+      if (!isScrolling) {
+        setIsScrolling(true);
+      }
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      timeoutId = window.setTimeout(() => {
+        setIsScrolling(false);
+      }, 350);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [isScrolling]);
+
   return (
     <div className="icons-section">
       <div className="social-icons" data-cursor="icons" id="social">
@@ -69,12 +95,12 @@ const SocialIcons = () => {
         </span>
       </div>
       <a
-        className="resume-button"
+        className={`resume-fab ${isScrolling ? "resume-fab--icon" : ""}`}
         href="https://drive.google.com/drive/folders/1hcBAv1AOkNLXJ6dhAiyaMeSSI-mirWor?usp=drive_link"
         target="_blank"
         rel="noreferrer"
       >
-        <HoverLinks text="RESUME" />
+        <span className="resume-fab-label">RESUME</span>
         <span>
           <TbNotes />
         </span>
