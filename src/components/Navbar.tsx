@@ -71,13 +71,15 @@ const Navbar = () => {
             </a>
           </li>
           <li className="nav-resume">
-            <a
-              href="https://drive.google.com/drive/folders/1hcBAv1AOkNLXJ6dhAiyaMeSSI-mirWor?usp=drive_link"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <HoverLinks text="RESUME" />
-            </a>
+            <span className="nav-resume-wrap">
+              <a
+                href="https://drive.google.com/drive/folders/1hcBAv1AOkNLXJ6dhAiyaMeSSI-mirWor?usp=drive_link"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <HoverLinks text="RESUME" />
+              </a>
+            </span>
           </li>
         </ul>
       </div>

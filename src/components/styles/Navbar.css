@@ -33,6 +33,24 @@
 .nav-resume {
   display: none;
 }
+
+.nav-resume-wrap {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--accentColor);
+  background: rgba(94, 234, 212, 0.08);
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.nav-resume-wrap:hover {
+  background: rgba(94, 234, 212, 0.18);
+  box-shadow: 0 0 20px rgba(94, 234, 212, 0.25);
+}
+
+.nav-resume-wrap a {
+  color: var(--accentColor);
+}
 .navbar-connect {
   position: absolute;
   display: none;
