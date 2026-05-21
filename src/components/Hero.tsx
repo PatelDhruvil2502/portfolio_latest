@@ -58,16 +58,47 @@ const Hero = () => {
 
     const engageTrap = () => {
       trappedRef.current = true;
+      // Lock both html and body — depending on the scroll root, locking just
+      // one isn't always enough to stop wheel-driven scroll.
+      document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
       getLenis()?.stop();
     };
     const releaseTrap = () => {
       trappedRef.current = false;
+      document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
       getLenis()?.start();
     };
 
     engageTrap();
+
+    // Lenis is initialised in SmoothScroll's useEffect, which (because React
+    // runs child effects first) fires AFTER this one. On the very first page
+    // load the trap engages before Lenis exists, so the first few wheel
+    // events used to slip through and Lenis would smooth-scroll the page.
+    // Poll across frames until Lenis is ready, then stop it.
+    let lenisRaf = 0;
+    const ensureLenisStopped = () => {
+      const lenis = getLenis();
+      if (lenis) {
+        if (trappedRef.current) lenis.stop();
+        return;
+      }
+      if (trappedRef.current) {
+        lenisRaf = requestAnimationFrame(ensureLenisStopped);
+      }
+    };
+    ensureLenisStopped();
+
+    // Belt-and-suspenders: if anything manages to move scrollY while we're
+    // trapped (e.g. a Lenis tick that ran before we caught it), snap back.
+    const handleScrollReset = () => {
+      if (trappedRef.current && window.scrollY > 0) {
+        window.scrollTo(0, 0);
+      }
+    };
+    window.addEventListener("scroll", handleScrollReset, { passive: true });
 
     const tick = (delta: number) => {
       if (!trappedRef.current) return;
@@ -81,14 +112,21 @@ const Hero = () => {
     // user can replay the animation in reverse.
     const atTop = () => window.scrollY <= 5;
 
+    // `stopImmediatePropagation` blocks Lenis's bubble-phase listener from ever
+    // seeing the event. Combined with `capture: true` on addEventListener, this
+    // means our handler runs first AND Lenis's never runs at all while trapped.
+    // Without this, Lenis processes deltaY in parallel and smooth-scrolls the
+    // page even though `preventDefault` cancels the native scroll.
     const handleWheel = (e: WheelEvent) => {
       if (trappedRef.current) {
         e.preventDefault();
+        e.stopImmediatePropagation();
         tick(e.deltaY * 0.0009);
         return;
       }
       if (e.deltaY < 0 && atTop()) {
         e.preventDefault();
+        e.stopImmediatePropagation();
         engageTrap();
         tick(e.deltaY * 0.0009);
       }
@@ -97,6 +135,11 @@ const Hero = () => {
     let touchStartY = 0;
     const handleTouchStart = (e: TouchEvent) => {
       touchStartY = e.touches[0].clientY;
+      // Shield Lenis from the touchstart while trapped so it can't initialise
+      // a touch-driven scroll sequence behind our backs.
+      if (trappedRef.current) {
+        e.stopImmediatePropagation();
+      }
     };
     const handleTouchMove = (e: TouchEvent) => {
       if (!touchStartY) return;
@@ -105,6 +148,7 @@ const Hero = () => {
 
       if (trappedRef.current) {
         e.preventDefault();
+        e.stopImmediatePropagation();
         const factor = deltaY < 0 ? 0.008 : 0.005;
         tick(deltaY * factor);
         touchStartY = touchY;
@@ -113,6 +157,7 @@ const Hero = () => {
       // Released — only re-trap if user is at top and pulling down (scroll up)
       if (deltaY < -20 && atTop()) {
         e.preventDefault();
+        e.stopImmediatePropagation();
         engageTrap();
         tick(deltaY * 0.008);
         touchStartY = touchY;
@@ -167,20 +212,27 @@ const Hero = () => {
       releaseTrap();
     };
 
-    window.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("touchstart", handleTouchStart, { passive: false });
-    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    // capture: true → our handlers run in the capturing phase, before any
+    // bubble-phase listener Lenis attaches. Together with stopImmediatePropagation
+    // this fully shields the trap from Lenis's own input handling.
+    window.addEventListener("wheel", handleWheel, { passive: false, capture: true });
+    window.addEventListener("touchstart", handleTouchStart, { passive: false, capture: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false, capture: true });
     window.addEventListener("touchend", handleTouchEnd);
-    window.addEventListener("keydown", handleKey);
+    window.addEventListener("keydown", handleKey, { capture: true });
     document.addEventListener("click", handleAnchorClick, true);
 
     return () => {
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
+      cancelAnimationFrame(lenisRaf);
+      // removeEventListener must match the capture flag used to add.
+      window.removeEventListener("wheel", handleWheel, { capture: true } as EventListenerOptions);
+      window.removeEventListener("touchstart", handleTouchStart, { capture: true } as EventListenerOptions);
+      window.removeEventListener("touchmove", handleTouchMove, { capture: true } as EventListenerOptions);
       window.removeEventListener("touchend", handleTouchEnd);
-      window.removeEventListener("keydown", handleKey);
+      window.removeEventListener("keydown", handleKey, { capture: true } as EventListenerOptions);
+      window.removeEventListener("scroll", handleScrollReset);
       document.removeEventListener("click", handleAnchorClick, true);
+      document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
       getLenis()?.start();
     };
