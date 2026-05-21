@@ -9,7 +9,12 @@ const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [time, setTime] = useState(() => formatTime());
   const [progress, setProgress] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  // Lazy-init so the very first render already knows whether we're on mobile —
+  // the scroll-trap vs auto-play decision is made on mount and we can't wait
+  // for an async useEffect to flip this from `false` first.
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== "undefined" && window.innerWidth < 768,
+  );
   const [vw, setVw] = useState(
     () => (typeof window !== "undefined" ? window.innerWidth : 1024),
   );
@@ -58,6 +63,14 @@ const Hero = () => {
     if (window.scrollY > 50) {
       progressRef.current = 1;
       setProgress(1);
+      trappedRef.current = false;
+      return;
+    }
+
+    // Mobile gets a completely different layout (magazine-cover style, see
+    // render branch below) — no scroll-trap, no progress-driven animation, no
+    // wheel/touch handlers. Bail out of the trap setup entirely.
+    if (isMobile) {
       trappedRef.current = false;
       return;
     }
@@ -275,6 +288,49 @@ const Hero = () => {
   // Start with a darker veil so the title halo reads cleanly over the photo;
   // ease off as the card expands and the title splits away.
   const veilFade = 0.65 - progress * 0.45;
+
+  if (isMobile) {
+    // Magazine-cover mobile hero. Photo dominates the top, name overlaid with
+    // a vertical reveal animation, info card below. No scroll-trap, no 3D
+    // scene — both feel out of place on a narrow touch viewport.
+    return (
+      <section className="hero hero-mobile" id="top">
+        <div className="m-hero-photo">
+          <img src={PORTRAIT_SRC} alt="Dhruvil Patel" loading="eager" />
+          <div className="m-hero-photo-gradient" aria-hidden />
+          <div className="m-hero-photo-overlay">
+            <p className="m-hero-eyebrow mono">
+              <span className="dot" /> embedding · 2025–26
+            </p>
+            <h1 className="m-hero-title serif">
+              <span className="m-line"><span className="m-word">Dhruvil</span></span>
+              <span className="m-line">
+                <span className="m-word">
+                  <span className="italic">Patel</span>
+                  <i className="hero-stop">.</i>
+                </span>
+              </span>
+            </h1>
+          </div>
+        </div>
+
+        <div className="m-hero-body">
+          <p className="m-hero-tag serif italic">
+            A frontend engineer who treats the codebase like a notebook.
+          </p>
+          <div className="m-hero-currently mono">
+            <span className="dim">currently — </span>
+            <span>shipping next.js</span>
+            <span className="dim"> @ global health impact</span>
+          </div>
+          <a href="#about" className="m-hero-scroll mono">
+            <span className="dim">scroll to about</span>
+            <span className="scroll-tick">↓</span>
+          </a>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="hero" id="top" ref={heroRef}>

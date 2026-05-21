@@ -211,19 +211,201 @@
   border: 0;
 }
 
-@media (max-width: 700px) {
-  .hero-pin-content {
-    padding-top: 6rem;
+/* =========================================================================
+   Mobile hero — completely separate layout from desktop.
+   Magazine-cover: portrait photo dominates the top with name overlaid (with a
+   vertical reveal on load), info card below. No scroll-trap, no 3D scene.
+   None of the .hero-* desktop styles above apply on mobile because the
+   mobile branch in Hero.tsx renders a different tree (.hero-mobile + .m-*).
+   ========================================================================= */
+
+@media (max-width: 767px) {
+  .hero.hero-mobile {
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100svh;
+    overflow: visible;
+    padding: 0;
+    isolation: isolate;
+    background: #0b0a14;
   }
-  .hero-meta-tl, .hero-meta-tr {
-    top: 5.5rem;
-    font-size: 0.66rem;
+
+  .m-hero-photo {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    max-height: 78vh;
+    overflow: hidden;
+    border-bottom-left-radius: 28px;
+    border-bottom-right-radius: 28px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+    animation: m-photo-in 0.9s var(--ease-out-quart) both;
+    background: #14121f;
   }
-  .hero-meta-bl, .hero-meta-br {
-    bottom: 1rem;
-    font-size: 0.66rem;
+
+  .m-hero-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+    display: block;
+    animation: m-photo-drift 18s ease-in-out infinite alternate;
   }
-  .hero-title-half {
-    font-size: clamp(2.4rem, 2.5rem + 6vw, 4.5rem);
+
+  .m-hero-photo-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(11, 10, 20, 0.55) 0%,
+        transparent 22%,
+        transparent 50%,
+        rgba(11, 10, 20, 0.88) 100%
+      );
+    pointer-events: none;
+  }
+
+  .m-hero-photo-overlay {
+    position: absolute;
+    left: 1.25rem;
+    right: 1.25rem;
+    bottom: 1.4rem;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .m-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245, 237, 225, 0.75);
+    margin: 0;
+    animation: m-fade-up 0.7s 0.15s var(--ease-out-quart) both;
+  }
+
+  .m-hero-eyebrow .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+
+  .m-hero-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2.6rem, 14vw, 4.6rem);
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    color: #f5ede1;
+    margin: 0;
+    text-shadow:
+      0 2px 30px rgba(0, 0, 0, 0.65),
+      0 1px 3px rgba(0, 0, 0, 0.5);
+  }
+
+  .m-line {
+    display: block;
+    overflow: hidden;
+    line-height: 1;
+    padding-bottom: 0.04em;
+  }
+
+  .m-word {
+    display: inline-block;
+    transform: translateY(110%);
+    will-change: transform;
+    animation: m-word-up 0.75s var(--ease-out-quart) both;
+  }
+
+  .m-line:nth-of-type(1) .m-word { animation-delay: 0.35s; }
+  .m-line:nth-of-type(2) .m-word { animation-delay: 0.5s; }
+
+  .m-word .italic { font-style: italic; }
+
+  .m-hero-body {
+    padding: 1.6rem 1.25rem 2.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    animation: m-fade-up 0.8s 0.85s var(--ease-out-quart) both;
+  }
+
+  .m-hero-tag {
+    font-size: 1.1rem;
+    line-height: 1.4;
+    color: var(--ink);
+    margin: 0;
+    max-width: 32ch;
+  }
+
+  .m-hero-currently {
+    align-self: flex-start;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: var(--ink);
+    padding: 0.65rem 0.9rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .m-hero-currently .dim {
+    color: var(--ink-faint);
+  }
+
+  .m-hero-scroll {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.3rem;
+    color: var(--ink-faint);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+    text-decoration: none;
+    align-self: flex-start;
+    padding: 0.5rem 0.9rem 0.5rem 0.7rem;
+    background: rgba(11, 10, 20, 0.5);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    transition: border-color 0.3s, color 0.3s;
+  }
+
+  .m-hero-scroll:hover,
+  .m-hero-scroll:active {
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+
+  @keyframes m-photo-in {
+    from { opacity: 0; transform: scale(1.035); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes m-photo-drift {
+    from { transform: scale(1.02) translateY(0); }
+    to   { transform: scale(1.06) translateY(-1.5%); }
+  }
+
+  @keyframes m-word-up {
+    from { transform: translateY(110%); }
+    to   { transform: translateY(0); }
+  }
+
+  @keyframes m-fade-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 }
