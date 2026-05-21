@@ -1,191 +1,295 @@
-@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
+/* ============================================================
+   Latent Space — Design System
+   ============================================================ */
 
 :root {
-  font-family: "Geist", sans-serif;
+  /* Palette */
+  --bg: #0b0a14;
+  --bg-2: #14121f;
+  --bg-3: #1c1930;
+  --ink: #f5ede1;
+  --ink-dim: #c7bfb2;
+  --ink-faint: #7a7466;
+  --accent: #ff5e3a;
+  --accent-soft: #ff8a6a;
+  --glow: #b8ff5e;
+  --glow-soft: #dcff9b;
+  --line: rgba(245, 237, 225, 0.12);
+  --line-strong: rgba(245, 237, 225, 0.32);
 
-  font-optical-sizing: auto;
-  font-style: normal;
+  /* Type */
+  --font-display: "Instrument Serif", "Times New Roman", serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+
+  /* Scale */
+  --step-0: clamp(0.95rem, 0.92rem + 0.15vw, 1.05rem);
+  --step-1: clamp(1.1rem, 1rem + 0.4vw, 1.3rem);
+  --step-2: clamp(1.4rem, 1.2rem + 0.8vw, 1.8rem);
+  --step-3: clamp(2rem, 1.6rem + 1.6vw, 2.8rem);
+  --step-4: clamp(3rem, 2.2rem + 3.2vw, 5rem);
+  --step-5: clamp(4.5rem, 3rem + 6vw, 9rem);
+  --step-6: clamp(6rem, 3rem + 12vw, 14rem);
+
+  /* Layout */
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --max-w: 1400px;
+
+  /* Motion */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
+
+  color-scheme: dark;
+  color: var(--ink);
+  background-color: var(--bg);
+  font-family: var(--font-body);
+  font-size: 16px;
   line-height: 1.5;
-  scroll-behavior: smooth;
-  color-scheme: light dark;
-  color: #eae5ec;
-  background-color: var(--backgroundColor);
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  --accentColor: #5eead4;
-  --backgroundColor: #0a0e17;
-  --vh: 100vh;
-  --vh: 100svh;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Geist", sans-serif;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 body {
-  overflow: hidden;
+  /* Subtle radial vignette for depth */
+  background:
+    radial-gradient(1200px 800px at 20% -10%, rgba(255, 94, 58, 0.08), transparent 60%),
+    radial-gradient(900px 700px at 90% 10%, rgba(184, 255, 94, 0.05), transparent 60%),
+    var(--bg);
 }
 
 a {
   color: inherit;
-  text-decoration: inherit;
+  text-decoration: none;
 }
 
-a:hover {
-  color: var(--accentColor);
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
 }
 
-main {
-  opacity: 1;
-  transition: 0.3s;
+img {
+  max-width: 100%;
+  display: block;
 }
 
-.main-active {
-  opacity: 0;
-  animation: fadeIn 1s 1;
-  animation-fill-mode: forwards;
+::selection {
+  background: var(--accent);
+  color: var(--bg);
 }
 
-@keyframes fadeIn {
-  100% {
-    opacity: 1;
-  }
-}
-
-body {
-  margin: 0;
-  height: auto;
-  background-color: #050810;
-  flex-grow: 1;
-  --cWidth: calc(100% - 30px);
-  --cMaxWidth: 1920px;
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-.main-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-.container-main {
-  width: 100%;
-  margin: auto;
-  position: relative;
-}
-
-.container1 {
-  width: var(--cWidth);
-  height: var(--vh);
-  margin: auto;
-  position: relative;
-}
-
-.split-line {
-  overflow: hidden;
-}
-
-.split-h2 {
-  overflow: hidden;
-  display: flex;
-  white-space: nowrap;
-  flex-wrap: nowrap;
-}
-
-.techstack {
-  width: 100%;
-  position: relative;
-  overflow: clip;
-  height: var(--vh);
-  margin: auto;
-  margin-top: 50px;
-  margin-bottom: -100px;
-}
-
-.techstack h2 {
-  font-size: 80px;
-  text-align: center;
-  position: absolute;
-  width: 100%;
-  top: 120px;
-  left: 0;
-  font-weight: 400;
-  text-transform: uppercase;
-}
-
-.tech-background-skills {
-  position: absolute;
-  top: 120px;
-  left: 50%;
-  transform: translateX(-50%) translateZ(0);
-  width: 92%;
-  height: calc(100% - 150px);
-  display: flex;
-  justify-content: space-between;
-  z-index: 0;
+/* ============================================================
+   Grain overlay — hand-crafted feel
+   ============================================================ */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
   pointer-events: none;
-  opacity: 0.25;
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 200px 200px;
 }
 
-.tech-bg-col {
-  width: 25vw;
-  min-width: 200px;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  gap: 15px 25px;
-}
-
-.tech-bg-col.left {
-  justify-content: flex-start;
-}
-
-.tech-bg-col.right {
-  justify-content: flex-end;
-}
-
-.tech-bg-skill {
-  font-size: clamp(16px, 2.5vw, 30px);
-  font-weight: 500;
-  color: var(--accentColor);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  padding: 10px 20px;
-  border: 1px solid rgba(94, 234, 212, 0.2);
-  border-radius: 50px;
-  background: rgba(94, 234, 212, 0.05);
-  backdrop-filter: blur(2px);
-}
-
-.tech-canvas {
-  position: absolute;
+/* ============================================================
+   Custom cursor
+   ============================================================ */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
   top: 0;
   left: 0;
+  pointer-events: none;
+  z-index: 10000;
+  border-radius: 50%;
+  mix-blend-mode: difference;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--ink);
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s var(--ease-out-quart), opacity 0.2s;
+}
+
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--ink);
+  transform: translate(-50%, -50%);
+  transition: transform 0.4s var(--ease-out-quart), width 0.3s, height 0.3s, border-color 0.3s;
+}
+
+.cursor-ring.is-hover {
+  width: 64px;
+  height: 64px;
+  border-color: var(--accent);
+}
+
+.cursor-ring.is-text {
+  width: 4px;
+  height: 28px;
+  border-radius: 2px;
+  background: var(--accent);
+  border: 0;
+}
+
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
+/* ============================================================
+   Layout helpers
+   ============================================================ */
+.section {
+  position: relative;
+  padding: clamp(5rem, 12vh, 10rem) var(--gutter);
+}
+
+.shell {
   width: 100%;
-  height: 100%;
-  z-index: 10;
-  pointer-events: auto;
+  max-width: var(--max-w);
+  margin: 0 auto;
 }
 
-@media screen and (min-width: 768px) {
-  body {
-    --cWidth: 94%;
-  }
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
 }
 
-@media screen and (max-width: 900px) {
-  .techstack h2 {
-    font-size: 40px;
-  }
+.eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+  display: inline-block;
 }
+
+.serif {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.italic {
+  font-style: italic;
+}
+
+/* ============================================================
+   Reveal animations (used by SplitText / IntersectionObserver)
+   ============================================================ */
+.line-wrap {
+  overflow: hidden;
+  display: block;
+}
+
+.line {
+  display: block;
+  transform: translateY(110%);
+  will-change: transform;
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s var(--ease-out-quart), transform 0.9s var(--ease-out-quart);
+}
+
+.fade-up.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   Marquee strip
+   ============================================================ */
+.marquee {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 1.2rem 0;
+  background: rgba(245, 237, 225, 0.02);
+}
+
+.marquee-track {
+  display: inline-flex;
+  gap: 3rem;
+  animation: marquee 40s linear infinite;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.marquee-track span::before {
+  content: "✦";
+  color: var(--accent);
+  margin-right: 3rem;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ============================================================
+   Magnetic / hover utility
+   ============================================================ */
+.magnetic {
+  display: inline-block;
+  transition: transform 0.3s var(--ease-out-quart);
+}
+
+/* ============================================================
+   Scrollbar
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--bg-3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }

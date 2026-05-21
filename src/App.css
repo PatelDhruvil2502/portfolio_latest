@@ -1,28 +1,19 @@
-.section-container {
-  width: 1300px;
+/* App-level shell — section dividers, intersection helpers */
+
+.app {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 }
-.title,
-.para {
-  font-kerning: none;
-  -webkit-text-rendering: optimizeSpeed;
-  text-rendering: optimizeSpeed;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
+
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line-strong) 50%, transparent);
 }
-@media only screen and (max-width: 1600px) {
-  .section-container {
-    width: 1200px;
-    max-width: calc(100% - 160px);
-  }
-}
-@media only screen and (max-width: 1400px) {
-  .section-container {
-    width: 900px;
-  }
-}
-@media only screen and (max-width: 900px) {
-  .section-container {
-    width: 500px;
-    max-width: var(--cWidth);
-  }
+
+.hairline {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 0;
 }

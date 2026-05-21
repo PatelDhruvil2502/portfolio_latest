@@ -1,93 +1,84 @@
-import { useEffect } from "react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import HoverLinks from "./HoverLinks";
-import { gsap } from "gsap";
-import { ScrollSmoother } from "gsap/ScrollSmoother";
+import { useEffect, useState } from "react";
 import "./styles/Navbar.css";
 
-gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
-export let smoother: ScrollSmoother;
+const links = [
+  { id: "about", label: "About", code: "01" },
+  { id: "experience", label: "Trained On", code: "02" },
+  { id: "projects", label: "Output", code: "03" },
+  { id: "skills", label: "Activations", code: "04" },
+  { id: "query", label: "Query", code: "05" },
+];
 
 const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState<string>("about");
+  const [open, setOpen] = useState(false);
+
   useEffect(() => {
-    smoother = ScrollSmoother.create({
-      wrapper: "#smooth-wrapper",
-      content: "#smooth-content",
-      smooth: 1.7,
-      speed: 1.7,
-      effects: true,
-      autoResize: true,
-      ignoreMobileResize: true,
-    });
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
 
-    smoother.scrollTop(0);
-    smoother.paused(true);
-
-    let links = document.querySelectorAll(".header ul a");
-    links.forEach((elem) => {
-      let element = elem as HTMLAnchorElement;
-      element.addEventListener("click", (e) => {
-        if (window.innerWidth > 1024) {
-          const target = e.currentTarget as HTMLAnchorElement;
-          const section = target.getAttribute("data-href");
-          if (section) {
-            e.preventDefault();
-            smoother.scrollTo(section, true, "top top");
-          }
-        }
-      });
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(e.target.id);
+        });
+      },
+      { rootMargin: "-40% 0px -50% 0px" },
+    );
+    links.forEach((l) => {
+      const el = document.getElementById(l.id);
+      if (el) io.observe(el);
     });
-    window.addEventListener("resize", () => {
-      ScrollSmoother.refresh(true);
-    });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      io.disconnect();
+    };
   }, []);
-  return (
-    <>
-      <div className="header">
-        <a href="/#" className="navbar-title" data-cursor="disable">
-          DP
-        </a>
-        <a
-          href="mailto:dhruvilpatel6468@gmail.com"
-          className="navbar-connect"
-          data-cursor="disable"
-        >
-          dhruvilpatel6468@gmail.com
-        </a>
-        <ul>
-          <li>
-            <a data-href="#about" href="#about">
-              <HoverLinks text="ABOUT" />
-            </a>
-          </li>
-          <li>
-            <a data-href="#work" href="#work">
-              <HoverLinks text="WORK" />
-            </a>
-          </li>
-          <li>
-            <a data-href="#contact" href="#contact">
-              <HoverLinks text="CONTACT" />
-            </a>
-          </li>
-          <li className="nav-resume">
-            <span className="nav-resume-wrap">
-              <a
-                href="https://drive.google.com/drive/folders/1hcBAv1AOkNLXJ6dhAiyaMeSSI-mirWor?usp=drive_link"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <HoverLinks text="RESUME" />
-              </a>
-            </span>
-          </li>
-        </ul>
-      </div>
 
-      <div className="landing-circle1"></div>
-      <div className="landing-circle2"></div>
-      <div className="nav-fade"></div>
-    </>
+  return (
+    <header className={`nav ${scrolled ? "is-scrolled" : ""}`}>
+      <a href="#top" className="nav-brand" aria-label="Home">
+        <span className="brand-mark">DP</span>
+        <span className="brand-meta mono">
+          <span>dhruvil.patel</span>
+          <span className="brand-sub">v.2026 · embedding</span>
+        </span>
+      </a>
+
+      <button
+        className={`nav-toggle ${open ? "is-open" : ""}`}
+        onClick={() => setOpen((v) => !v)}
+        aria-label="Toggle menu"
+      >
+        <span />
+        <span />
+      </button>
+
+      <nav className={`nav-links ${open ? "is-open" : ""}`}>
+        {links.map((l) => (
+          <a
+            key={l.id}
+            href={`#${l.id}`}
+            className={`nav-link ${active === l.id ? "is-active" : ""}`}
+            onClick={() => setOpen(false)}
+          >
+            <span className="nav-link-code mono">{l.code}</span>
+            <span className="nav-link-label">{l.label}</span>
+          </a>
+        ))}
+        <a
+          href="https://drive.google.com/drive/folders/1hcBAv1AOkNLXJ6dhAiyaMeSSI-mirWor?usp=drive_link"
+          target="_blank"
+          rel="noreferrer"
+          className="nav-resume"
+        >
+          <span className="dot" />
+          résumé.pdf
+        </a>
+      </nav>
+    </header>
   );
 };
 

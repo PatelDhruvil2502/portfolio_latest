@@ -1,0 +1,250 @@
+.exp {
+  position: relative;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 50%, var(--bg) 100%);
+}
+
+.exp-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.exp-title {
+  font-size: clamp(2.4rem, 1.6rem + 3vw, 4.2rem);
+  margin: 0.6rem 0 0;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  grid-column: 1;
+}
+
+.exp-title .accent {
+  color: var(--accent);
+  font-style: normal;
+}
+
+.exp-sub {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  color: var(--ink-faint);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  justify-self: end;
+  grid-column: 2;
+}
+
+.exp-sub .sep {
+  color: var(--ink-faint);
+}
+
+.exp-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line);
+}
+
+.exp-row {
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  transition: background 0.4s;
+}
+
+.exp-row:hover {
+  background: rgba(245, 237, 225, 0.015);
+}
+
+.exp-row.is-open {
+  background: rgba(255, 94, 58, 0.025);
+}
+
+.exp-row-head {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 70px 1fr auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.8rem 0;
+  text-align: left;
+  transition: padding 0.3s;
+}
+
+.exp-idx {
+  font-size: 0.78rem;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+}
+
+.exp-row-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.exp-row-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.4rem, 1.1rem + 0.8vw, 2.1rem);
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  transition: color 0.3s, transform 0.3s;
+}
+
+.exp-row.is-open .exp-row-title,
+.exp-row-head:hover .exp-row-title {
+  color: var(--accent);
+}
+
+.exp-row-org {
+  color: var(--ink-dim);
+  font-style: italic;
+  font-size: 0.85em;
+}
+
+.exp-row-range {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+.exp-row-toggle {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+}
+
+.exp-row-toggle span {
+  position: absolute;
+  background: var(--ink);
+  transition: transform 0.4s var(--ease-out-quart), background 0.3s;
+}
+
+.exp-row-toggle span:nth-child(1) {
+  width: 14px;
+  height: 1.5px;
+}
+
+.exp-row-toggle span:nth-child(2) {
+  width: 1.5px;
+  height: 14px;
+}
+
+.exp-row-toggle.is-open span:nth-child(2) {
+  transform: rotate(90deg);
+}
+
+.exp-row.is-open .exp-row-toggle span {
+  background: var(--accent);
+}
+
+.exp-row-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s var(--ease-out-quart);
+}
+
+.exp-row.is-open .exp-row-body {
+  grid-template-rows: 1fr;
+}
+
+.exp-row-body-in {
+  overflow: hidden;
+  padding-left: 86px;
+  padding-right: 1rem;
+  padding-top: 0;
+  padding-bottom: 0;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.4s var(--ease-out-quart),
+    padding-top 0.4s var(--ease-out-quart),
+    padding-bottom 0.4s var(--ease-out-quart);
+}
+
+.exp-row.is-open .exp-row-body-in {
+  padding-top: 0.4rem;
+  padding-bottom: 2.5rem;
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.12s;
+}
+
+.exp-row-body-text {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--ink-dim);
+  max-width: 75ch;
+  margin: 0 0 1.5rem;
+}
+
+.exp-metrics {
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem;
+  border-left: 2px solid var(--accent);
+  background: rgba(255, 94, 58, 0.04);
+  width: fit-content;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.metric-value {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-style: italic;
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+
+.metric-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.exp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+@media (max-width: 800px) {
+  .exp-head {
+    grid-template-columns: 1fr;
+  }
+  .exp-sub {
+    justify-self: start;
+    grid-column: 1;
+  }
+  .exp-row-head {
+    grid-template-columns: 40px 1fr 28px;
+    gap: 0.8rem;
+    padding: 1.4rem 0;
+  }
+  .exp-row-body-in {
+    padding-left: 48px;
+  }
+  .exp-metrics {
+    gap: 1.5rem;
+  }
+  .metric-value {
+    font-size: 1.5rem;
+  }
+}
