@@ -2,10 +2,17 @@ import { useEffect, useRef, useState } from "react";
 import EmbeddingField from "./scene/EmbeddingField";
 import "./styles/Hero.css";
 
+const PORTRAIT_SRC = "/images/dhruvil.jpeg";
+
 const Hero = () => {
   const mouse = useRef<[number, number]>([0, 0]);
   const heroRef = useRef<HTMLDivElement>(null);
   const [time, setTime] = useState(() => formatTime());
+  const [progress, setProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const progressRef = useRef(0);
+  const trappedRef = useRef(true);
 
   useEffect(() => {
     const el = heroRef.current;
@@ -25,66 +32,232 @@ const Hero = () => {
     return () => clearInterval(t);
   }, []);
 
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Scroll-trap: input drives `progress` directly, no page scroll happens until
+  // the animation completes. Once `progress === 1`, normal scrolling (Lenis +
+  // native) resumes and About becomes reachable.
+  useEffect(() => {
+    // Refresh-mid-page guard: if we landed somewhere below the hero, skip the
+    // animation entirely so we don't strand the user with overflow:hidden.
+    if (window.scrollY > 50) {
+      progressRef.current = 1;
+      setProgress(1);
+      trappedRef.current = false;
+      return;
+    }
+
+    type LenisLike = { stop: () => void; start: () => void };
+    const getLenis = (): LenisLike | undefined =>
+      (window as unknown as { __lenis?: LenisLike }).__lenis;
+
+    const engageTrap = () => {
+      trappedRef.current = true;
+      document.body.style.overflow = "hidden";
+      getLenis()?.stop();
+    };
+    const releaseTrap = () => {
+      trappedRef.current = false;
+      document.body.style.overflow = "";
+      getLenis()?.start();
+    };
+
+    engageTrap();
+
+    const tick = (delta: number) => {
+      if (!trappedRef.current) return;
+      const next = Math.min(1, Math.max(0, progressRef.current + delta));
+      progressRef.current = next;
+      setProgress(next);
+      if (next >= 1) releaseTrap();
+    };
+
+    // Rewind: at the top of the page, scrolling up re-engages the trap so the
+    // user can replay the animation in reverse.
+    const atTop = () => window.scrollY <= 5;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (trappedRef.current) {
+        e.preventDefault();
+        tick(e.deltaY * 0.0009);
+        return;
+      }
+      if (e.deltaY < 0 && atTop()) {
+        e.preventDefault();
+        engageTrap();
+        tick(e.deltaY * 0.0009);
+      }
+    };
+
+    let touchStartY = 0;
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!touchStartY) return;
+      const touchY = e.touches[0].clientY;
+      const deltaY = touchStartY - touchY;
+
+      if (trappedRef.current) {
+        e.preventDefault();
+        const factor = deltaY < 0 ? 0.008 : 0.005;
+        tick(deltaY * factor);
+        touchStartY = touchY;
+        return;
+      }
+      // Released — only re-trap if user is at top and pulling down (scroll up)
+      if (deltaY < -20 && atTop()) {
+        e.preventDefault();
+        engageTrap();
+        tick(deltaY * 0.008);
+        touchStartY = touchY;
+      }
+    };
+    const handleTouchEnd = () => {
+      touchStartY = 0;
+    };
+
+    const scrollKeys = new Set([
+      "ArrowDown",
+      "ArrowUp",
+      "PageDown",
+      "PageUp",
+      " ",
+      "Spacebar",
+      "Home",
+      "End",
+    ]);
+    const handleKey = (e: KeyboardEvent) => {
+      if (!scrollKeys.has(e.key)) return;
+      // Don't trap when the user is typing in an input/textarea
+      const target = e.target as HTMLElement | null;
+      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA")) return;
+      const down =
+        e.key === "ArrowDown" ||
+        e.key === "PageDown" ||
+        e.key === " " ||
+        e.key === "Spacebar" ||
+        e.key === "End";
+
+      if (trappedRef.current) {
+        e.preventDefault();
+        tick(down ? 0.15 : -0.15);
+        return;
+      }
+      if (!down && atTop()) {
+        e.preventDefault();
+        engageTrap();
+        tick(-0.15);
+      }
+    };
+
+    // Anchor link clicks (navbar etc.) need to bypass the trap — release first
+    // so SmoothScroll's lenis.scrollTo can actually move the page.
+    const handleAnchorClick = (e: MouseEvent) => {
+      if (!trappedRef.current) return;
+      const a = (e.target as HTMLElement | null)?.closest('a[href^="#"]');
+      if (!a) return;
+      progressRef.current = 1;
+      setProgress(1);
+      releaseTrap();
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: false });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd);
+    window.addEventListener("keydown", handleKey);
+    document.addEventListener("click", handleAnchorClick, true);
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
+      window.removeEventListener("keydown", handleKey);
+      document.removeEventListener("click", handleAnchorClick, true);
+      document.body.style.overflow = "";
+      getLenis()?.start();
+    };
+  }, []);
+
+  // Card animates from a near-square start (matches the photo's natural ratio
+  // so we don't aggressively crop) to a wide landscape end frame.
+  const mediaW = 360 + progress * (isMobile ? 620 : 1200);
+  const mediaH = 440 + progress * (isMobile ? 220 : 380);
+  const titleShift = progress * (isMobile ? 95 : 60);
+  const metaFade = 1 - Math.min(1, progress * 1.4);
+  const bgFade = 1 - progress * 0.65;
+  // Start with a darker veil so the title halo reads cleanly over the photo;
+  // ease off as the card expands and the title splits away.
+  const veilFade = 0.65 - progress * 0.45;
+
   return (
     <section className="hero" id="top" ref={heroRef}>
-      <div className="hero-scene" aria-hidden>
+      <div className="hero-scene" aria-hidden style={{ opacity: bgFade }}>
         <EmbeddingField mouse={mouse} />
       </div>
 
       <div className="hero-gradient" aria-hidden />
 
-      <div className="hero-meta hero-meta-tl mono">
+      <div className="hero-meta hero-meta-tl mono" style={{ opacity: metaFade }}>
         <span className="dim">// hello, world</span>
         <span>init( ) → vector_field_v2.6</span>
       </div>
 
-      <div className="hero-meta hero-meta-tr mono">
+      <div className="hero-meta hero-meta-tr mono" style={{ opacity: metaFade }}>
         <span className="dim">{time} EST · bloomington, IN</span>
         <span className="dim">lat 39.17°N · lon -86.52°W</span>
       </div>
 
-      <div className="hero-meta hero-meta-bl mono">
-        <span className="dim">scroll</span>
+      <div className="hero-meta hero-meta-bl mono" style={{ opacity: metaFade }}>
+        <span className="dim">scroll to expand</span>
         <span className="scroll-tick">↓</span>
       </div>
 
-      <div className="hero-meta hero-meta-br mono">
+      <div className="hero-meta hero-meta-br mono" style={{ opacity: metaFade }}>
         <span className="dim">currently — </span>
         <span>shipping next.js</span>
         <span className="dim">@ global health impact</span>
       </div>
 
-      <div className="hero-content">
-        <p className="hero-eyebrow mono">
-          <span className="dot" /> embedding · 2025–26
-        </p>
-
-        <h1 className="hero-name">
-          <span className="line-wrap"><span className="line serif">Dhruvil</span></span>
-          <span className="line-wrap"><span className="line serif italic">Patel<i className="hero-stop">.</i></span></span>
-        </h1>
-
-        <div className="hero-sub">
-          <p className="serif italic hero-tag">
-            A frontend engineer who treats
-            <br />
-            the codebase like a notebook —
-          </p>
-          <p className="hero-tag-2 mono">
-            messy in the middle, neat at the edges.
-          </p>
-        </div>
-
-        <div className="hero-row">
-          <a href="#query" className="hero-cta">
-            <span className="hero-cta-label">query the space</span>
-            <span className="hero-cta-arrow">→</span>
-          </a>
-          <a href="#projects" className="hero-cta-secondary">
-            <span>see the outputs</span>
-          </a>
-        </div>
+      <div
+        className="hero-portrait"
+        style={{
+          width: `${mediaW}px`,
+          height: `${mediaH}px`,
+        }}
+      >
+        <img src={PORTRAIT_SRC} alt="Dhruvil Patel" loading="eager" />
+        <div
+          className="hero-portrait-veil"
+          style={{ opacity: veilFade }}
+          aria-hidden
+        />
       </div>
+
+      <div className="hero-title-stack" aria-hidden={progress > 0.9}>
+        <h1
+          className="hero-title-half serif"
+          style={{ transform: `translateX(-${titleShift}vw)` }}
+        >
+          Dhruvil
+        </h1>
+        <h1
+          className="hero-title-half serif"
+          style={{ transform: `translateX(${titleShift}vw)` }}
+        >
+          <span className="italic">Patel</span>
+          <i className="hero-stop">.</i>
+        </h1>
+      </div>
+
+      <span className="visually-hidden">Dhruvil Patel</span>
     </section>
   );
 };

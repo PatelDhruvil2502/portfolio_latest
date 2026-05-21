@@ -37,8 +37,7 @@ const Footer = () => {
             <div className="eyebrow">Colophon</div>
             <p className="footer-colophon">
               Built with React + TypeScript, three.js (via R3F), and Lenis.
-              Typeset in Instrument Serif, Inter & JetBrains Mono. Hand-coded,
-              occasionally over-engineered.
+              Typeset in Instrument Serif, Inter & JetBrains Mono.
             </p>
           </div>
         </div>

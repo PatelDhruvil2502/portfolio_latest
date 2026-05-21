@@ -16,19 +16,8 @@ type Project = {
 
 const projects: Project[] = [
   {
-    id: "fastapi-copilot",
-    index: "p.001",
-    title: "FastAPI Copilot",
-    kind: "Offline RAG · documentation assistant",
-    year: "2026",
-    image: "/images/placeholder.webp",
-    stack: ["Python", "RAG", "Vector DB", "LLM"],
-    body:
-      "Offline RAG pipeline over the entire FastAPI markdown corpus, embedded into a local vector store for sub-second semantic search. Custom chunking maps doc headers to anchor links and injects referenced Python snippets so the LLM gets real context, not just prose. Conversational agent runs a context-window summarizer + async URL-validator — 100% citation accuracy, zero dead-link hallucinations.",
-  },
-  {
     id: "meetsmart",
-    index: "p.002",
+    index: "p.001",
     title: "MeetSmart",
     kind: "LLM-powered meeting intelligence",
     year: "2025",
@@ -39,7 +28,7 @@ const projects: Project[] = [
   },
   {
     id: "car-detective",
-    index: "p.003",
+    index: "p.002",
     title: "Car Damage Detective",
     kind: "Deep learning · classification",
     year: "2024",
@@ -50,7 +39,7 @@ const projects: Project[] = [
   },
   {
     id: "what-the-tweet",
-    index: "p.004",
+    index: "p.003",
     title: "What the Tweet?!",
     kind: "NLP · classification",
     year: "2024",
@@ -61,7 +50,7 @@ const projects: Project[] = [
   },
   {
     id: "pihealth",
-    index: "p.005",
+    index: "p.004",
     title: "Pi-health",
     kind: "Healthcare · hospital management",
     year: "2024",
@@ -72,7 +61,7 @@ const projects: Project[] = [
   },
   {
     id: "societyzen",
-    index: "p.006",
+    index: "p.005",
     title: "Societyzen",
     kind: "Civic · society management",
     year: "2023",
@@ -152,23 +141,7 @@ const ProjStagePreview = ({ project }: { project: Project }) => {
     >
       <div className="proj-preview-inner">
         <div className="proj-preview-frame">
-          {project.image.includes("placeholder") ? (
-            <div className="proj-preview-fallback">
-              <div className="fallback-dots">
-                <span /><span /><span />
-              </div>
-              <div className="fallback-code mono">
-                <span><i className="c-dim">$</i> <i className="c-acc">poetry</i> run fastapi-copilot</span>
-                <span><i className="c-dim">→</i> indexing <i className="c-glow">2,847</i> docs · <i className="c-acc">412</i> chunks</span>
-                <span><i className="c-dim">→</i> embeddings → <i className="c-glow">faiss/local.idx</i></span>
-                <span><i className="c-dim">→</i> agent ready · ctx <i className="c-acc">8192</i></span>
-                <span className="c-prompt">›<i className="cursor-blink">|</i></span>
-              </div>
-              <div className="fallback-title serif italic">{project.title}</div>
-            </div>
-          ) : (
-            <img src={project.image} alt={project.title} loading="lazy" />
-          )}
+          <img src={project.image} alt={project.title} loading="lazy" />
           <div className="proj-preview-tag mono">{project.index}</div>
         </div>
         <div className="proj-preview-meta">
