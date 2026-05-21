@@ -10,6 +10,12 @@ const Hero = () => {
   const [time, setTime] = useState(() => formatTime());
   const [progress, setProgress] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [vw, setVw] = useState(
+    () => (typeof window !== "undefined" ? window.innerWidth : 1024),
+  );
+  const [vh, setVh] = useState(
+    () => (typeof window !== "undefined" ? window.innerHeight : 768),
+  );
 
   const progressRef = useRef(0);
   const trappedRef = useRef(true);
@@ -33,10 +39,14 @@ const Hero = () => {
   }, []);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    const onResize = () => {
+      setVw(window.innerWidth);
+      setVh(window.innerHeight);
+      setIsMobile(window.innerWidth < 768);
+    };
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
   // Scroll-trap: input drives `progress` directly, no page scroll happens until
@@ -238,12 +248,29 @@ const Hero = () => {
     };
   }, []);
 
-  // Card animates from a near-square start (matches the photo's natural ratio
-  // so we don't aggressively crop) to a wide landscape end frame.
-  const mediaW = 360 + progress * (isMobile ? 620 : 1200);
-  const mediaH = 440 + progress * (isMobile ? 220 : 380);
-  const titleShift = progress * (isMobile ? 95 : 60);
-  const metaFade = 1 - Math.min(1, progress * 1.4);
+  // Interpolate against the actual viewport so progress = 1 lines up with the
+  // visual endpoint (95vw × 85vh). Previously the card hit its max-width cap
+  // around progress = 0.5, leaving half the animation invisible — which made
+  // meta corners and the split title look like they hadn't finished.
+  // Smaller start on mobile so the card still has visible room to grow even
+  // though the target (95vw) is already small.
+  const startW = isMobile ? 260 : 360;
+  const startH = isMobile ? 340 : 440;
+  const targetW = vw * 0.95;
+  const targetH = vh * 0.85;
+  const mediaW = startW + progress * Math.max(0, targetW - startW);
+  const mediaH = startH + progress * Math.max(0, targetH - startH);
+  // 110vw / 130vw guarantee the title halves are fully off-screen at progress 1
+  // regardless of font scaling or viewport width.
+  const titleShift = progress * (isMobile ? 130 : 110);
+  // Hide the meta corners as soon as the photo starts dominating — by ~25%
+  // they're gone. Keeping them around longer looked cluttered, since the photo
+  // grows to 85vh and the corners sit in the small margin below it. Reverses
+  // symmetrically so they fade back in once you scroll back to ~25%.
+  const metaFade = Math.max(0, Math.min(1, (0.25 - progress) / 0.08));
+  // Beyond that threshold we also drop them from the DOM entirely so there's
+  // zero chance of them peeking through the photo's bottom margin.
+  const showMeta = metaFade > 0.01;
   const bgFade = 1 - progress * 0.65;
   // Start with a darker veil so the title halo reads cleanly over the photo;
   // ease off as the card expands and the title splits away.
@@ -257,26 +284,30 @@ const Hero = () => {
 
       <div className="hero-gradient" aria-hidden />
 
-      <div className="hero-meta hero-meta-tl mono" style={{ opacity: metaFade }}>
-        <span className="dim">// hello, world</span>
-        <span>init( ) → vector_field_v2.6</span>
-      </div>
+      {showMeta && (
+        <>
+          <div className="hero-meta hero-meta-tl mono" style={{ opacity: metaFade }}>
+            <span className="dim">// hello, world</span>
+            <span>init( ) → vector_field_v2.6</span>
+          </div>
 
-      <div className="hero-meta hero-meta-tr mono" style={{ opacity: metaFade }}>
-        <span className="dim">{time} EST · bloomington, IN</span>
-        <span className="dim">lat 39.17°N · lon -86.52°W</span>
-      </div>
+          <div className="hero-meta hero-meta-tr mono" style={{ opacity: metaFade }}>
+            <span className="dim">{time} EST · bloomington, IN</span>
+            <span className="dim">lat 39.17°N · lon -86.52°W</span>
+          </div>
 
-      <div className="hero-meta hero-meta-bl mono" style={{ opacity: metaFade }}>
-        <span className="dim">scroll to expand</span>
-        <span className="scroll-tick">↓</span>
-      </div>
+          <div className="hero-meta hero-meta-bl mono" style={{ opacity: metaFade }}>
+            <span className="dim">scroll to expand</span>
+            <span className="scroll-tick">↓</span>
+          </div>
 
-      <div className="hero-meta hero-meta-br mono" style={{ opacity: metaFade }}>
-        <span className="dim">currently — </span>
-        <span>shipping next.js</span>
-        <span className="dim">@ global health impact</span>
-      </div>
+          <div className="hero-meta hero-meta-br mono" style={{ opacity: metaFade }}>
+            <span className="dim">currently — </span>
+            <span>shipping next.js</span>
+            <span className="dim">@ global health impact</span>
+          </div>
+        </>
+      )}
 
       <div
         className="hero-portrait"
