@@ -18,7 +18,7 @@ const roles: Role[] = [
     id: "ghi",
     title: "Frontend Developer",
     org: "Global Health Impact",
-    range: "Feb 2026 - present · United States",
+    range: "Feb 2026 - present · Indiana, United States",
     current: true,
     tags: ["next.js", "jetstream2", "rest api", "data pipelines"],
     body: "Spearheading migration of a legacy Flask global-health forecasting platform onto a modular, API-driven Next.js architecture - projected −40% page-load latency on the heaviest research tools and faster feature delivery. Built cloud-backed analytics workflows on Jetstream2 holding 99.9% uptime for the pipelines that feed global-health policy analysis.",
@@ -31,7 +31,7 @@ const roles: Role[] = [
     id: "grad-research",
     title: "Graduate Research Assistant",
     org: "Indiana University Bloomington",
-    range: "Jan 2026 - May 2026 · United States",
+    range: "Jan 2026 - May 2026 · Indiana, United States",
     tags: ["hnsw", "ann", "vector storage", "python", "numpy"],
     body: "Architected a file-system–backed vector storage engine for 1M+ high-dimensional embeddings, tuning HNSW indexing to drop NN-search latency 35% while holding 95%+ recall under tight memory. Ran controlled performance experiments across memory thresholds; disk-assisted hybrid indexing pushed throughput +28% and cut memory overhead 40% without giving up retrieval quality.",
     metrics: [
@@ -44,7 +44,7 @@ const roles: Role[] = [
     id: "ai-research",
     title: "AI Research Engineer",
     org: "Indiana University Bloomington",
-    range: "Jan 2026 - May 2026 · United States",
+    range: "Jan 2026 - May 2026 · Indiana, United States",
     tags: ["rag", "cag", "genomics", "evals", "llm"],
     body: "Designed a scalable RAG-based clinical-genomics QA system over 50K+ NIH NHGRI documents. Built a high-throughput ingestion pipeline processing 10K+ records per cycle and cut query response latency 36%. Wrote an evaluation & benchmarking framework for genomic retrieval; a hybrid RAG–CAG architecture improved precision 20% and dropped hallucination rates 25%.",
     metrics: [
