@@ -38,7 +38,7 @@ const corpus: Doc[] = [
   {
     id: "loc",
     tags: ["location", "where", "based", "city"],
-    text: "Currently in Bloomington, Indiana - Eastern timezone, lat 39.17°N lon -86.52°W.",
+    text: "Based in the United States · Eastern timezone.",
   },
   {
     id: "contact",

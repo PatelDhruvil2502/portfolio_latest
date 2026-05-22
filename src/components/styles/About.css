@@ -25,6 +25,11 @@
   letter-spacing: 0.04em;
 }
 
+.about-coord-open {
+  color: var(--glow);
+  letter-spacing: 0.04em;
+}
+
 .about-body {
   max-width: 880px;
 }

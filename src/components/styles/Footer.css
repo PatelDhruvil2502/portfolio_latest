@@ -70,6 +70,30 @@
   width: 100%;
 }
 
+.footer-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink);
+  font-size: 0.85rem;
+  margin-top: 0.4rem;
+  letter-spacing: 0.02em;
+}
+
+.footer-open-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--glow);
+  box-shadow: 0 0 0 4px rgba(184, 255, 94, 0.18);
+  animation: footer-open-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes footer-open-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(184, 255, 94, 0.18); }
+  50% { box-shadow: 0 0 0 8px rgba(184, 255, 94, 0); }
+}
+
 .ink-faint {
   color: var(--ink-faint);
 }

@@ -337,7 +337,7 @@ const Hero = () => {
           <div className="m-hero-photo-gradient" aria-hidden />
           <div className="m-hero-photo-overlay">
             <p className="m-hero-eyebrow mono">
-              <span className="dot" /> embedding · 2025–26
+              <span className="dot" /> open for full-time roles · may 2026
             </p>
             <h1 className="m-hero-title serif">
               <span className="m-line">
@@ -393,8 +393,11 @@ const Hero = () => {
             className="hero-meta hero-meta-tr mono"
             style={{ opacity: metaFade }}
           >
-            <span className="dim">{time} EST · bloomington, IN</span>
-            <span className="dim">lat 39.17°N · lon -86.52°W</span>
+            <span className="dim">{time} EST · united states</span>
+            <span className="hero-meta-open">
+              <span className="hero-meta-dot" aria-hidden /> open for full-time
+              roles · may 2026
+            </span>
           </div>
 
           <div

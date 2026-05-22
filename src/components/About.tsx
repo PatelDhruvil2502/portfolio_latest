@@ -10,11 +10,11 @@ const About = () => {
           <div className="about-meta">
             <p className="eyebrow">/ 01 - origin vector</p>
             <p className="mono about-coord">
-              x: 39.17°N
+              loc: united states
               <br />
-              y: -86.52°W
+              tz:&nbsp; eastern time
               <br />
-              z: stack[0]
+              <span className="about-coord-open">status: open to roles</span>
             </p>
           </div>
 

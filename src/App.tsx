@@ -27,8 +27,8 @@ const App = () => {
           items={[
             "React · Next.js · TypeScript · accessibility · perf",
             "RAG · CAG · HNSW · ANN · vector search",
-            "Global Health Impact · Bloomington, IN",
-            "open to conversations - full-time, May 2026",
+            "currently shipping @ Global Health Impact",
+            "open for full-time SWE / frontend roles · May 2026",
           ]}
         />
         <Experience />

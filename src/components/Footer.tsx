@@ -28,7 +28,11 @@ const Footer = () => {
                 </a>
               </li>
               <li className="mono ink-faint">
-                +1 (708) 996-9690 · Bloomington, IN
+                +1 (708) 996-9690 · United States
+              </li>
+              <li className="mono footer-open">
+                <span className="footer-open-dot" aria-hidden /> open for
+                full-time roles · May 2026
               </li>
             </ul>
           </div>

@@ -68,6 +68,30 @@
   color: var(--ink-faint);
 }
 
+/* "Open for roles" badge in the top-right meta corner */
+.hero-meta-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--ink);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+.hero-meta-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--glow);
+  box-shadow: 0 0 0 3px rgba(184, 255, 94, 0.18);
+  animation: hero-meta-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes hero-meta-pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(184, 255, 94, 0.18); }
+  50% { box-shadow: 0 0 0 7px rgba(184, 255, 94, 0); }
+}
+
 .hero-meta-tl {
   top: 6rem;
   left: var(--gutter);
