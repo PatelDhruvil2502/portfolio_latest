@@ -30,6 +30,7 @@ const Navbar = () => {
   const [pill, setPill] = useState<PillRect>({ left: 0, width: 0, ready: false });
 
   const railRef = useRef<HTMLDivElement | null>(null);
+  const brandRef = useRef<HTMLAnchorElement | null>(null);
   const linkRefs = useRef<Map<string, HTMLAnchorElement>>(new Map());
 
   useLayoutEffect(() => {
@@ -105,12 +106,15 @@ const Navbar = () => {
       if (t?.closest('input, textarea, select, [contenteditable="true"]')) return;
 
       let targetId: string | null = null;
+      let trigger: HTMLAnchorElement | null = null;
       if (e.key === "0") {
         targetId = "top";
+        trigger = brandRef.current;
       } else {
         const n = Number(e.key);
         if (Number.isInteger(n) && n >= 1 && n <= links.length) {
           targetId = links[n - 1].id;
+          trigger = linkRefs.current.get(targetId) ?? null;
         }
       }
       if (!targetId) return;
@@ -118,7 +122,16 @@ const Navbar = () => {
       e.preventDefault();
       setPressed(targetId);
       window.setTimeout(() => setPressed((p) => (p === targetId ? null : p)), 400);
-      scrollToId(targetId);
+
+      // Dispatch a real click on the anchor so Hero's scroll-trap release
+      // handler fires and SmoothScroll's Lenis-driven scroll then runs.
+      // Calling lenis.scrollTo directly would no-op while the hero trap is
+      // engaged (overflow hidden + lenis.stop()) on first page load.
+      if (trigger) {
+        trigger.click();
+      } else {
+        scrollToId(targetId);
+      }
       setOpen(false);
     };
 
@@ -128,7 +141,7 @@ const Navbar = () => {
 
   return (
     <header className={`nav ${scrolled ? "is-scrolled" : ""}`}>
-      <a href="#top" className="nav-brand" aria-label="Home">
+      <a href="#top" className="nav-brand" aria-label="Home" ref={brandRef}>
         <span className="brand-mark">
           <span className="brand-mark-ring" aria-hidden />
           <span className="brand-mark-letters">DP</span>
