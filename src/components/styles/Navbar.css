@@ -1,3 +1,10 @@
+/* ============================================================
+   Navbar — "Probe Bar"
+   Glassy floating rail with a morphing accent pill, decoder
+   caret on the active section, a rotating ring around the
+   brand mark, and a scroll-progress strip underneath.
+   ============================================================ */
+
 .nav {
   position: fixed;
   top: 0;
@@ -7,18 +14,24 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.25rem var(--gutter);
-  transition: backdrop-filter 0.4s ease, background 0.4s ease, padding 0.4s ease;
+  padding: 1rem var(--gutter);
+  transition:
+    backdrop-filter 0.4s ease,
+    background 0.4s ease,
+    padding 0.4s ease,
+    border-color 0.4s ease;
+  border-bottom: 1px solid transparent;
 }
 
 .nav.is-scrolled {
-  background: rgba(11, 10, 20, 0.65);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  border-bottom: 1px solid var(--line);
-  padding: 0.75rem var(--gutter);
+  background: rgba(11, 10, 20, 0.6);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border-bottom-color: var(--line);
+  padding: 0.6rem var(--gutter);
 }
 
+/* ---------- Brand ---------- */
 .nav-brand {
   display: flex;
   align-items: center;
@@ -28,24 +41,68 @@
 }
 
 .brand-mark {
-  width: 38px;
-  height: 38px;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+}
+
+.brand-mark-letters {
+  position: relative;
+  z-index: 2;
+  width: 32px;
+  height: 32px;
   display: grid;
   place-items: center;
   border: 1px solid var(--ink);
   border-radius: 50%;
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   letter-spacing: -0.04em;
-  transition: background 0.3s, color 0.3s, transform 0.3s;
+  transition:
+    background 0.3s,
+    color 0.3s,
+    transform 0.4s var(--ease-out-quart),
+    border-color 0.3s;
+  background: rgba(11, 10, 20, 0.4);
 }
 
-.nav-brand:hover .brand-mark {
+.brand-mark-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px dashed var(--line-strong);
+  animation: brand-spin 18s linear infinite;
+  pointer-events: none;
+}
+
+.brand-mark-ring::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translateX(-50%);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+@keyframes brand-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.nav-brand:hover .brand-mark-letters {
   background: var(--accent);
   color: var(--bg);
   border-color: var(--accent);
-  transform: rotate(-12deg);
+  transform: rotate(-10deg);
 }
 
 .brand-meta {
@@ -60,61 +117,201 @@
   color: var(--ink-faint);
   font-size: 0.66rem;
   letter-spacing: 0.08em;
-}
-
-.nav-links {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.4rem;
 }
 
-.nav-link {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.4rem;
-  padding: 0.55rem 0.85rem;
-  border-radius: 999px;
-  font-size: 0.92rem;
-  letter-spacing: -0.005em;
-  color: var(--ink-dim);
-  transition: color 0.25s, background 0.25s;
-  position: relative;
+.brand-status-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--glow);
+  box-shadow: 0 0 0 3px rgba(184, 255, 94, 0.18);
+  animation: brand-status 2.4s ease-in-out infinite;
 }
 
-.nav-link::before {
-  content: "";
+@keyframes brand-status {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(184, 255, 94, 0.18); }
+  50% { box-shadow: 0 0 0 6px rgba(184, 255, 94, 0); }
+}
+
+/* ---------- Right-side cluster ---------- */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ---------- Rail (the floating glass capsule) ---------- */
+.nav-rail {
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  padding: 0.3rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(245, 237, 225, 0.025);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* The morphing accent pill that slides between items */
+.nav-rail-pill {
   position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  border: 1px solid transparent;
-  transition: border-color 0.25s;
+  top: 0.3rem;
+  bottom: 0.3rem;
+  left: 0;
+  border-radius: 999px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 94, 58, 0.18),
+    rgba(255, 94, 58, 0.08)
+  );
+  border: 1px solid var(--accent);
+  box-shadow:
+    0 0 24px rgba(255, 94, 58, 0.25),
+    inset 0 0 12px rgba(255, 94, 58, 0.06);
+  opacity: 0;
+  transition:
+    transform 0.55s cubic-bezier(0.32, 1.4, 0.55, 1),
+    width 0.55s cubic-bezier(0.32, 1.4, 0.55, 1),
+    opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform, width;
+}
+
+.nav-rail-pill.is-ready {
+  opacity: 1;
+}
+
+/* ---------- Links ---------- */
+.nav-link {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  letter-spacing: -0.005em;
+  color: var(--ink-dim);
+  transition: color 0.25s ease;
+  white-space: nowrap;
 }
 
 .nav-link:hover {
   color: var(--ink);
 }
 
-.nav-link:hover::before {
-  border-color: var(--line);
-}
-
 .nav-link.is-active {
   color: var(--ink);
 }
 
-.nav-link.is-active::before {
-  border-color: var(--accent);
-  background: rgba(255, 94, 58, 0.08);
-}
-
 .nav-link-code {
   font-size: 0.62rem;
-  color: var(--accent);
-  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  letter-spacing: 0.12em;
+  transition: color 0.3s ease;
 }
 
+.nav-link:hover .nav-link-code {
+  color: var(--ink-dim);
+}
+
+.nav-link.is-active .nav-link-code {
+  color: var(--accent);
+}
+
+.nav-link-label {
+  position: relative;
+}
+
+/* Keycap tooltip — reveals the keyboard shortcut on hover */
+.nav-link::after {
+  content: attr(data-shortcut);
+  position: absolute;
+  top: calc(100% + 0.55rem);
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  min-width: 20px;
+  padding: 0.18rem 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  line-height: 1;
+  color: var(--ink);
+  text-align: center;
+  background: rgba(11, 10, 20, 0.92);
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  box-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.4),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.3s var(--ease-out-quart);
+  z-index: 5;
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Press feedback — when the user actually hits 1–5 */
+.nav-link.is-pressed {
+  animation: nav-press 0.4s var(--ease-out-quart);
+}
+
+.nav-link.is-pressed .nav-link-code {
+  color: var(--accent);
+  text-shadow: 0 0 8px rgba(255, 94, 58, 0.55);
+}
+
+@keyframes nav-press {
+  0%, 100% { transform: scale(1); }
+  40% { transform: scale(0.93); }
+}
+
+/* Decoder caret — blinks next to active section */
+.nav-link-caret {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-left: 0.1rem;
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity 0.25s ease,
+    transform 0.4s var(--ease-out-quart);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.nav-link.is-active .nav-link-caret {
+  opacity: 1;
+  transform: scale(1);
+  animation: caret-blink 1.4s steps(2, end) infinite;
+}
+
+@keyframes caret-blink {
+  0%, 60% { opacity: 1; }
+  61%, 100% { opacity: 0.25; }
+}
+
+/* ---------- Resume button ---------- */
 .nav-resume {
-  margin-left: 0.6rem;
+  margin-left: 0.4rem;
   padding: 0.6rem 1rem;
   border-radius: 999px;
   background: var(--ink);
@@ -125,7 +322,11 @@
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  transition: transform 0.25s, background 0.25s, color 0.25s;
+  transition:
+    transform 0.25s,
+    background 0.25s,
+    color 0.25s,
+    box-shadow 0.25s;
 }
 
 .nav-resume .dot {
@@ -141,6 +342,7 @@
   background: var(--accent);
   color: var(--bg);
   transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(255, 94, 58, 0.25);
 }
 
 @keyframes pulse {
@@ -148,6 +350,35 @@
   50% { box-shadow: 0 0 0 8px rgba(255, 94, 58, 0); }
 }
 
+/* ---------- Scroll progress strip at the bottom of the navbar ---------- */
+.nav-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.nav-progress-fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--accent) 0%,
+    var(--accent-soft) 55%,
+    var(--glow) 100%
+  );
+  box-shadow: 0 0 12px rgba(255, 94, 58, 0.55);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.12s linear;
+  will-change: transform;
+}
+
+/* ---------- Mobile toggle ---------- */
 .nav-toggle {
   display: none;
   width: 42px;
@@ -158,6 +389,8 @@
   justify-content: center;
   position: relative;
   z-index: 2;
+  background: rgba(11, 10, 20, 0.4);
+  backdrop-filter: blur(6px);
 }
 
 .nav-toggle span {
@@ -165,7 +398,9 @@
   width: 18px;
   height: 1.5px;
   background: var(--ink);
-  transition: transform 0.3s, opacity 0.3s;
+  transition:
+    transform 0.3s var(--ease-out-quart),
+    opacity 0.3s;
 }
 
 .nav-toggle span:nth-child(1) { transform: translateY(-4px); }
@@ -174,6 +409,7 @@
 .nav-toggle.is-open span:nth-child(1) { transform: rotate(45deg); }
 .nav-toggle.is-open span:nth-child(2) { transform: rotate(-45deg); }
 
+/* ---------- Mobile layout ---------- */
 @media (max-width: 900px) {
   .nav-toggle {
     display: flex;
@@ -194,9 +430,33 @@
   .nav-links.is-open {
     transform: translateX(0);
   }
+  .nav-rail {
+    flex-direction: column;
+    border: 0;
+    background: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+    padding: 0;
+    gap: 0.6rem;
+  }
+  .nav-rail-pill {
+    display: none;
+  }
   .nav-link {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     padding: 0.4rem 1.2rem;
+    border: 1px solid transparent;
+  }
+  .nav-link.is-active {
+    border-color: var(--accent);
+    background: rgba(255, 94, 58, 0.08);
+  }
+  .nav-link::after {
+    display: none;
+  }
+  .nav-link-caret {
+    width: 8px;
+    height: 8px;
   }
   .brand-meta {
     display: none;
