@@ -18,6 +18,17 @@
       href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <!-- Kick off the hero portrait download in parallel with the JS bundle.
+         imagesrcset + type lets the browser pick AVIF when supported and
+         fall back to WebP otherwise; the <picture> in Hero.tsx still
+         handles the very-old-browser PNG/JPEG path. -->
+    <link
+      rel="preload"
+      as="image"
+      href="/images/dhruvil.avif"
+      type="image/avif"
+      fetchpriority="high"
+    />
   </head>
   <body>
     <div id="root"></div>

@@ -103,6 +103,19 @@ const Projects = () => {
   );
 };
 
+// Replaces /images/foo.png with /images/foo.avif (or .webp) without
+// hard-coding both paths everywhere the data is defined.
+const swapExt = (src: string, ext: string) =>
+  src.replace(/\.(png|jpe?g)$/i, `.${ext}`);
+
+const ProjectImage = ({ src, alt }: { src: string; alt: string }) => (
+  <picture>
+    <source srcSet={swapExt(src, "avif")} type="image/avif" />
+    <source srcSet={swapExt(src, "webp")} type="image/webp" />
+    <img src={src} alt={alt} loading="lazy" decoding="async" />
+  </picture>
+);
+
 const ProjStagePreview = ({ project }: { project: Project }) => {
   const wrapRef = useRef<HTMLDivElement>(null);
 
@@ -136,7 +149,7 @@ const ProjStagePreview = ({ project }: { project: Project }) => {
     >
       <div className="proj-preview-inner">
         <div className="proj-preview-frame">
-          <img src={project.image} alt={project.title} loading="lazy" />
+          <ProjectImage src={project.image} alt={project.title} />
           <div className="proj-preview-tag mono">{project.index}</div>
         </div>
         <div className="proj-preview-meta">

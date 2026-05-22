@@ -1,8 +1,27 @@
-import { useEffect, useRef, useState } from "react";
-import EmbeddingField from "./scene/EmbeddingField";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import "./styles/Hero.css";
 
-const PORTRAIT_SRC = "/images/dhruvil.jpeg";
+// Defer the WebGL field so its three.js chunk doesn't block first paint -
+// the hero text and portrait can render while the scene loads in.
+const EmbeddingField = lazy(() => import("./scene/EmbeddingField"));
+
+const PORTRAIT_AVIF = "/images/dhruvil.avif";
+const PORTRAIT_WEBP = "/images/dhruvil.webp";
+const PORTRAIT_FALLBACK = "/images/dhruvil.jpeg";
+
+const HeroPortrait = ({ eager = true }: { eager?: boolean }) => (
+  <picture>
+    <source srcSet={PORTRAIT_AVIF} type="image/avif" />
+    <source srcSet={PORTRAIT_WEBP} type="image/webp" />
+    <img
+      src={PORTRAIT_FALLBACK}
+      alt="Dhruvil Patel"
+      loading={eager ? "eager" : "lazy"}
+      decoding="async"
+      fetchPriority={eager ? "high" : "auto"}
+    />
+  </picture>
+);
 
 const Hero = () => {
   const mouse = useRef<[number, number]>([0, 0]);
@@ -24,6 +43,26 @@ const Hero = () => {
 
   const progressRef = useRef(0);
   const trappedRef = useRef(true);
+
+  // Mount the heavy three.js scene only after the browser is idle so the
+  // hero text and portrait render first. Falls back to a short timeout
+  // where requestIdleCallback isn't available (Safari).
+  const [showField, setShowField] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    type IdleWindow = Window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+      cancelIdleCallback?: (id: number) => void;
+    };
+    const w = window as IdleWindow;
+    const reveal = () => setShowField(true);
+    if (w.requestIdleCallback) {
+      const id = w.requestIdleCallback(reveal, { timeout: 600 });
+      return () => w.cancelIdleCallback?.(id);
+    }
+    const id = window.setTimeout(reveal, 250);
+    return () => window.clearTimeout(id);
+  }, []);
 
   useEffect(() => {
     const el = heroRef.current;
@@ -317,7 +356,7 @@ const Hero = () => {
     return (
       <section className="hero hero-mobile" id="top">
         <div className="m-hero-photo">
-          <img src={PORTRAIT_SRC} alt="Dhruvil Patel" loading="eager" />
+          <HeroPortrait />
           <div className="m-hero-photo-gradient" aria-hidden />
           <div className="m-hero-photo-overlay">
             <p className="m-hero-eyebrow mono">
@@ -357,8 +396,16 @@ const Hero = () => {
 
   return (
     <section className="hero" id="top" ref={heroRef}>
-      <div className="hero-scene" aria-hidden style={{ opacity: bgFade }}>
-        <EmbeddingField mouse={mouse} />
+      <div
+        className={`hero-scene ${showField ? "is-loaded" : ""}`}
+        aria-hidden
+        style={{ opacity: showField ? bgFade : 0 }}
+      >
+        {showField && (
+          <Suspense fallback={null}>
+            <EmbeddingField mouse={mouse} />
+          </Suspense>
+        )}
       </div>
 
       <div className="hero-gradient" aria-hidden />
@@ -407,7 +454,7 @@ const Hero = () => {
           height: `${mediaH}px`,
         }}
       >
-        <img src={PORTRAIT_SRC} alt="Dhruvil Patel" loading="eager" />
+        <HeroPortrait />
         <div
           className="hero-portrait-veil"
           style={{ opacity: veilFade }}
