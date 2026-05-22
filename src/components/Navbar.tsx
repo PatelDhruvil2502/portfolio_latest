@@ -27,13 +27,30 @@ const Navbar = () => {
       },
       { rootMargin: "-40% 0px -50% 0px" },
     );
-    links.forEach((l) => {
-      const el = document.getElementById(l.id);
-      if (el) io.observe(el);
-    });
+
+    // Lazy-loaded sections (e.g. Projects, Query) mount after the navbar,
+    // so retry observation until every section has been picked up.
+    const observed = new Set<string>();
+    const observeAvailable = () => {
+      links.forEach((l) => {
+        if (observed.has(l.id)) return;
+        const el = document.getElementById(l.id);
+        if (el) {
+          io.observe(el);
+          observed.add(l.id);
+        }
+      });
+      if (observed.size === links.length) mo.disconnect();
+    };
+
+    const mo = new MutationObserver(observeAvailable);
+    mo.observe(document.body, { childList: true, subtree: true });
+    observeAvailable();
+
     return () => {
       window.removeEventListener("scroll", onScroll);
       io.disconnect();
+      mo.disconnect();
     };
   }, []);
 
