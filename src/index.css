@@ -1,5 +1,5 @@
 /* ============================================================
-   Latent Space — Design System
+   Latent Space - Design System
    ============================================================ */
 
 :root {
@@ -70,8 +70,16 @@ body {
 body {
   /* Subtle radial vignette for depth */
   background:
-    radial-gradient(1200px 800px at 20% -10%, rgba(255, 94, 58, 0.08), transparent 60%),
-    radial-gradient(900px 700px at 90% 10%, rgba(184, 255, 94, 0.05), transparent 60%),
+    radial-gradient(
+      1200px 800px at 20% -10%,
+      rgba(255, 94, 58, 0.08),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 700px at 90% 10%,
+      rgba(184, 255, 94, 0.05),
+      transparent 60%
+    ),
     var(--bg);
 }
 
@@ -100,7 +108,7 @@ img {
 }
 
 /* ============================================================
-   Grain overlay — hand-crafted feel
+   Grain overlay - hand-crafted feel
    ============================================================ */
 .grain {
   position: fixed;
@@ -132,7 +140,9 @@ img {
   height: 6px;
   background: var(--ink);
   transform: translate(-50%, -50%);
-  transition: transform 0.2s var(--ease-out-quart), opacity 0.2s;
+  transition:
+    transform 0.2s var(--ease-out-quart),
+    opacity 0.2s;
 }
 
 .cursor-ring {
@@ -140,7 +150,11 @@ img {
   height: 36px;
   border: 1px solid var(--ink);
   transform: translate(-50%, -50%);
-  transition: transform 0.4s var(--ease-out-quart), width 0.3s, height 0.3s, border-color 0.3s;
+  transition:
+    transform 0.4s var(--ease-out-quart),
+    width 0.3s,
+    height 0.3s,
+    border-color 0.3s;
 }
 
 .cursor-ring.is-hover {
@@ -229,7 +243,9 @@ img {
 .fade-up {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.9s var(--ease-out-quart), transform 0.9s var(--ease-out-quart);
+  transition:
+    opacity 0.9s var(--ease-out-quart),
+    transform 0.9s var(--ease-out-quart);
 }
 
 .fade-up.in {
@@ -268,8 +284,12 @@ img {
 }
 
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 /* ============================================================
@@ -287,9 +307,13 @@ img {
   width: 8px;
   height: 8px;
 }
-::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
 ::-webkit-scrollbar-thumb {
   background: var(--bg-3);
   border-radius: 4px;
 }
-::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}

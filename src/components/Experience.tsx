@@ -18,11 +18,10 @@ const roles: Role[] = [
     id: "ghi",
     title: "Frontend Developer",
     org: "Global Health Impact",
-    range: "Feb 2026 — present · Bloomington, IN",
+    range: "Feb 2026 - present · Bloomington, IN",
     current: true,
     tags: ["next.js", "jetstream2", "rest api", "data pipelines"],
-    body:
-      "Spearheading migration of a legacy Flask global-health forecasting platform onto a modular, API-driven Next.js architecture — projected −40% page-load latency on the heaviest research tools and faster feature delivery. Built cloud-backed analytics workflows on Jetstream2 holding 99.9% uptime for the pipelines that feed global-health policy analysis.",
+    body: "Spearheading migration of a legacy Flask global-health forecasting platform onto a modular, API-driven Next.js architecture - projected −40% page-load latency on the heaviest research tools and faster feature delivery. Built cloud-backed analytics workflows on Jetstream2 holding 99.9% uptime for the pipelines that feed global-health policy analysis.",
     metrics: [
       { label: "page latency", value: "−40%" },
       { label: "pipeline uptime", value: "99.9%" },
@@ -32,10 +31,9 @@ const roles: Role[] = [
     id: "grad-research",
     title: "Graduate Research Assistant",
     org: "Indiana University Bloomington",
-    range: "Jan 2026 — May 2026 · Bloomington, IN",
+    range: "Jan 2026 - May 2026 · Bloomington, IN",
     tags: ["hnsw", "ann", "vector storage", "python", "numpy"],
-    body:
-      "Architected a file-system–backed vector storage engine for 1M+ high-dimensional embeddings, tuning HNSW indexing to drop NN-search latency 35% while holding 95%+ recall under tight memory. Ran controlled performance experiments across memory thresholds; disk-assisted hybrid indexing pushed throughput +28% and cut memory overhead 40% without giving up retrieval quality.",
+    body: "Architected a file-system–backed vector storage engine for 1M+ high-dimensional embeddings, tuning HNSW indexing to drop NN-search latency 35% while holding 95%+ recall under tight memory. Ran controlled performance experiments across memory thresholds; disk-assisted hybrid indexing pushed throughput +28% and cut memory overhead 40% without giving up retrieval quality.",
     metrics: [
       { label: "search latency", value: "−35%" },
       { label: "throughput", value: "+28%" },
@@ -46,10 +44,9 @@ const roles: Role[] = [
     id: "ai-research",
     title: "AI Research Engineer",
     org: "Indiana University Bloomington",
-    range: "Jan 2026 — May 2026 · Bloomington, IN",
+    range: "Jan 2026 - May 2026 · Bloomington, IN",
     tags: ["rag", "cag", "genomics", "evals", "llm"],
-    body:
-      "Designed a scalable RAG-based clinical-genomics QA system over 50K+ NIH NHGRI documents. Built a high-throughput ingestion pipeline processing 10K+ records per cycle and cut query response latency 36%. Wrote an evaluation & benchmarking framework for genomic retrieval; a hybrid RAG–CAG architecture improved precision 20% and dropped hallucination rates 25%.",
+    body: "Designed a scalable RAG-based clinical-genomics QA system over 50K+ NIH NHGRI documents. Built a high-throughput ingestion pipeline processing 10K+ records per cycle and cut query response latency 36%. Wrote an evaluation & benchmarking framework for genomic retrieval; a hybrid RAG–CAG architecture improved precision 20% and dropped hallucination rates 25%.",
     metrics: [
       { label: "latency", value: "−36%" },
       { label: "precision", value: "+20%" },
@@ -60,10 +57,9 @@ const roles: Role[] = [
     id: "fuzzy-cloud",
     title: "React Developer Intern",
     org: "Fuzzy Cloud",
-    range: "Dec 2023 — Apr 2024 · Gujarat, India",
+    range: "Dec 2023 - Apr 2024 · Gujarat, India",
     tags: ["typescript", "zod", "jotai", "dexie", "react"],
-    body:
-      "Architected a type-safe patient-data module for a Hospital Management System using TypeScript + Zod, eliminating schema inconsistencies 90% while modernizing 40+ legacy components — −22% regression defects, +20% feature delivery. Optimized frontend architecture with Jotai state and Dexie.js offline persistence: +30% rendering performance, 100% data reliability across 1,000+ test sessions.",
+    body: "Architected a type-safe patient-data module for a Hospital Management System using TypeScript + Zod, eliminating schema inconsistencies 90% while modernizing 40+ legacy components - −22% regression defects, +20% feature delivery. Optimized frontend architecture with Jotai state and Dexie.js offline persistence: +30% rendering performance, 100% data reliability across 1,000+ test sessions.",
     metrics: [
       { label: "schema drift", value: "−90%" },
       { label: "frontend perf", value: "+30%" },
@@ -80,7 +76,7 @@ const Experience = () => {
     <section className="section exp" id="experience">
       <div className="shell">
         <div className="exp-head fade-up" ref={headRef}>
-          <p className="eyebrow">/ 02 — trained on</p>
+          <p className="eyebrow">/ 02 - trained on</p>
           <h2 className="exp-title serif">
             The corpus<i className="accent">.</i> What I read
             <br />
@@ -125,7 +121,9 @@ const ExpRow = ({
   return (
     <div className={`exp-row ${isOpen ? "is-open" : ""}`}>
       <button className="exp-row-head" onClick={onToggle}>
-        <span className="exp-idx mono">{String(index + 1).padStart(2, "0")}</span>
+        <span className="exp-idx mono">
+          {String(index + 1).padStart(2, "0")}
+        </span>
         <div className="exp-row-main">
           <h3 className="exp-row-title">
             {role.title}
@@ -152,7 +150,9 @@ const ExpRow = ({
           </div>
           <div className="exp-tags">
             {role.tags.map((t) => (
-              <span className="tag" key={t}>{t}</span>
+              <span className="tag" key={t}>
+                {t}
+              </span>
             ))}
           </div>
         </div>

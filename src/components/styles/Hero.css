@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   width: 100%;
-  /* One viewport tall — the page is scroll-locked during the animation,
+  /* One viewport tall - the page is scroll-locked during the animation,
      so we don't need extra height. Once the trap releases, this section
      scrolls past normally and About comes into view. */
   height: 100vh;
@@ -28,7 +28,12 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(60% 50% at 50% 90%, rgba(11, 10, 20, 0.95) 0%, rgba(11, 10, 20, 0.6) 50%, transparent 100%),
+    radial-gradient(
+      60% 50% at 50% 90%,
+      rgba(11, 10, 20, 0.95) 0%,
+      rgba(11, 10, 20, 0.6) 50%,
+      transparent 100%
+    ),
     radial-gradient(40% 30% at 50% 10%, rgba(11, 10, 20, 0.7), transparent 70%);
   z-index: 1;
   pointer-events: none;
@@ -49,8 +54,14 @@
 }
 
 @keyframes meta-in {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-meta .dim {
@@ -93,8 +104,15 @@
 }
 
 @keyframes scroll-tick {
-  0%, 100% { transform: translateY(0); opacity: 0.8; }
-  50% { transform: translateY(5px); opacity: 1; }
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(5px);
+    opacity: 1;
+  }
 }
 
 .hero-meta-br {
@@ -139,7 +157,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Bias the crop slightly upward — the card's aspect ratio shifts from
+  /* Bias the crop slightly upward - the card's aspect ratio shifts from
      near-square to wide-landscape during the animation, and most personal
      photos have the subject in the upper-center. Tweak if needed. */
   object-position: center 35%;
@@ -212,7 +230,7 @@
 }
 
 /* =========================================================================
-   Mobile hero — completely separate layout from desktop.
+   Mobile hero - completely separate layout from desktop.
    Magazine-cover: portrait photo dominates the top with name overlaid (with a
    vertical reveal on load), info card below. No scroll-trap, no 3D scene.
    None of the .hero-* desktop styles above apply on mobile because the
@@ -257,14 +275,13 @@
   .m-hero-photo-gradient {
     position: absolute;
     inset: 0;
-    background:
-      linear-gradient(
-        180deg,
-        rgba(11, 10, 20, 0.55) 0%,
-        transparent 22%,
-        transparent 50%,
-        rgba(11, 10, 20, 0.88) 100%
-      );
+    background: linear-gradient(
+      180deg,
+      rgba(11, 10, 20, 0.55) 0%,
+      transparent 22%,
+      transparent 50%,
+      rgba(11, 10, 20, 0.88) 100%
+    );
     pointer-events: none;
   }
 
@@ -327,10 +344,16 @@
     animation: m-word-up 0.75s var(--ease-out-quart) both;
   }
 
-  .m-line:nth-of-type(1) .m-word { animation-delay: 0.35s; }
-  .m-line:nth-of-type(2) .m-word { animation-delay: 0.5s; }
+  .m-line:nth-of-type(1) .m-word {
+    animation-delay: 0.35s;
+  }
+  .m-line:nth-of-type(2) .m-word {
+    animation-delay: 0.5s;
+  }
 
-  .m-word .italic { font-style: italic; }
+  .m-word .italic {
+    font-style: italic;
+  }
 
   .m-hero-body {
     padding: 1.6rem 1.25rem 2.6rem;
@@ -380,7 +403,9 @@
     background: rgba(11, 10, 20, 0.5);
     border: 1px solid var(--line);
     border-radius: 999px;
-    transition: border-color 0.3s, color 0.3s;
+    transition:
+      border-color 0.3s,
+      color 0.3s;
   }
 
   .m-hero-scroll:hover,
@@ -390,22 +415,42 @@
   }
 
   @keyframes m-photo-in {
-    from { opacity: 0; transform: scale(1.035); }
-    to   { opacity: 1; transform: scale(1); }
+    from {
+      opacity: 0;
+      transform: scale(1.035);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 
   @keyframes m-photo-drift {
-    from { transform: scale(1.02) translateY(0); }
-    to   { transform: scale(1.06) translateY(-1.5%); }
+    from {
+      transform: scale(1.02) translateY(0);
+    }
+    to {
+      transform: scale(1.06) translateY(-1.5%);
+    }
   }
 
   @keyframes m-word-up {
-    from { transform: translateY(110%); }
-    to   { transform: translateY(0); }
+    from {
+      transform: translateY(110%);
+    }
+    to {
+      transform: translateY(0);
+    }
   }
 
   @keyframes m-fade-up {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }

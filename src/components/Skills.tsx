@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useReveal } from "../hooks/useReveal";
 import "./styles/Skills.css";
 
-// Daily drivers — rotates through, spotlight
+// Daily drivers - rotates through, spotlight
 const drivers = [
   { name: "React", tagline: "where the user actually clicks", years: "5y" },
   { name: "TypeScript", tagline: "where it lies less", years: "4y" },
@@ -23,9 +23,31 @@ const aiStack = [
   "NLTK",
 ];
 
-const webStack = ["React", "Next.js", "TypeScript", "Tailwind", "Node.js", "Flutter"];
-const dataStack = ["FAISS", "ChromaDB", "Vector Stores", "SQL", "NoSQL", "NumPy", "Pandas"];
-const infraStack = ["Jetstream2", "Linux", "Git", "Jupyter", "Cloud", "Distributed Systems"];
+const webStack = [
+  "React",
+  "Next.js",
+  "TypeScript",
+  "Tailwind",
+  "Node.js",
+  "Flutter",
+];
+const dataStack = [
+  "FAISS",
+  "ChromaDB",
+  "Vector Stores",
+  "SQL",
+  "NoSQL",
+  "NumPy",
+  "Pandas",
+];
+const infraStack = [
+  "Jetstream2",
+  "Linux",
+  "Git",
+  "Jupyter",
+  "Cloud",
+  "Distributed Systems",
+];
 
 const Skills = () => {
   const head = useReveal<HTMLDivElement>();
@@ -33,14 +55,14 @@ const Skills = () => {
     <section className="section skills" id="skills">
       <div className="shell">
         <div className="skills-head fade-up" ref={head}>
-          <p className="eyebrow">/ 05 — activation map</p>
+          <p className="eyebrow">/ 05 - activation map</p>
           <h2 className="skills-title serif">
             Field notes on the tools
             <br />
             <span className="italic accent">I actually pick up.</span>
           </h2>
           <p className="skills-sub mono">
-            stats, opinions, evidence — sized by how often the neuron fires
+            stats, opinions, evidence - sized by how often the neuron fires
           </p>
         </div>
 
@@ -111,7 +133,8 @@ const SpotlightTile = () => {
       <header className="tile-head">
         <span className="tile-eyebrow mono">// daily driver</span>
         <span className="tile-meta mono">
-          {String(i + 1).padStart(2, "0")} / {String(drivers.length).padStart(2, "0")}
+          {String(i + 1).padStart(2, "0")} /{" "}
+          {String(drivers.length).padStart(2, "0")}
         </span>
       </header>
       <div className="spotlight-stage">
@@ -142,11 +165,12 @@ const AICluster = () => {
     <article className="tile tile-ai">
       <header className="tile-head">
         <span className="tile-eyebrow mono" style={{ color: "var(--glow)" }}>
-          // research stack — the other half
+          // research stack - the other half
         </span>
       </header>
       <h3 className="ai-title serif">
-        Retrieval, ranking, <i>everything that has to find before it generates.</i>
+        Retrieval, ranking,{" "}
+        <i>everything that has to find before it generates.</i>
       </h3>
       <div className="ai-tags">
         {aiStack.map((t, i) => (
@@ -197,7 +221,9 @@ const StatTile = ({ value, label, sub, color }: StatProps) => {
   }, []);
   return (
     <article className={`tile tile-stat ${shown ? "is-shown" : ""}`} ref={ref}>
-      <span className="stat-value serif" style={{ color }}>{value}</span>
+      <span className="stat-value serif" style={{ color }}>
+        {value}
+      </span>
       <span className="stat-label">{label}</span>
       <span className="stat-sub mono">{sub}</span>
     </article>
@@ -216,8 +242,8 @@ const CodeTile = () => {
       <pre className="code-body">
         <code>
           <span className="c-key">const</span>{" "}
-          <span className="c-var">dhruvil</span>{" "}
-          <span className="c-op">=</span> {"{"}
+          <span className="c-var">dhruvil</span> <span className="c-op">=</span>{" "}
+          {"{"}
           {"\n  "}
           <span className="c-prop">role</span>
           <span className="c-op">:</span>{" "}
@@ -225,20 +251,17 @@ const CodeTile = () => {
           <span className="c-op">,</span>
           {"\n  "}
           <span className="c-prop">obsessions</span>
-          <span className="c-op">:</span> [
-          {"\n    "}
+          <span className="c-op">:</span> [{"\n    "}
           <span className="c-str">"interfaces that don't lie"</span>
           <span className="c-op">,</span>
           {"\n    "}
           <span className="c-str">"perf budgets nobody else watches"</span>
           <span className="c-op">,</span>
-          {"\n  "}
-          ]<span className="c-op">,</span>
+          {"\n  "}]<span className="c-op">,</span>
           {"\n  "}
           <span className="c-prop">picks_up</span>
-          <span className="c-op">:</span>{" "}
-          <span className="c-fn">whatever</span>(
-          <span className="c-str">"the task needs"</span>),
+          <span className="c-op">:</span> <span className="c-fn">whatever</span>
+          (<span className="c-str">"the task needs"</span>),
           {"\n"}
           {"}"}
           <span className="cursor-blink">▍</span>
@@ -258,7 +281,9 @@ const QuoteTile = () => {
         The model is the easy part.
       </p>
       <footer className="tile-foot">
-        <span className="mono quote-attr">— me, after two demos that didn't ship</span>
+        <span className="mono quote-attr">
+          - me, after two demos that didn't ship
+        </span>
       </footer>
     </article>
   );
@@ -279,12 +304,16 @@ const GroupTile = ({ title, caption, color, stack, icon }: GroupProps) => {
       style={{ ["--group-color" as string]: color }}
     >
       <header className="group-head">
-        <span className="group-icon" style={{ color }}>{icon}</span>
+        <span className="group-icon" style={{ color }}>
+          {icon}
+        </span>
         <div>
           <h3 className="group-title">{title}</h3>
           <p className="group-caption mono">{caption}</p>
         </div>
-        <span className="group-count mono">{String(stack.length).padStart(2, "0")}</span>
+        <span className="group-count mono">
+          {String(stack.length).padStart(2, "0")}
+        </span>
       </header>
       <ul className="group-list">
         {stack.map((s) => (
@@ -302,7 +331,7 @@ const LangTile = () => {
     <article className="tile tile-langs">
       <header className="tile-head">
         <span className="tile-eyebrow mono" style={{ color: "var(--accent)" }}>
-          // languages — by line-count, not love
+          // languages - by line-count, not love
         </span>
       </header>
       <div className="lang-bars">
@@ -315,13 +344,14 @@ const LangTile = () => {
           { l: "C / C++", w: 56 },
           { l: "Dart", w: 48 },
         ].map((row, i) => (
-          <div className="lang-row" key={row.l} style={{ animationDelay: `${i * 0.06}s` }}>
+          <div
+            className="lang-row"
+            key={row.l}
+            style={{ animationDelay: `${i * 0.06}s` }}
+          >
             <span className="lang-name">{row.l}</span>
             <span className="lang-bar">
-              <span
-                className="lang-bar-fill"
-                style={{ width: `${row.w}%` }}
-              />
+              <span className="lang-bar-fill" style={{ width: `${row.w}%` }} />
             </span>
             <span className="lang-w mono">{row.w}</span>
           </div>

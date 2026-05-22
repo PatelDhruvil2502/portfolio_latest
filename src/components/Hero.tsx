@@ -9,17 +9,17 @@ const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [time, setTime] = useState(() => formatTime());
   const [progress, setProgress] = useState(0);
-  // Lazy-init so the very first render already knows whether we're on mobile —
+  // Lazy-init so the very first render already knows whether we're on mobile -
   // the scroll-trap vs auto-play decision is made on mount and we can't wait
   // for an async useEffect to flip this from `false` first.
   const [isMobile, setIsMobile] = useState(
     () => typeof window !== "undefined" && window.innerWidth < 768,
   );
-  const [vw, setVw] = useState(
-    () => (typeof window !== "undefined" ? window.innerWidth : 1024),
+  const [vw, setVw] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth : 1024,
   );
-  const [vh, setVh] = useState(
-    () => (typeof window !== "undefined" ? window.innerHeight : 768),
+  const [vh, setVh] = useState(() =>
+    typeof window !== "undefined" ? window.innerHeight : 768,
   );
 
   const progressRef = useRef(0);
@@ -68,7 +68,7 @@ const Hero = () => {
     }
 
     // Mobile gets a completely different layout (magazine-cover style, see
-    // render branch below) — no scroll-trap, no progress-driven animation, no
+    // render branch below) - no scroll-trap, no progress-driven animation, no
     // wheel/touch handlers. Bail out of the trap setup entirely.
     if (isMobile) {
       trappedRef.current = false;
@@ -81,7 +81,7 @@ const Hero = () => {
 
     const engageTrap = () => {
       trappedRef.current = true;
-      // Lock both html and body — depending on the scroll root, locking just
+      // Lock both html and body - depending on the scroll root, locking just
       // one isn't always enough to stop wheel-driven scroll.
       document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
@@ -177,7 +177,7 @@ const Hero = () => {
         touchStartY = touchY;
         return;
       }
-      // Released — only re-trap if user is at top and pulling down (scroll up)
+      // Released - only re-trap if user is at top and pulling down (scroll up)
       if (deltaY < -20 && atTop()) {
         e.preventDefault();
         e.stopImmediatePropagation();
@@ -204,7 +204,11 @@ const Hero = () => {
       if (!scrollKeys.has(e.key)) return;
       // Don't trap when the user is typing in an input/textarea
       const target = e.target as HTMLElement | null;
-      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA")) return;
+      if (
+        target &&
+        (target.tagName === "INPUT" || target.tagName === "TEXTAREA")
+      )
+        return;
       const down =
         e.key === "ArrowDown" ||
         e.key === "PageDown" ||
@@ -224,7 +228,7 @@ const Hero = () => {
       }
     };
 
-    // Anchor link clicks (navbar etc.) need to bypass the trap — release first
+    // Anchor link clicks (navbar etc.) need to bypass the trap - release first
     // so SmoothScroll's lenis.scrollTo can actually move the page.
     const handleAnchorClick = (e: MouseEvent) => {
       if (!trappedRef.current) return;
@@ -238,9 +242,18 @@ const Hero = () => {
     // capture: true → our handlers run in the capturing phase, before any
     // bubble-phase listener Lenis attaches. Together with stopImmediatePropagation
     // this fully shields the trap from Lenis's own input handling.
-    window.addEventListener("wheel", handleWheel, { passive: false, capture: true });
-    window.addEventListener("touchstart", handleTouchStart, { passive: false, capture: true });
-    window.addEventListener("touchmove", handleTouchMove, { passive: false, capture: true });
+    window.addEventListener("wheel", handleWheel, {
+      passive: false,
+      capture: true,
+    });
+    window.addEventListener("touchstart", handleTouchStart, {
+      passive: false,
+      capture: true,
+    });
+    window.addEventListener("touchmove", handleTouchMove, {
+      passive: false,
+      capture: true,
+    });
     window.addEventListener("touchend", handleTouchEnd);
     window.addEventListener("keydown", handleKey, { capture: true });
     document.addEventListener("click", handleAnchorClick, true);
@@ -248,11 +261,19 @@ const Hero = () => {
     return () => {
       cancelAnimationFrame(lenisRaf);
       // removeEventListener must match the capture flag used to add.
-      window.removeEventListener("wheel", handleWheel, { capture: true } as EventListenerOptions);
-      window.removeEventListener("touchstart", handleTouchStart, { capture: true } as EventListenerOptions);
-      window.removeEventListener("touchmove", handleTouchMove, { capture: true } as EventListenerOptions);
+      window.removeEventListener("wheel", handleWheel, {
+        capture: true,
+      } as EventListenerOptions);
+      window.removeEventListener("touchstart", handleTouchStart, {
+        capture: true,
+      } as EventListenerOptions);
+      window.removeEventListener("touchmove", handleTouchMove, {
+        capture: true,
+      } as EventListenerOptions);
       window.removeEventListener("touchend", handleTouchEnd);
-      window.removeEventListener("keydown", handleKey, { capture: true } as EventListenerOptions);
+      window.removeEventListener("keydown", handleKey, {
+        capture: true,
+      } as EventListenerOptions);
       window.removeEventListener("scroll", handleScrollReset);
       document.removeEventListener("click", handleAnchorClick, true);
       document.documentElement.style.overflow = "";
@@ -263,7 +284,7 @@ const Hero = () => {
 
   // Interpolate against the actual viewport so progress = 1 lines up with the
   // visual endpoint (95vw × 85vh). Previously the card hit its max-width cap
-  // around progress = 0.5, leaving half the animation invisible — which made
+  // around progress = 0.5, leaving half the animation invisible - which made
   // meta corners and the split title look like they hadn't finished.
   // Smaller start on mobile so the card still has visible room to grow even
   // though the target (95vw) is already small.
@@ -276,7 +297,7 @@ const Hero = () => {
   // 110vw / 130vw guarantee the title halves are fully off-screen at progress 1
   // regardless of font scaling or viewport width.
   const titleShift = progress * (isMobile ? 130 : 110);
-  // Hide the meta corners as soon as the photo starts dominating — by ~25%
+  // Hide the meta corners as soon as the photo starts dominating - by ~25%
   // they're gone. Keeping them around longer looked cluttered, since the photo
   // grows to 85vh and the corners sit in the small margin below it. Reverses
   // symmetrically so they fade back in once you scroll back to ~25%.
@@ -292,7 +313,7 @@ const Hero = () => {
   if (isMobile) {
     // Magazine-cover mobile hero. Photo dominates the top, name overlaid with
     // a vertical reveal animation, info card below. No scroll-trap, no 3D
-    // scene — both feel out of place on a narrow touch viewport.
+    // scene - both feel out of place on a narrow touch viewport.
     return (
       <section className="hero hero-mobile" id="top">
         <div className="m-hero-photo">
@@ -303,7 +324,9 @@ const Hero = () => {
               <span className="dot" /> embedding · 2025–26
             </p>
             <h1 className="m-hero-title serif">
-              <span className="m-line"><span className="m-word">Dhruvil</span></span>
+              <span className="m-line">
+                <span className="m-word">Dhruvil</span>
+              </span>
               <span className="m-line">
                 <span className="m-word">
                   <span className="italic">Patel</span>
@@ -319,7 +342,7 @@ const Hero = () => {
             A frontend engineer who treats the codebase like a notebook.
           </p>
           <div className="m-hero-currently mono">
-            <span className="dim">currently — </span>
+            <span className="dim">currently - </span>
             <span>shipping next.js</span>
             <span className="dim"> @ global health impact</span>
           </div>
@@ -342,23 +365,35 @@ const Hero = () => {
 
       {showMeta && (
         <>
-          <div className="hero-meta hero-meta-tl mono" style={{ opacity: metaFade }}>
+          <div
+            className="hero-meta hero-meta-tl mono"
+            style={{ opacity: metaFade }}
+          >
             <span className="dim">// hello, world</span>
             <span>init( ) → vector_field_v2.6</span>
           </div>
 
-          <div className="hero-meta hero-meta-tr mono" style={{ opacity: metaFade }}>
+          <div
+            className="hero-meta hero-meta-tr mono"
+            style={{ opacity: metaFade }}
+          >
             <span className="dim">{time} EST · bloomington, IN</span>
             <span className="dim">lat 39.17°N · lon -86.52°W</span>
           </div>
 
-          <div className="hero-meta hero-meta-bl mono" style={{ opacity: metaFade }}>
+          <div
+            className="hero-meta hero-meta-bl mono"
+            style={{ opacity: metaFade }}
+          >
             <span className="dim">scroll to expand</span>
             <span className="scroll-tick">↓</span>
           </div>
 
-          <div className="hero-meta hero-meta-br mono" style={{ opacity: metaFade }}>
-            <span className="dim">currently — </span>
+          <div
+            className="hero-meta hero-meta-br mono"
+            style={{ opacity: metaFade }}
+          >
+            <span className="dim">currently - </span>
             <span>shipping next.js</span>
             <span className="dim">@ global health impact</span>
           </div>

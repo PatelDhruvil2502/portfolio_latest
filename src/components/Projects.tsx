@@ -23,8 +23,7 @@ const projects: Project[] = [
     year: "2025",
     image: "/images/meetsmart.png",
     stack: ["Python", "FastAPI", "Whisper", "NLP"],
-    body:
-      "Meeting intelligence platform processing 200+ minutes of audio per session — auto-extracts notes & action items at 88% precision, cutting manual documentation time 70%. Multilingual sentiment + NLP pipelines hit 85% classification accuracy across 5 languages, expanding accessibility 60%.",
+    body: "Meeting intelligence platform processing 200+ minutes of audio per session - auto-extracts notes & action items at 88% precision, cutting manual documentation time 70%. Multilingual sentiment + NLP pipelines hit 85% classification accuracy across 5 languages, expanding accessibility 60%.",
   },
   {
     id: "car-detective",
@@ -34,8 +33,7 @@ const projects: Project[] = [
     year: "2024",
     image: "/images/car_detective.png",
     stack: ["Python", "Flask", "VGG16", "CNN"],
-    body:
-      "Fine-tuned VGG16 on a curated damage dataset to triage car-damage photos by severity and type. Flask service wraps the model; the interesting part was the data hygiene, not the model.",
+    body: "Fine-tuned VGG16 on a curated damage dataset to triage car-damage photos by severity and type. Flask service wraps the model; the interesting part was the data hygiene, not the model.",
   },
   {
     id: "what-the-tweet",
@@ -45,8 +43,7 @@ const projects: Project[] = [
     year: "2024",
     image: "/images/what_the_tweet.png",
     stack: ["Python", "Keras", "BiLSTM"],
-    body:
-      "BiLSTM classifier over a noisy Twitter corpus. Spent more time on tokenizer choice than on the model — which, in retrospect, is usually the lesson.",
+    body: "BiLSTM classifier over a noisy Twitter corpus. Spent more time on tokenizer choice than on the model - which, in retrospect, is usually the lesson.",
   },
   {
     id: "pihealth",
@@ -56,8 +53,7 @@ const projects: Project[] = [
     year: "2024",
     image: "/images/pihealth.png",
     stack: ["React", "TypeScript", "Zod", "Dexie"],
-    body:
-      "Type-safe patient module for an HMS. Zod at the boundary, Jotai for state, Dexie offline-first. Wrote integration tests because mocking the DB had bitten people before.",
+    body: "Type-safe patient module for an HMS. Zod at the boundary, Jotai for state, Dexie offline-first. Wrote integration tests because mocking the DB had bitten people before.",
   },
   {
     id: "societyzen",
@@ -67,8 +63,7 @@ const projects: Project[] = [
     year: "2023",
     image: "/images/societyzen.png",
     stack: ["React", "TypeScript", "Node.js"],
-    body:
-      "Membership, dues, and notice-board for residential societies. Built end-to-end; the hardest part was making the dues flow legible to non-technical board members.",
+    body: "Membership, dues, and notice-board for residential societies. Built end-to-end; the hardest part was making the dues flow legible to non-technical board members.",
   },
 ];
 
@@ -81,7 +76,7 @@ const Projects = () => {
     <section className="section projects" id="projects">
       <div className="shell">
         <div className="proj-head fade-up" ref={head}>
-          <p className="eyebrow">/ 04 — output space</p>
+          <p className="eyebrow">/ 04 - output space</p>
           <h2 className="proj-title serif">
             Projects, picked from the
             <br />
@@ -150,7 +145,9 @@ const ProjStagePreview = ({ project }: { project: Project }) => {
           <p className="proj-preview-body">{project.body}</p>
           <div className="proj-preview-stack">
             {project.stack.map((s) => (
-              <span className="tag" key={s}>{s}</span>
+              <span className="tag" key={s}>
+                {s}
+              </span>
             ))}
           </div>
         </div>
@@ -185,7 +182,9 @@ const ProjListItem = ({
         <p className="proj-row-body">{p.body}</p>
         <div className="proj-row-stack">
           {p.stack.map((s) => (
-            <span className="tag" key={s}>{s}</span>
+            <span className="tag" key={s}>
+              {s}
+            </span>
           ))}
         </div>
       </div>

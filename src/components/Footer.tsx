@@ -6,7 +6,10 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-shell shell">
         <div className="footer-mark">
-          <span className="serif" style={{ fontSize: "clamp(4rem, 18vw, 12rem)" }}>
+          <span
+            className="serif"
+            style={{ fontSize: "clamp(4rem, 18vw, 12rem)" }}
+          >
             d<span className="italic">.</span>p
           </span>
           <span className="mono footer-sig">/ end of embedding</span>
@@ -20,17 +23,45 @@ const Footer = () => {
                 <a href="mailto:dp86@iu.edu">dp86@iu.edu</a>
               </li>
               <li>
-                <a href="mailto:dhruvilpatel6468@gmail.com">dhruvilpatel6468@gmail.com</a>
+                <a href="mailto:dhruvilpatel6468@gmail.com">
+                  dhruvilpatel6468@gmail.com
+                </a>
               </li>
-              <li className="mono ink-faint">+1 (708) 996-9690 · Bloomington, IN</li>
+              <li className="mono ink-faint">
+                +1 (708) 996-9690 · Bloomington, IN
+              </li>
             </ul>
           </div>
           <div>
             <div className="eyebrow">Elsewhere</div>
             <ul className="footer-list">
-              <li><a href="https://github.com/PatelDhruvil2502" target="_blank" rel="noreferrer">GitHub ↗</a></li>
-              <li><a href="https://www.linkedin.com/in/dhruvil2502/" target="_blank" rel="noreferrer">LinkedIn ↗</a></li>
-              <li><a href="https://drive.google.com/drive/folders/1hcBAv1AOkNLXJ6dhAiyaMeSSI-mirWor?usp=drive_link" target="_blank" rel="noreferrer">Résumé ↗</a></li>
+              <li>
+                <a
+                  href="https://github.com/PatelDhruvil2502"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  GitHub ↗
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.linkedin.com/in/dhruvil2502/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  LinkedIn ↗
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://drive.google.com/drive/folders/1hcBAv1AOkNLXJ6dhAiyaMeSSI-mirWor?usp=drive_link"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Résumé ↗
+                </a>
+              </li>
             </ul>
           </div>
           <div>
@@ -43,8 +74,10 @@ const Footer = () => {
         </div>
 
         <div className="footer-base">
-          <span className="mono">© {year} — patel, d.</span>
-          <span className="mono">made between debugging sessions, w/ too much coffee</span>
+          <span className="mono">© {year} - patel, d.</span>
+          <span className="mono">
+            made between debugging sessions, w/ too much coffee
+          </span>
         </div>
       </div>
     </footer>

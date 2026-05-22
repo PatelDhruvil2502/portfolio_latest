@@ -12,10 +12,7 @@ export const useReveal = <T extends HTMLElement = HTMLDivElement>(
 
     // If element is already on screen at mount, reveal immediately.
     const r = el.getBoundingClientRect();
-    if (
-      r.top < window.innerHeight &&
-      r.bottom > 0
-    ) {
+    if (r.top < window.innerHeight && r.bottom > 0) {
       el.classList.add("in");
       if (once) return;
     }
@@ -36,7 +33,7 @@ export const useReveal = <T extends HTMLElement = HTMLDivElement>(
 
     io.observe(el);
 
-    // Safety net — re-check on scroll in case IO misfires
+    // Safety net - re-check on scroll in case IO misfires
     const onScroll = () => {
       if (el.classList.contains("in")) return;
       const rect = el.getBoundingClientRect();

@@ -8,7 +8,7 @@ const About = () => {
       <div className="shell">
         <div className="about-grid" ref={ref}>
           <div className="about-meta">
-            <p className="eyebrow">/ 01 — origin vector</p>
+            <p className="eyebrow">/ 01 - origin vector</p>
             <p className="mono about-coord">
               x: 39.17°N
               <br />
@@ -29,15 +29,15 @@ const About = () => {
               <div className="about-col">
                 <p className="about-p">
                   Most of my time goes into making web apps feel <em>fast</em>{" "}
-                  and <em>honest</em>. I ship Next.js, type-safe boundaries,
-                  and the unglamorous plumbing — accessibility, perf budgets,
-                  the 17 ways a state machine can lie to you.
+                  and <em>honest</em>. I ship Next.js, type-safe boundaries, and
+                  the unglamorous plumbing - accessibility, perf budgets, the 17
+                  ways a state machine can lie to you.
                 </p>
               </div>
               <div className="about-col">
                 <p className="about-p">
-                  Off the day job I still write ML — RAG pipelines, HNSW
-                  indexes, retrieval evals — leftovers from my MS at Indiana
+                  Off the day job I still write ML - RAG pipelines, HNSW
+                  indexes, retrieval evals - leftovers from my MS at Indiana
                   University. TypeScript when correctness matters, Python when
                   speed of thought matters, a notebook when I'm trying to be
                   honest with myself.
@@ -59,7 +59,7 @@ const About = () => {
           <div className="sticky-card">
             <span className="mono sticky-pin">★</span>
             <p>
-              "the design is fine, the data fetch is the bug" — me,
+              "the design is fine, the data fetch is the bug" - me,
               <br /> every other pull request
             </p>
           </div>

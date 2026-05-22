@@ -6,7 +6,7 @@ const stages = [
     label: "fine-tuning",
     title: "M.S. Computer Science",
     org: "Indiana University Bloomington",
-    range: "2024 — 2026",
+    range: "2024 - 2026",
     detail:
       "Applied Algorithms · Machine Learning · Software Engineering · Computer Networks · Database Concepts. GPA 3.66.",
     epoch: "epoch 02",
@@ -15,7 +15,7 @@ const stages = [
     label: "pre-training",
     title: "B.Tech, Information Technology",
     org: "Dharmsinh Desai University · Nadiad, India",
-    range: "2020 — 2024",
+    range: "2020 - 2024",
     detail:
       "Software development & database management. Graduated with GPA 4.00.",
     epoch: "epoch 01",
@@ -24,11 +24,11 @@ const stages = [
 
 const certs = [
   {
-    name: "Oracle Cloud Infrastructure 2025 — AI Foundations Associate",
+    name: "Oracle Cloud Infrastructure 2025 - AI Foundations Associate",
     weight: "credential",
   },
   {
-    name: "Advanced LLMs with Retrieval-Augmented Generation — Practical Projects",
+    name: "Advanced LLMs with Retrieval-Augmented Generation - Practical Projects",
     weight: "credential",
   },
 ];
@@ -39,7 +39,7 @@ const Education = () => {
     <section className="section edu" id="education">
       <div className="shell">
         <div className="edu-head fade-up" ref={head}>
-          <p className="eyebrow">/ 03 — pre-training stages</p>
+          <p className="eyebrow">/ 03 - pre-training stages</p>
           <h2 className="edu-title serif">
             Where the <span className="italic accent">weights</span> got set.
           </h2>

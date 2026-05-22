@@ -1,4 +1,4 @@
-/* App-level shell — section dividers, intersection helpers */
+/* App-level shell - section dividers, intersection helpers */
 
 .app {
   position: relative;
@@ -9,7 +9,12 @@
 .section-divider {
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--line-strong) 50%, transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--line-strong) 50%,
+    transparent
+  );
 }
 
 .hairline {
