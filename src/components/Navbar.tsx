@@ -26,7 +26,6 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string>("about");
   const [open, setOpen] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [pressed, setPressed] = useState<string | null>(null);
   const [pill, setPill] = useState<PillRect>({ left: 0, width: 0, ready: false });
 
@@ -60,12 +59,7 @@ const Navbar = () => {
   }, [active, open]);
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 40);
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const p = max > 0 ? Math.min(100, Math.max(0, (window.scrollY / max) * 100)) : 0;
-      setProgress(p);
-    };
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
 
@@ -197,13 +191,6 @@ const Navbar = () => {
           résumé.pdf
         </a>
       </nav>
-
-      <div className="nav-progress" aria-hidden>
-        <span
-          className="nav-progress-fill"
-          style={{ transform: `scaleX(${progress / 100})` }}
-        />
-      </div>
     </header>
   );
 };
