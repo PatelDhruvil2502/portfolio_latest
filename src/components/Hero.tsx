@@ -1,9 +1,6 @@
-import { Suspense, lazy, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import EmbeddingField from "./scene/EmbeddingField";
 import "./styles/Hero.css";
-
-// Defer the WebGL field so its three.js chunk doesn't block first paint -
-// the hero text and portrait can render while the scene loads in.
-const EmbeddingField = lazy(() => import("./scene/EmbeddingField"));
 
 const PORTRAIT_AVIF = "/images/dhruvil.avif";
 const PORTRAIT_WEBP = "/images/dhruvil.webp";
@@ -43,26 +40,6 @@ const Hero = () => {
 
   const progressRef = useRef(0);
   const trappedRef = useRef(true);
-
-  // Mount the heavy three.js scene only after the browser is idle so the
-  // hero text and portrait render first. Falls back to a short timeout
-  // where requestIdleCallback isn't available (Safari).
-  const [showField, setShowField] = useState(false);
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    type IdleWindow = Window & {
-      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
-      cancelIdleCallback?: (id: number) => void;
-    };
-    const w = window as IdleWindow;
-    const reveal = () => setShowField(true);
-    if (w.requestIdleCallback) {
-      const id = w.requestIdleCallback(reveal, { timeout: 600 });
-      return () => w.cancelIdleCallback?.(id);
-    }
-    const id = window.setTimeout(reveal, 250);
-    return () => window.clearTimeout(id);
-  }, []);
 
   useEffect(() => {
     const el = heroRef.current;
@@ -396,16 +373,8 @@ const Hero = () => {
 
   return (
     <section className="hero" id="top" ref={heroRef}>
-      <div
-        className={`hero-scene ${showField ? "is-loaded" : ""}`}
-        aria-hidden
-        style={{ opacity: showField ? bgFade : 0 }}
-      >
-        {showField && (
-          <Suspense fallback={null}>
-            <EmbeddingField mouse={mouse} />
-          </Suspense>
-        )}
+      <div className="hero-scene" aria-hidden style={{ opacity: bgFade }}>
+        <EmbeddingField mouse={mouse} />
       </div>
 
       <div className="hero-gradient" aria-hidden />

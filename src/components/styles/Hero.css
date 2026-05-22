@@ -19,12 +19,6 @@
   transition: opacity 0.12s linear;
 }
 
-/* Lazy-mounted: fade in smoothly the first time the WebGL chunk loads, then
-   defer back to the snappy scroll-driven 0.12s transition. */
-.hero-scene:not(.is-loaded) {
-  transition: opacity 0.6s ease-out;
-}
-
 .hero-scene .hero-canvas {
   width: 100% !important;
   height: 100% !important;
