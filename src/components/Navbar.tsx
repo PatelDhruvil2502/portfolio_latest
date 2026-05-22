@@ -99,6 +99,32 @@ const Navbar = () => {
     };
   }, []);
 
+  // Dismiss the compact mobile menu when the user taps outside the panel
+  // or presses Escape. Skipped when the menu is closed so we don't add
+  // global listeners we don't need.
+  useEffect(() => {
+    if (!open) return;
+    const onDocClick = (e: MouseEvent) => {
+      const t = e.target as HTMLElement | null;
+      if (!t) return;
+      if (t.closest(".nav-links") || t.closest(".nav-toggle")) return;
+      setOpen(false);
+    };
+    const onEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    // Defer one tick so the same click that opened the menu doesn't close it.
+    const id = window.setTimeout(() => {
+      document.addEventListener("click", onDocClick);
+    }, 0);
+    document.addEventListener("keydown", onEscape);
+    return () => {
+      window.clearTimeout(id);
+      document.removeEventListener("click", onDocClick);
+      document.removeEventListener("keydown", onEscape);
+    };
+  }, [open]);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return;
