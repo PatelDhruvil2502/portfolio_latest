@@ -31,6 +31,7 @@ const projects: Project[] = [
     title: "FastAPI Copilot",
     kind: "Offline RAG documentation assistant",
     year: "2026",
+    image: "/images/fastapi_docs_copilot_launch.png",
     stack: ["Python", "FastAPI", "Vector Search"],
     body: "Offline documentation assistant with local vector storage, header-aware chunking, code-context preservation, and anchor-linked citations. Added context-window summarization and asynchronous URL validation; tests recorded 100% citation accuracy with no dead links.",
   },
