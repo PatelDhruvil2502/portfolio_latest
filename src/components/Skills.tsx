@@ -12,15 +12,15 @@ const drivers = [
 
 const aiStack = [
   "RAG",
+  "CRAG",
   "CAG",
   "HNSW",
-  "Embeddings",
-  "Semantic Search",
-  "LLMs",
-  "Scikit-learn",
+  "BGE Embeddings",
+  "Sentence-Transformers",
+  "ChromaDB",
+  "Ollama",
+  "BERTScore",
   "Whisper",
-  "NLP",
-  "NLTK",
 ];
 
 const webStack = [
@@ -28,25 +28,25 @@ const webStack = [
   "Next.js",
   "TypeScript",
   "Tailwind",
-  "Node.js",
-  "Flutter",
+  "Zod",
+  "Drizzle ORM",
 ];
 const dataStack = [
+  "PostgreSQL",
+  "SQLite",
   "FAISS",
   "ChromaDB",
-  "Vector Stores",
-  "SQL",
-  "NoSQL",
+  "hnswlib",
   "NumPy",
   "Pandas",
 ];
 const infraStack = [
+  "Docker",
+  "SLURM",
   "Jetstream2",
   "Linux",
   "Git",
   "Jupyter",
-  "Cloud",
-  "Distributed Systems",
 ];
 
 const Skills = () => {
@@ -70,16 +70,16 @@ const Skills = () => {
           <SpotlightTile />
           <AICluster />
           <StatTile
-            value="1M+"
-            label="high-dim embeddings"
-            sub="custom file-system vector store · HNSW tuned"
+            value="150K"
+            label="128-d vectors"
+            sub="hnswlib prefetch A/B · −24% mean query latency"
             color="var(--glow)"
           />
           <CodeTile />
           <StatTile
-            value="50K+"
-            label="NIH NHGRI docs"
-            sub="RAG · CAG pipeline · 36% lower latency"
+            value="500"
+            label="genomics eval set"
+            sub="RAG · CRAG · CAG · Hit@k / MRR / BERTScore"
             color="var(--accent)"
           />
           <QuoteTile />
@@ -185,7 +185,7 @@ const AICluster = () => {
       </div>
       <footer className="tile-foot">
         <span className="mono ai-foot">
-          ★ deepest cluster · 36% lower query latency · 25% fewer hallucinations
+          ★ deepest cluster · CGD RAG/CRAG/CAG · 500-question eval harness
         </span>
       </footer>
     </article>

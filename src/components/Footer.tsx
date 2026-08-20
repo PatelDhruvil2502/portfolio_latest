@@ -71,8 +71,9 @@ const Footer = () => {
           <div>
             <div className="eyebrow">Colophon</div>
             <p className="footer-colophon">
-              Built with React + TypeScript, three.js (via R3F), and Lenis.
-              Typeset in Instrument Serif, Inter & JetBrains Mono.
+              Built with React + TypeScript + Vite, Three.js (via React Three
+              Fiber), and Lenis. Typeset in Instrument Serif, Inter &amp;
+              JetBrains Mono. Deployed on Netlify.
             </p>
           </div>
         </div>

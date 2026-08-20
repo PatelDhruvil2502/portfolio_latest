@@ -36,11 +36,11 @@ const About = () => {
               </div>
               <div className="about-col">
                 <p className="about-p">
-                  Off the day job I still write ML - RAG pipelines, HNSW
-                  indexes, retrieval evals - leftovers from my MS at Indiana
-                  University. TypeScript when correctness matters, Python when
-                  speed of thought matters, a notebook when I'm trying to be
-                  honest with myself.
+                  Off the day job I still write ML — RAG/CRAG/CAG pipelines,
+                  HNSW benchmarks, retrieval evals — leftovers from my MS at
+                  Indiana University. TypeScript when correctness matters,
+                  Python when speed of thought matters, a notebook when I'm
+                  trying to be honest with myself.
                 </p>
               </div>
             </div>
@@ -48,9 +48,9 @@ const About = () => {
             <div className="about-tags">
               <span className="tag">React · Next.js</span>
               <span className="tag">TypeScript · Zod</span>
-              <span className="tag">Tailwind · CSS</span>
-              <span className="tag">RAG · CAG</span>
-              <span className="tag">PyTorch · FastAPI</span>
+              <span className="tag">Drizzle · SQLite</span>
+              <span className="tag">RAG · CRAG · CAG</span>
+              <span className="tag">Python · FastAPI</span>
             </div>
           </div>
         </div>

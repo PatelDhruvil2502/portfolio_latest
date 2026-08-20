@@ -7,33 +7,33 @@ type Doc = { id: string; text: string; tags: string[] };
 const corpus: Doc[] = [
   {
     id: "rag",
-    tags: ["rag", "cag", "ml", "retrieval", "research", "ai"],
-    text: "Designed a RAG/CAG clinical-genomics QA system over 50K+ NIH documents, dropping query latency 36% and hallucinations 25%.",
+    tags: ["rag", "crag", "cag", "ml", "retrieval", "research", "ai", "genomics"],
+    text: "Built RAG/CRAG/CAG pipelines over NHGRI CGD with ChromaDB, BGE embeddings, and Llama via Ollama — plus a verified 500-question genomics eval (Hit@k, MRR, BERTScore).",
   },
   {
     id: "hnsw",
-    tags: ["hnsw", "ann", "vector", "indexing", "performance"],
-    text: "Built a file-system vector store for 1M+ embeddings; HNSW tuning gave −35% NN-search latency at 95%+ recall under tight memory.",
+    tags: ["hnsw", "ann", "vector", "indexing", "performance", "docker", "prefetch"],
+    text: "Docker A/B of hnswlib software prefetch on 150K 128-d vectors cut mean HNSW latency ~24% (0.83 vs 1.03 ms) and p99 from 1.55 ms to 1.14 ms with no recall change.",
   },
   {
     id: "ghi",
-    tags: ["frontend", "next", "health", "data", "ssr", "uptime"],
-    text: "Migrating Global Health Impact's Flask forecasting platform onto Next.js - projected ~40% latency drop, 99.9% pipeline uptime on Jetstream2.",
+    tags: ["frontend", "next", "health", "data", "drizzle", "sqlite", "charts"],
+    text: "At Global Health Impact: Next.js/TypeScript analytics dashboard with Drizzle + 7 SQLite tables, Google Charts, and ranked DALY/source-score analysis across 12 year-disease combinations.",
   },
   {
     id: "react",
-    tags: ["react", "typescript", "frontend", "ui", "state"],
-    text: "Type-safe React/TS work: Zod at the boundary, Jotai for state, Dexie for offline-first persistence.",
+    tags: ["react", "typescript", "frontend", "ui", "state", "zod", "jotai"],
+    text: "Type-safe React/TS work: Zod at the boundary, Jotai for state, Dexie for offline-first persistence — 40+ HMS components at Fuzzy Cloud.",
   },
   {
     id: "edu",
     tags: ["education", "school", "degree", "iu", "indiana"],
-    text: "M.S. Computer Science at Indiana University Bloomington (2024–2026). GPA 3.66.",
+    text: "M.S. Computer Science at Indiana University Bloomington (Aug 2024–May 2026). GPA 3.66.",
   },
   {
     id: "btech",
     tags: ["education", "btech", "ddu", "india"],
-    text: "B.Tech in Information Technology, Dharmsinh Desai University, Nadiad, India. GPA 4.00.",
+    text: "B.Tech in Information Technology, Dharmsinh Desai University, Nadiad, India (Aug 2020–May 2024). GPA 3.30.",
   },
   {
     id: "loc",
@@ -43,22 +43,22 @@ const corpus: Doc[] = [
   {
     id: "contact",
     tags: ["email", "contact", "reach", "hire", "available"],
-    text: "Reach me at dp86@iu.edu or dhruvilpatel6468@gmail.com. Open to research / SWE roles.",
+    text: "Reach me at dp86@iu.edu or dhruvilpatel6468@gmail.com. Open to full-time SWE / frontend / applied AI roles after May 2026.",
   },
   {
     id: "stack",
     tags: ["typescript", "react", "next", "python", "tools"],
-    text: "Daily drivers: React + TypeScript + Next.js on the day job; Python + PyTorch when ML pulls me back in.",
+    text: "Daily drivers: React + TypeScript + Next.js on the day job; Python + retrieval/eval stacks when ML pulls me back in.",
   },
   {
     id: "github",
     tags: ["github", "code", "repo"],
-    text: "Code on GitHub: github.com/PatelDhruvil2502 - most of the interesting work lives in private repos.",
+    text: "Code on GitHub: github.com/PatelDhruvil2502.",
   },
   {
     id: "linkedin",
     tags: ["linkedin", "social", "network"],
-    text: "LinkedIn: linkedin.com/in/dhruvil2502 - quickest place to start a conversation.",
+    text: "LinkedIn: linkedin.com/in/dhruvil2502 — quickest place to start a conversation.",
   },
   {
     id: "fav",
@@ -68,12 +68,22 @@ const corpus: Doc[] = [
   {
     id: "currently",
     tags: ["now", "current", "today", "this week", "role", "job"],
-    text: "Right now: frontend engineer at Global Health Impact - migrating a legacy Flask forecasting platform to a modular, API-driven Next.js architecture.",
+    text: "Right now: Frontend Developer at Global Health Impact — Next.js analytics, Drizzle/SQLite, and methodology UX from Figma.",
   },
   {
     id: "looking",
     tags: ["job", "looking", "opportunity", "full-time", "2026"],
-    text: "Open to: full-time frontend / SWE conversations once my MS wraps in May 2026.",
+    text: "Open to full-time frontend / SWE / applied AI conversations once my MS wraps in May 2026.",
+  },
+  {
+    id: "wageshield",
+    tags: ["wageshield", "h1b", "project", "next", "postgres", "ai"],
+    text: "WageShield H-1B: privacy-first AI evidence auditor on Next.js + PostgreSQL with two-pass extraction/verification and SHA-256 manifests.",
+  },
+  {
+    id: "copilot",
+    tags: ["fastapi", "copilot", "rag", "docs", "project"],
+    text: "FastAPI Copilot: offline RAG docs assistant with header-aware chunking, anchor citations, and 100% citation accuracy in tests.",
   },
 ];
 
@@ -148,7 +158,6 @@ const Query = () => {
     }
     setContactErr(null);
     setContactSent(true);
-    // formspree handles the redirect
     void form;
   };
 
@@ -162,7 +171,7 @@ const Query = () => {
             <i className="accent"> anything.</i>
           </h2>
           <p className="query-sub mono">
-            mini-rag over a 14-doc corpus · cmd/ctrl-k to focus
+            mini-rag over a {corpus.length}-doc corpus · cmd/ctrl-k to focus
           </p>
         </div>
 

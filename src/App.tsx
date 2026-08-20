@@ -25,8 +25,8 @@ const App = () => {
         <About />
         <Marquee
           items={[
-            "React · Next.js · TypeScript · accessibility · perf",
-            "RAG · CAG · HNSW · ANN · vector search",
+            "React · Next.js · TypeScript · Drizzle · accessibility · perf",
+            "RAG · CRAG · CAG · HNSW · ANN · vector search",
             "currently shipping @ Global Health Impact",
             "open for full-time SWE / frontend roles · May 2026",
           ]}

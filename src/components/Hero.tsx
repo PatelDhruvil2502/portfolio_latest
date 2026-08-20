@@ -359,7 +359,7 @@ const Hero = () => {
           </p>
           <div className="m-hero-currently mono">
             <span className="dim">currently - </span>
-            <span>shipping next.js</span>
+            <span>shipping next.js analytics</span>
             <span className="dim"> @ global health impact</span>
           </div>
           <a href="#about" className="m-hero-scroll mono">
@@ -413,7 +413,7 @@ const Hero = () => {
             style={{ opacity: metaFade }}
           >
             <span className="dim">currently - </span>
-            <span>shipping next.js</span>
+            <span>shipping next.js analytics</span>
             <span className="dim">@ global health impact</span>
           </div>
         </>

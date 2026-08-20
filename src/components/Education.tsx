@@ -6,7 +6,7 @@ const stages = [
     label: "fine-tuning",
     title: "M.S. Computer Science",
     org: "Indiana University Bloomington",
-    range: "2024 - 2026",
+    range: "Aug 2024 - May 2026",
     detail:
       "Applied Algorithms · Machine Learning · Software Engineering · Computer Networks · Database Concepts. GPA 3.66.",
     epoch: "epoch 02",
@@ -15,20 +15,20 @@ const stages = [
     label: "pre-training",
     title: "B.Tech, Information Technology",
     org: "Dharmsinh Desai University · Nadiad, India",
-    range: "2020 - 2024",
+    range: "Aug 2020 - May 2024",
     detail:
-      "Software development & database management. Graduated with GPA 4.00.",
+      "Software development & database management. Graduated with GPA 3.30.",
     epoch: "epoch 01",
   },
 ];
 
 const certs = [
   {
-    name: "Oracle Cloud Infrastructure 2025 - AI Foundations Associate",
+    name: "Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate (Oracle, Oct 2025)",
     weight: "credential",
   },
   {
-    name: "Advanced LLMs with Retrieval-Augmented Generation - Practical Projects",
+    name: "Advanced LLMs with Retrieval Augmented Generation (RAG) — LinkedIn Learning, Oct 2025",
     weight: "credential",
   },
 ];

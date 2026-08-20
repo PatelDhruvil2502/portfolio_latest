@@ -8,7 +8,7 @@ type Project = {
   title: string;
   kind: string;
   year: string;
-  image: string;
+  image?: string;
   stack: string[];
   body: string;
   link?: string;
@@ -16,34 +16,32 @@ type Project = {
 
 const projects: Project[] = [
   {
-    id: "meetsmart",
+    id: "wageshield",
     index: "p.001",
+    title: "WageShield H-1B",
+    kind: "Privacy-first AI evidence auditor",
+    year: "2025",
+    stack: ["Next.js", "React", "PostgreSQL", "OpenRouter"],
+    body: "Full-stack Next.js app with account flows, secure uploads, versioned APIs, and case-scoped PostgreSQL persistence. Two-pass AI extraction/verification with page-grounded citations, explicit abstention, retention/deletion controls, selective reports, and SHA-256 manifests for auditable evidence handling.",
+  },
+  {
+    id: "fastapi-copilot",
+    index: "p.002",
+    title: "FastAPI Copilot",
+    kind: "Offline RAG documentation assistant",
+    year: "2025",
+    stack: ["Python", "FastAPI", "Vector Search"],
+    body: "Offline documentation assistant with local vector storage, header-aware chunking, code-context preservation, and anchor-linked citations. Added context-window summarization and asynchronous URL validation; tests recorded 100% citation accuracy with no dead links.",
+  },
+  {
+    id: "meetsmart",
+    index: "p.003",
     title: "MeetSmart",
     kind: "LLM-powered meeting intelligence",
     year: "2025",
     image: "/images/meetsmart.png",
-    stack: ["Python", "FastAPI", "Whisper", "NLP"],
-    body: "Meeting intelligence platform processing 200+ minutes of audio per session - auto-extracts notes & action items at 88% precision, cutting manual documentation time 70%. Multilingual sentiment + NLP pipelines hit 85% classification accuracy across 5 languages, expanding accessibility 60%.",
-  },
-  {
-    id: "car-detective",
-    index: "p.002",
-    title: "Car Damage Detective",
-    kind: "Deep learning · classification",
-    year: "2024",
-    image: "/images/car_detective.png",
-    stack: ["Python", "Flask", "VGG16", "CNN"],
-    body: "Fine-tuned VGG16 on a curated damage dataset to triage car-damage photos by severity and type. Flask service wraps the model; the interesting part was the data hygiene, not the model.",
-  },
-  {
-    id: "what-the-tweet",
-    index: "p.003",
-    title: "What the Tweet?!",
-    kind: "NLP · classification",
-    year: "2024",
-    image: "/images/what_the_tweet.png",
-    stack: ["Python", "Keras", "BiLSTM"],
-    body: "BiLSTM classifier over a noisy Twitter corpus. Spent more time on tokenizer choice than on the model - which, in retrospect, is usually the lesson.",
+    stack: ["Python", "Whisper", "NLP", "LLMs"],
+    body: "Speech and LLM pipelines for 200+ minutes of audio per session — auto-extracts notes and action items at 88% precision, cutting manual documentation time 70%. Multilingual sentiment classification hit 85% accuracy across five languages.",
   },
   {
     id: "pihealth",
@@ -53,17 +51,17 @@ const projects: Project[] = [
     year: "2024",
     image: "/images/pihealth.png",
     stack: ["React", "TypeScript", "Zod", "Dexie"],
-    body: "Type-safe patient module for an HMS. Zod at the boundary, Jotai for state, Dexie offline-first. Wrote integration tests because mocking the DB had bitten people before.",
+    body: "Type-safe patient module for a hospital management system — Zod at the boundary, Jotai for state, Dexie offline-first persistence. Built alongside Fuzzy Cloud internship work modernizing 40+ components.",
   },
   {
-    id: "societyzen",
+    id: "car-detective",
     index: "p.005",
-    title: "Societyzen",
-    kind: "Civic · society management",
-    year: "2023",
-    image: "/images/societyzen.png",
-    stack: ["React", "TypeScript", "Node.js"],
-    body: "Membership, dues, and notice-board for residential societies. Built end-to-end; the hardest part was making the dues flow legible to non-technical board members.",
+    title: "Car Damage Detective",
+    kind: "Deep learning · classification",
+    year: "2024",
+    image: "/images/car_detective.png",
+    stack: ["Python", "Flask", "VGG16", "CNN"],
+    body: "Fine-tuned VGG16 on a curated damage dataset to triage car-damage photos by severity and type. Flask service wraps the model; the interesting part was the data hygiene, not the model.",
   },
 ];
 
@@ -103,8 +101,6 @@ const Projects = () => {
   );
 };
 
-// Replaces /images/foo.png with /images/foo.avif (or .webp) without
-// hard-coding both paths everywhere the data is defined.
 const swapExt = (src: string, ext: string) =>
   src.replace(/\.(png|jpe?g)$/i, `.${ext}`);
 
@@ -114,6 +110,14 @@ const ProjectImage = ({ src, alt }: { src: string; alt: string }) => (
     <source srcSet={swapExt(src, "webp")} type="image/webp" />
     <img src={src} alt={alt} loading="lazy" decoding="async" />
   </picture>
+);
+
+const ProjectPlaceholder = ({ title, stack }: { title: string; stack: string[] }) => (
+  <div className="proj-placeholder" aria-hidden>
+    <span className="proj-placeholder-mark mono">// project</span>
+    <span className="proj-placeholder-title serif">{title}</span>
+    <span className="proj-placeholder-stack mono">{stack.slice(0, 3).join(" · ")}</span>
+  </div>
 );
 
 const ProjStagePreview = ({ project }: { project: Project }) => {
@@ -149,7 +153,11 @@ const ProjStagePreview = ({ project }: { project: Project }) => {
     >
       <div className="proj-preview-inner">
         <div className="proj-preview-frame">
-          <ProjectImage src={project.image} alt={project.title} />
+          {project.image ? (
+            <ProjectImage src={project.image} alt={project.title} />
+          ) : (
+            <ProjectPlaceholder title={project.title} stack={project.stack} />
+          )}
           <div className="proj-preview-tag mono">{project.index}</div>
         </div>
         <div className="proj-preview-meta">
